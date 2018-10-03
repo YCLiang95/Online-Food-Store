@@ -12,28 +12,61 @@
 	</div>
 
 <div>
-	<p><form method="post" accept-charset="UTF-8">
+	<p><form id="loginForm" name="NloginForm" method="post" accept-charset="UTF-8">
 		<p>
 			<h5><label for="email">User Name</label></h5>
-			<input type="text" name = "email" id = "input_email">
+			<input type="text" placeholder="enter user name" name = "email" id = "input_email">
 		</p>
 		<p>
    			<h5><label for="password">Password</label></h5>
-			<input type="password" name = "password" id = "input_password">
+			<input type="password" placeholder="enter password" name = "password" id = "input_password">
 		</p>
 	
 		<p>
-		<button formaction="http://47.254.94.78:8085/cs160/user/login" type="submit">Login</button>
+		<!--<button formtarget="_self" formaction="http://47.254.94.78:8085/cs160/user/login" type="submit">Login</button>-->
+		<button onclick="login();">Login</button>
 		<button formaction="http://47.254.94.78:8085/cs160/user/register" type="submit">Register</button>
 		</p>
 	</form></p>	
+
+	<script>
+		function login(){
+			var xhttp = new XMLHttpRequest();
+			var form = document.getElementById ('loginForm');
+			var data = new FormData(form);
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					validateLogin(this);
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/login", false);
+    		xhttp.send(data); 
+			//return false;
+			//form=document.getElementByID("loginForm");
+			//form.target="_self";
+			//form.action="http://47.254.94.78:8085/cs160/user/login";
+			//form.submit();
+		}
+		
+	function validateLogin(xhttp){
+		var x = JSON.parse(xhttp.responseText);
+
+		if (x.code == 200) {
+			alert(x.message);
+			return false;
+		} else {
+			alert(x.message);
+			return false;
+		}
+	}
+	</script>
+
 </div>
 
 <div>
-<form action = "landing.html">
+<form action = "index.html">
 <button type="submit">Return Home</button>
 </form>
 </div>
-
 </body>
 </html>
