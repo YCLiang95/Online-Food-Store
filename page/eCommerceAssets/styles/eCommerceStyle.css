@@ -46,6 +46,7 @@ header {
 	padding-top: 57px;
 	padding-bottom: 57px;
 }
+
 /* Main content of the site */
 #content {
 	clear: both;
@@ -79,33 +80,42 @@ header {
 /* Each product Information in the catalog */
 .mainContent .productRow .productInfo {
 	float: left;
-	padding-left: 5%;
-	padding-right: 5%;
-	width: 15%;
+	padding-left: 3%;
+	padding-right: 3%;
+	width: 10%;
 }
+/* Content holder for products in catalog*/
+.productRow .productInfo .productContent {
+	position: relative;
+	top: -5px;
+	font-size: 20px;
+	font-family: source-sans-pro, sans-serif;
+	color: rgba(0,150,150,1.00);
+}
+
+/* Weight of a products in catalog */
+.productRow .productInfo .productWeight {
+	font-family: 'Montserrat', sans-serif;
+	color: rgba(150,150,150,1.00);
+	font-size: 15px;
+	position: relative;
+	top: -25px;
+}
+
+
 /* Prices of a products in catalog */
 .productRow .productInfo .price {
 	font-family: 'Montserrat', sans-serif;
 	color: rgba(0,0,0,1.00);
 	font-size: 20px;
 	position: relative;
-	top: -20px;
+	top: -40px;
 }
-/* Content holder for products in catalog*/
-.productRow .productInfo .productContent {
-	position: relative;
-	top: -37px;
-	font-size: 16px;
-	font-family: source-sans-pro, sans-serif;
-	font-style: normal;
-	font-weight: 200;
-	color: rgba(0,150,150,1.00);
-	white-space: pre-wrap;
-}
+
 /* Buy button for products in catalog */
 .productRow .productInfo .buyButton {
 	position: relative;
-	top: -48px;
+	top: -60px;
 	width: 84%;
 	background-color: rgba(0,200,200,1.00);
 	height: 35px;
@@ -123,21 +133,12 @@ header {
 	font-family: source-sans-pro, sans-serif;
 	font-style: normal;
 	font-weight: 200;
-	line-height: 1.8;
-	padding-top: 22px;
-	padding-left: 22px;
 	text-align: center;
-	padding-bottom: 22px;
-	padding-right: 22px;
 }
 /*Each footer content */
 #mainWrapper footer div {
-	width: 27%;
-	float: left;
-	padding-left: 4%;
-	padding-right: 2%;
 	color: rgba(255,255,255,1.00);
-	text-align: justify;
+	text-align: center;
 }
 /* Links in footer */
 footer div a {
