@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* Global Styles */
 a:hover {
-	color: rgba(255,255,255,1.00);
+	color: rgba(255,255,0,1.00);
 }
 /*header*/
 header {
