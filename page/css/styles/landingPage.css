@@ -1,13 +1,13 @@
 @charset "utf-8";
 /* Global Styles */
 a:hover {
-	color: rgba(255,255,255,1.00);
+	color: rgba(255,255,0,1.00);
 }
 /*header*/
 header {
 	font-family: 'Montserrat', sans-serif;
 	color: rgba(146,146,146,1.00);
-	font-size: 16px;
+	font-size: 30px;
 	font-style: normal;
 	font-weight: 400;
 }
