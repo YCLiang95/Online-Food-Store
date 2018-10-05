@@ -4,36 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Online Food Store Login and Register</title>
-<link href="css/styles/LoginRegister.css" rel="stylesheet" type="text/css">
+<link href="eCommerceAssets/styles/LoginRegister.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div>
+	<div id="message">
 		<h3>This is the login and registration page.</h3>
 	</div>
 
-<div>
+<div id="inputbox">
 	<p><form id="loginForm" name="NloginForm" method="post" accept-charset="UTF-8">
 		<p>
-			<h5><label for="email">User Name</label></h5>
+			<h5><label for="email" id="label_email">User Name</label></h5>
 			<input type="text" placeholder="enter user name" name = "email" id = "input_email">
 		</p>
 		<p>
-   			<h5><label for="password">Password</label></h5>
+   			<h5><label for="password" id="label_password">Password</label></h5>
 			<input type="password" placeholder="enter password" name = "password" id = "input_password">
 		</p>
 	
 		<p>
-		<!--<button formtarget="_self" formaction="http://47.254.94.78:8085/cs160/user/login" type="submit">Login</button>-->
-		<button onclick="login();">Login</button>
-		<button formaction="http://47.254.94.78:8085/cs160/user/register" type="submit">Register</button>
+		<button onclick="login();" id="button_login">Login</button>
+		<button onclick="register();" id="button_register">Register</button>
 		</p>
 	</form></p>	
 
 	<script>
 		function login(){
 			var xhttp = new XMLHttpRequest();
-			var form = document.getElementById ('loginForm');
-			var data = new FormData(form);
+			var data = new FormData(document.getElementById ('loginForm'));
 			xhttp.onreadystatechange = function() {
         		if (this.readyState == 4 && this.status == 200) {
 					validateLogin(this);
@@ -41,11 +39,18 @@
     		};
     		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/login", false);
     		xhttp.send(data); 
-			//return false;
-			//form=document.getElementByID("loginForm");
-			//form.target="_self";
-			//form.action="http://47.254.94.78:8085/cs160/user/login";
-			//form.submit();
+		}
+		
+		function register(){
+			var xhttp = new XMLHttpRequest();
+			var data = new FormData(document.getElementById ('loginForm'));
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					validateLogin(this);
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/register", false);
+    		xhttp.send(data); 
 		}
 		
 	function validateLogin(xhttp){
@@ -63,9 +68,9 @@
 
 </div>
 
-<div>
+<div id="returnHome">
 <form action = "index.html">
-<button type="submit">Return Home</button>
+<button type="submit" id="button_submit">Return Home</button>
 </form>
 </div>
 </body>
