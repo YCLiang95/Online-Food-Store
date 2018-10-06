@@ -21,7 +21,7 @@ func main() {
 
 	csvFile, _ := os.Open("data/population-density-per-zipcode.csv")
 	reader := csv.NewReader(bufio.NewReader(csvFile))
-	dict := make(map[int64]Data) // create a map,k: on zip code, v: Data object
+	data := make(map[int64]Data) // create a map,k: on zip code, v: Data object
 	for {
 		line, err := reader.Read()
 		if err == io.EOF {
@@ -30,7 +30,6 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		// fmt.Println(line)
 
 		zipcode, err := strconv.ParseInt(line[0], 16, 64)
 		population, err := strconv.ParseInt(line[1], 16, 64)
@@ -39,13 +38,37 @@ func main() {
 
 		dataObj := Data{zipcode, population, landSqMile, densitySqMile}
 
-		dict[zipcode] = dataObj
-
+		data[zipcode] = dataObj
 	}
 
-	// print the contents of the map
-	for key, value := range dict {
+	// San Mateo zip codes:  94401, 94402, 94403, 94404.
+	// Santa Clara zip codes: 94089, 95002, 95008, 95013, 95014, 95032, 95035, 95037, 95050, 95054, 95070, 95110, 95111, 95112, 95113, 95116, 95117, 95118, 95119, 95120, 95121, 95122, 95123, 95124, 95125, 95126, 95127, 95128, 95129, 95130, 95131, 95132, 95133, 95134, 95135, 95136, 95138, 95139, 95140, 95148.
+
+	countyZipCodes := make(map[string][]int64)
+
+	countyZipCodes["San Mateo"] = []int64{94401, 94402, 94403, 94404}
+	countyZipCodes["San Jose"] = []int64{94089, 95002, 95008, 95013, 95014, 95032, 95035, 95037, 95050, 95054, 95070, 95110, 95111, 95112, 95113, 95116, 95117, 95118, 95119, 95120, 95121, 95122, 95123, 95124, 95125, 95126, 95127, 95128, 95129, 95130, 95131, 95132, 95133, 95134, 95135, 95136, 95138, 95139, 95140, 95148}
+
+	type CountyZip struct {
+		zipcode int64
+		county  string
+	}
+
+	densityMap := make(map[CountyZip]float64) // create a map,k: on zip code, v: population denisty
+
+	for key, value := range countyZipCodes {
+		arr := value
+
+		for i := 0; i < len(arr); i++ {
+			zipcode := arr[i]                         // get zip code from list
+			dataOjb := data[zipcode]                  // get Data object based on zipcode
+			densityPerSqMile := dataOjb.densitySqMile // get the density per sq mile from the object
+			k := CountyZip{zipcode, key}
+			densityMap[k] = densityPerSqMile // put density in the map for each zip code
+		}
+	}
+
+	for key, value := range densityMap {
 		fmt.Println("Key:", key, "Value:", value)
 	}
-
 }
