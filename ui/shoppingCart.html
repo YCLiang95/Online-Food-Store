@@ -4,27 +4,21 @@
 <meta charset="utf-8">
 <title>Shopping Cart</title>
 </head>
-<section>
-	<a>This is the shopping cart place holder.</a>
-	<a>This page will display the shopping cart content</a>
-</section>
 <body onload="foo()">
 <section>
 	<a></a>
-	<div id = "title">Shopping Cart</div>
+	<p id="shoppingCartTitle">shopping Cart</p>
 	<div id = "itemList">
-		A list of item
-		<!--
-		This will be the container that items will be in
-		The class name is "container"
-		Those are dynamicly created, this is just an reference template for creating CSS
-
+	<!--
 		<div class = "container">
-			<button class="removeButton" type="Submit">
-		<div>
-		-->
+			<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
+			<p class="title">Potato! Tpye ${shoppingCart[i].id}<p>
+			<p class = "itemQuantity">${shoppingCart[i].quantity}<p>
+			<button class="removeButton" type="Submit">Remove Item</button>
+		</div>
+	-->
 	</div>
-	<a href="#">Proced to check out</a>
+	<button id="checkoutButton" type="Submit">Check Out</button>
 </section>
 	<script>
 		var shoppingCart = new Object();
@@ -38,17 +32,17 @@
 		function loadShoppingCart(){
 			shoppingCart = JSON.parse(getCookie("shoppingCart"));
 			var list = document.getElementById("itemList");
-
 			for (var i = 0; i < shoppingCart.length; i ++){
-				var div = document.createElement("div");
-				div.setAttribute("class", "container");
-				div.appendChild(document.createTextNode("id=" + shoppingCart[i].id + "Quantity=" + shoppingCart[i].quantity));
-				var button = document.createElement("button");
-				button.setAttribute("type", "submit");
-				button.setAttribute("class", "removeButton");
-				button.appendChild(document.createTextNode("Remove Item"));
-				div.appendChild(button);
-				list.appendChild(div);
+				var container =`<div class = "container">
+					<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
+					<p class="title">Potatoes! Tpye ${shoppingCart[i].id}<p>
+					<p class = "itemQuantity">Quantity: ${shoppingCart[i].quantity}<p>
+					<button class="removeButton" type="Submit">Remove Item</button>
+				</div>`;
+				var template = document.createElement("template");
+				template.innerHTML = container;
+				//list.appendChild(template);
+				list.appendChild(template.content.firstChild);
 			}
 		}
 		
@@ -82,6 +76,23 @@
 			document.cookie = 'shoppingCart=' + JSON.stringify(bar) + ';';
 			loadShoppingCart();
 		}
+		
+		/*
+				var div = document.createElement("div");
+				div.setAttribute("class", "container");
+				div.appendChild(document.createTextNode("id=" + shoppingCart[i].id + "Quantity=" + shoppingCart[i].quantity));
+				var image = document.createElement("image");
+				image.setAttribute("src", "eCommerceAssets/images/potato.jpg");
+				var itemName = document.create
+				var button = document.createElement("button");
+				button.setAttribute("type", "submit");
+				button.setAttribute("class", "removeButton");
+				button.appendChild(document.createTextNode("Remove Item"));
+				div.appendChild(button);
+				list.appendChild(div);
+		*/
 	</script>
 </body>
 </html>
+
+
