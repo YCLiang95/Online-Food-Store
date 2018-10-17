@@ -15,7 +15,7 @@ header {
 	float: left;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width: 139px;
+	width: 100px;
 	text-align: center;
 	color: rgba(255,255,255,1.00);
 	background-color: rgba(0,150,150,1.00);
@@ -40,11 +40,15 @@ header {
 #offer {
 	font-family: 'Montserrat', sans-serif;
 	clear: both;
-	color: rgba(0,50,50,1.00);
-	background-color:rgba(208,208,208,0.90);
-	padding-left: 115px;
-	padding-top: 57px;
-	padding-bottom: 57px;
+font-size: 30px;
+line-height: 35px;
+	color: white;
+	background-image: url("../images/organic.jpg");
+	background-repeat:no-repeat;
+	height: 100%;
+	padding-left: 225px;
+	padding-top: 25px;
+	padding-bottom: 30px;
 }
 
 /* Main content of the site */
