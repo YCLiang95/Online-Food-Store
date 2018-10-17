@@ -23,7 +23,7 @@
 		</p>
 	
 		<p>
-		<button onclick="login();" id="button_login">Login</button>
+		<button onclick="return login();" id="button_login">Login</button>
 		<button onclick="register();" id="button_register">Register</button>
 		</p>
 	</form></p>	
@@ -39,6 +39,7 @@
     		};
     		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/login", false);
     		xhttp.send(data); 
+			return false;
 		}
 		
 		function register(){
@@ -51,18 +52,36 @@
     		};
     		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/register", false);
     		xhttp.send(data); 
+			return false;
 		}
 		
 	function validateLogin(xhttp){
 		var x = JSON.parse(xhttp.responseText);
 
 		if (x.code == 200) {
-			alert(x.message);
+			var shoppingCart = getCookie("shoppingCart");
+			var userName = document.getElementById("input_email").value;
+			document.cookie = "userName=" + userName + '; expires=Thu, 01 Jan 2020 00:00:01 GMT'; 
+			document.cookie = "shoppingCart=" + shoppingCart + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+			window.location.href = "loginSuccessful.html";
 			return false;
 		} else {
 			alert(x.message);
 			return false;
 		}
+	}
+		
+	function getCookie(cookieName){
+		var name = cookieName + "=";
+    	var cookie = document.cookie.split(';');
+    	for(var i = 0; i < cookie.length; i++) {
+        	var entry = cookie[i];
+			entry.replace(/ /g,'');
+        	if (entry.indexOf(name) == 0) {
+            	return entry.substring(name.length, entry.length);
+			}
+		}
+    	return "";
 	}
 	</script>
 

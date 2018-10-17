@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <title>Shopping Cart</title>
 </head>
-<body onload="foo()">
+<body onload="loadShoppingCart()">
 <section>
 	<a></a>
-	<p id="shoppingCartTitle">shopping Cart</p>
+	<p><a id="shoppingCartTitle">shopping Cart</a></p>
 	<div id = "itemList">
 	<!--
 		<div class = "container">
@@ -22,6 +22,7 @@
 </section>
 	<script>
 		var shoppingCart = new Object();
+		var userName = "";
 		
 		//Sent request to the server for specific item data
 		function quary(id){
@@ -30,6 +31,12 @@
 		
 		//Load the shopping cart content from cookie
 		function loadShoppingCart(){
+			userName = getCookie("userName");
+			if (userName == '') userName = "Guest";
+			document.getElementById("shoppingCartTitle").innerHTML = userName + "'s shopping cart.";
+			foo();
+			//alert(document.cookie);
+			//alert(getCookie("shoppingCart"));
 			shoppingCart = JSON.parse(getCookie("shoppingCart"));
 			var list = document.getElementById("itemList");
 			for (var i = 0; i < shoppingCart.length; i ++){
@@ -46,14 +53,15 @@
 			}
 		}
 		
-		function getCookie(cname){
-			var name = cname + "=";
+		function getCookie(cookieName){
+			var name = cookieName + "=";
     		var cookie = document.cookie.split(';');
     		for(var i = 0; i < cookie.length; i++) {
         		var entry = cookie[i];
 				entry.replace(/ /g,'');
-        		if (entry.indexOf(name) == 0) {
-            		return entry.substring(name.length, entry.length);
+				//alert(entry + entry.indexOf(name));
+        		if (entry.indexOf(name) >= 0) {
+            		return entry.substring(entry.indexOf(name) + name.length, entry.length);
 				}
 			}
     		return "";
@@ -73,8 +81,8 @@
 			bar[0].quantity = 5;
 			bar[1].id = "2";
 			bar[1].quantity = 1;
-			document.cookie = 'shoppingCart=' + JSON.stringify(bar) + ';';
-			loadShoppingCart();
+			document.cookie = "userName=" + userName + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+			document.cookie = "shoppingCart=" + JSON.stringify(bar) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
 		}
 		
 		/*
