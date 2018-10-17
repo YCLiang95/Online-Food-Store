@@ -7,16 +7,41 @@
 <link href="eCommerceAssets/styles/eCommerceStyle.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body onLoad="load()">
 <div id="mainWrapper">
   <header> 
     <div id="logo"> OFS </div>
 	  <div id="headerLinks">
 		  <a href="#" title="StoreLocation">Store Location</a>
-		  <a href="LoginRegister.html" title="Login/Register">Login/Register</a>
+		  <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
 		  <a href="tracking.html" title="Tracking">Tracking</a>
 		  <a href="shoppingCart.html" title="Cart">Cart</a></div>
   </header>
+	
+	<script>
+		function load(){
+			var name = getUserName();
+			if (name == ""){
+				document.getElementById("Login/Register").innerHTML = "Login/Register";
+				document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
+			} else {
+				document.getElementById("Login/Register").innerHTML = name;
+				document.getElementById("Login/Register").setAttribute("href", "profile.html");
+			}
+		}
+		
+		function getUserName(){
+    	var cookie = document.cookie.split(';');
+    	for(var i = 0; i < cookie.length; i++) {
+        	var entry = cookie[i];
+			entry.replace(/ /g,'');
+        	if (entry.indexOf("userName") >= 0) {
+            	return entry.substring(entry.indexOf("userName") + 9, entry.length);
+			}
+		}
+    	return "";
+	}
+	</script>
 	
   <section id="offer"> 
     <h2>Organic Food Store</h2>
