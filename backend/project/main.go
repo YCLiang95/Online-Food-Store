@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"github.com/cs160/project/utils"
-	"github.com/cs160/project/utils/mysql-utils"
-	"github.com/cs160/project/control/filter"
+	"github.com/YCLiang95/CS160Group1OFS/backend/utils"
+	"github.com/YCLiang95/CS160Group1OFS/backend/utils/mysql-utils"
+	"github.com/YCLiang95/CS160Group1OFS/backend/control/filter"
 )
 
 var SERVER_PORT string

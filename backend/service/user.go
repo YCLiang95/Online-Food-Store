@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"github.com/cs160/project/dao"
-	"github.com/cs160/project/dao/types"
+	"github.com/YCLiang95/CS160Group1OFS/backend/dao"
+	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
 )
 
 var(
@@ -14,14 +14,14 @@ var(
 
 
 func Register(email,password string)error{
-	if err:=dao.GetUserDao().Register(email,password);err!=nil {
+	if err:=dao.GetInstance().Register(email,password);err!=nil {
 		return RegisterError
 	}
 	return nil
 }
 
-func Login(email,password string)( *types.ProjectUser,error) {
-	user, err := dao.GetUserDao().GetUser(email)
+func Login(email,password string)( *protocal.ProjectUser,error) {
+	user, err := dao.GetInstance().GetUser(email)
 	if err != nil{
 		return nil,UserSystemErr
 	}

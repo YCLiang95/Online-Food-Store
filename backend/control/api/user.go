@@ -2,10 +2,12 @@ package api
 
 import (
 	"net/http"
-	"github.com/cs160/project/control/api/model/response"
-	"github.com/cs160/project/control/api/model/request"
-	"github.com/cs160/project/service"
+	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/response"
+	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/request"
+	"github.com/YCLiang95/CS160Group1OFS/backend/service"
 )
+
+
 
 func Register(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, error) {
 	userRequest := request.UserRequest{}
@@ -17,6 +19,7 @@ func Register(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, 
 	}
 	return response.GenerateSuccessStruct("register user successfully", "54895786hdfkhas"), nil
 }
+
 
 func Login(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, error) {
 	userRequest := request.UserRequest{}
@@ -34,3 +37,4 @@ func Login(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, err
 	}
 	return response.GenerateSuccessStruct("login successfully", userResponse), nil
 }
+

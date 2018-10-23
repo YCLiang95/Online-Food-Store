@@ -1,51 +1,35 @@
 package dao
 
 import (
-	"github.com/cs160/project/dao/types"
-	"github.com/cs160/project/utils/mysql-utils"
-	"github.com/cs160/project/utils"
+	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
 )
 
+type UserDaoInstance struct{}
 
 var userDaoObject *UserDaoInstance = nil
 
-
-type UserDaoInstance struct {
-	DaoInstance
-}
-
-
-func GetUserDao() *UserDaoInstance {
+func GetInstance() *UserDaoInstance {
 	if userDaoObject == nil {
 		userDaoObject = new(UserDaoInstance)
-		userDaoObject.tableName = "project_user"
-		userDaoObject.databaseEnginer = mysql_utils.GetInstance()
 	}
 	return userDaoObject
 }
 
-func (ui *UserDaoInstance) Register(email, password string) error {
-	user := &types.ProjectUser{Email: email, Password: password}
-	_, err := ui.databaseEnginer.Insert(user)
-	if err != nil {
-		utils.Logger.Error("--UserDao--"," Failed to insert user informatiom: ",err)
-		return err
-	} else {
-		return nil
-	}
+func (ui *UserDaoInstance) Register(email, password string) (err error) {
+	user := &protocal.ProjectUser{Email: email, Password: password}
+	 err = daoFunctionLogWapper(user, nil,saveRecorders)
+	return
 }
 
-func (ui *UserDaoInstance) GetUser(email string) (*types.ProjectUser, error) {
-	 user:=new(types.ProjectUser)
-	user.Email = email
-	bool, err := ui.databaseEnginer.Get(user)
-	if err != nil {
-		utils.Logger.Error("--UserDao--"," Failed to Get user informatiom: ",err)
+func (ui *UserDaoInstance) GetUser(email string) (user *protocal.ProjectUser, err error) {
 
-		return nil, err
+	user= &protocal.ProjectUser{Email:email}
+	if err = daoFunctionLogWapper(user,nil,getRecorder); err != nil {
+		user = nil
+		return
 	}
-	if !bool {
-		return nil, nil
+	if user.Uid==0{
+		user=nil
 	}
-	return user, nil
+	return
 }

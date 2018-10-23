@@ -7,9 +7,9 @@ import (
 	"errors"
 )
 var (
-	MissingParamErr=errors.New("800:缺少参数")
-	IllegalParamErr=errors.New("801:参数不合法")
-	SystemErr=errors.New("802:系统错误")
+	MissingParamErr=errors.New("800:Missing Params")
+	IllegalParamErr=errors.New("801:Parmas is illegal")
+	SystemErr=errors.New("802:System error")
 
 )
 
@@ -57,6 +57,12 @@ func SetValue(v reflect.Value,value string)error{
 			return IllegalParamErr
 		}
 		 v.SetInt(intValue)
+	case float64:
+		floatValue,err:=strconv.ParseFloat(value,64)
+		if err!=nil{
+			return IllegalParamErr
+		}
+		v.SetFloat(floatValue)
 	}
 	return nil
 }

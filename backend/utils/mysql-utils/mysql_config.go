@@ -1,7 +1,7 @@
 package mysql_utils
 
 import (
-	"github.com/cs160/project/utils"
+	"github.com/YCLiang95/CS160Group1OFS/backend/utils"
 	"encoding/json"
 	"io/ioutil"
 )
@@ -15,6 +15,7 @@ type MysqlConfig struct {
 	MaxIdel  int    `json:"maxIdel"`
 	MaxOpen  int    `json:"maxOpen"`
 }
+
 
 func LoadConfigFile(url string) *MysqlConfig {
 	configData, e := ioutil.ReadFile(url)

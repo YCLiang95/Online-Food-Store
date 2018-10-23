@@ -9,7 +9,6 @@ import (
 	"errors"
 	"reflect"
 	"strconv"
-
 	"github.com/go-xorm/core"
 )
 
@@ -55,7 +54,6 @@ func (session *Session) get(bean interface{}) (bool, error) {
 	}
 
 	table := session.statement.RefTable
-
 	if session.canCache() && beanValue.Elem().Kind() == reflect.Struct {
 		if cacher := session.engine.getCacher2(table); cacher != nil &&
 			!session.statement.unscoped {
