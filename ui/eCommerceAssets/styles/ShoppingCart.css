@@ -1,0 +1,102 @@
+#shoppingCartTitle {
+     position: absolute;
+     top: 50px;
+     left: 50%;
+     margin-left: -400px;
+     width: 800px;
+     height: 100%;
+     background-image: url("../images/shoppingcart.png");
+     background-repeat:no-repeat;
+     padding:80px;
+     font-family: 'Montserrat', sans-serif;
+     font-weight: bold;
+     font-size: 40px;
+     color: white;
+}
+ section {
+     width: 800px;
+     height: 100%;
+     margin: 249px auto;
+     display: flex;
+     flex-direction: column;
+}
+ .container {
+     height: 120px;
+     border-bottom: 1px solid rgba(200,220,220,1.0);
+     display: flex;
+     align-items: center;
+}
+ .removeButton {
+     border: none;
+     background-color: white;
+     cursor: pointer;
+}
+
+ .itemImage {
+     position: relative;
+     left: 20px;
+     width: 120px;
+}
+ .description {
+     position: relative;
+     left: 40px;
+     line-height: 50%;
+     width: 200px;
+}
+ .itemName{
+     font-family: 'Montserrat', sans-serif;
+     font-weight: bold;
+     font-size: 20px;
+}
+ .wt{
+     font-family: 'Montserrat', sans-serif;
+     font-size: 12px;
+     color: rgba(127,127,127,1.0);
+}
+ .quantity {
+     position: relative;
+     margin-left: 50px;
+     display: flex;
+     align-items: center;
+}
+ .itemQuantity{
+     font-family: 'Montserrat', sans-serif;
+     font-size: 18px;
+     width:50px;
+     text-align: center;
+}
+ .plus, .minus{
+     background-color: white;
+     border: none;
+     cursor: pointer;
+}
+ .price {
+     font-family: 'Montserrat', sans-serif;
+     font-size: 18px;
+     font-weight: bold;
+     width:120px;
+     text-align: center;
+}
+ .weight{
+     font-family: 'Montserrat', sans-serif;
+     font-size: 18px;
+     color: rgba(127,127,127,1.0);
+     text-align: center;
+     width:120px;
+}
+ #checkoutButton {
+     position: absolute;
+     bottom:100px;
+     right: 600px;
+     font-family: 'Montserrat', sans-serif;
+     font-size: 17px;
+     color: white;
+     font-weight: bold;
+     background-color: rgba(0,150,150,1.0);
+     border: none;
+     cursor: pointer;
+     padding: 10px 100px;
+}
+ #checkoutButton:hover {
+     opacity: 0.8;
+}

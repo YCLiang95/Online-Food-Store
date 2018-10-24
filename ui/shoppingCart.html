@@ -1,106 +1,126 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Shopping Cart</title>
-</head>
-<body onload="loadShoppingCart()">
-<section>
-	<a></a>
-	<p><a id="shoppingCartTitle">shopping Cart</a></p>
-	<div id = "itemList">
-	<!--
-		<div class = "container">
-			<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
-			<p class="title">Potato! Tpye ${shoppingCart[i].id}<p>
-			<p class = "itemQuantity">${shoppingCart[i].quantity}<p>
-			<button class="removeButton" type="Submit">Remove Item</button>
-		</div>
-	-->
-	</div>
-	<button id="checkoutButton" type="Submit">Check Out</button>
-</section>
-	<script>
-		var shoppingCart = new Object();
-		var userName = "";
-		
-		//Sent request to the server for specific item data
-		function quary(id){
-			
-		}
-		
-		//Load the shopping cart content from cookie
-		function loadShoppingCart(){
-			userName = getCookie("userName");
-			if (userName == '') userName = "Guest";
-			document.getElementById("shoppingCartTitle").innerHTML = userName + "'s shopping cart.";
-			foo();
-			//alert(document.cookie);
-			//alert(getCookie("shoppingCart"));
-			shoppingCart = JSON.parse(getCookie("shoppingCart"));
-			var list = document.getElementById("itemList");
-			for (var i = 0; i < shoppingCart.length; i ++){
-				var container =`<div class = "container">
-					<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
-					<p class="title">Potatoes! Tpye ${shoppingCart[i].id}<p>
-					<p class = "itemQuantity">Quantity: ${shoppingCart[i].quantity}<p>
-					<button class="removeButton" type="Submit">Remove Item</button>
-				</div>`;
-				var template = document.createElement("template");
-				template.innerHTML = container;
-				//list.appendChild(template);
-				list.appendChild(template.content.firstChild);
-			}
-		}
-		
-		function getCookie(cookieName){
-			var name = cookieName + "=";
-    		var cookie = document.cookie.split(';');
-    		for(var i = 0; i < cookie.length; i++) {
-        		var entry = cookie[i];
-				entry.replace(/ /g,'');
-				//alert(entry + entry.indexOf(name));
-        		if (entry.indexOf(name) >= 0) {
-            		return entry.substring(entry.indexOf(name) + name.length, entry.length);
-				}
-			}
-    		return "";
-		}
-		
-		//Save anychanges to the cookie
-		function saveToCookie(){
-			
-		}
-		
-		//placehodler shopping cart initialization
-		function foo(){
-			var bar = [];
-			bar[0] = new Object();
-			bar[1] = new Object();
-			bar[0].id = "1";
-			bar[0].quantity = 5;
-			bar[1].id = "2";
-			bar[1].quantity = 1;
-			document.cookie = "userName=" + userName + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
-			document.cookie = "shoppingCart=" + JSON.stringify(bar) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
-		}
-		
-		/*
-				var div = document.createElement("div");
-				div.setAttribute("class", "container");
-				div.appendChild(document.createTextNode("id=" + shoppingCart[i].id + "Quantity=" + shoppingCart[i].quantity));
-				var image = document.createElement("image");
-				image.setAttribute("src", "eCommerceAssets/images/potato.jpg");
-				var itemName = document.create
-				var button = document.createElement("button");
-				button.setAttribute("type", "submit");
-				button.setAttribute("class", "removeButton");
-				button.appendChild(document.createTextNode("Remove Item"));
-				div.appendChild(button);
-				list.appendChild(div);
-		*/
-	</script>
-</body>
+   <head>
+      <meta charset="utf-8">
+      <title>Shopping Cart</title>
+      <link href="eCommerceAssets/styles/ShoppingCart.css" rel="stylesheet" type="text/css">
+   </head>
+   <body onload="loadShoppingCart()">
+      <section>
+         <a></a>
+         <p><a id="shoppingCartTitle">shopping Cart</a></p>
+         <div id = "itemList">
+            <!--
+               <div class = "container">
+                   	<button class="removeButton" type="submit">
+               	<img src="eCommerceAssets/images/delete.png" alt="" />
+               </button>
+               	
+               	<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
+                 <div class="description">
+               <p class="itemName">Potato! Tpye ${shoppingCart[i].id}<p>
+               <p class="wt">0.5 lb / item<p>
+                 </div>
+               
+                 <div class="quantity">
+                   <button class="plus" type="button" name="button">
+                     <img src="eCommerceAssets/images/plus.png" alt="" />
+                   </button>	
+               <p class = "itemQuantity">${shoppingCart[i].quantity}<p>
+               
+                   <button class="minus" type="button" name="button">
+                     <img src="eCommerceAssets/images/minus.png" alt="" />
+                   </button>
+                 </div>
+               <p class="price">$ 0.47</p>
+               <p class="weight">0.5 lb</p>
+               
+               
+               </div>
+               
+               -->
+         </div>
+         <button id="checkoutButton" type="Submit">Check Out</button>
+      </section>
+      <script>
+         var shoppingCart = new Object();
+         var userName = "";
+         
+         //Sent request to the server for specific item data
+         function quary(id){
+         	
+         }
+         
+         //Load the shopping cart content from cookie
+         function loadShoppingCart(){
+         	userName = getCookie("userName");
+         	if (userName == '') userName = "Guest";
+         	document.getElementById("shoppingCartTitle").innerHTML = userName + "'s shopping cart.";
+         	foo();
+         	//alert(document.cookie);
+         	//alert(getCookie("shoppingCart"));
+         	shoppingCart = JSON.parse(getCookie("shoppingCart"));
+         	var list = document.getElementById("itemList");
+         	for (var i = 0; i < shoppingCart.length; i ++){
+         		var container =`<div class = "container">
+         			<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
+         			<p class="itemName">Potatoes! Tpye ${shoppingCart[i].id}<p>
+         			<p class = "itemQuantity">Quantity: ${shoppingCart[i].quantity}<p>
+         			<button class="removeButton" type="Submit">Remove Item</button>
+         		</div>`;
+         		var template = document.createElement("template");
+         		template.innerHTML = container;
+         		//list.appendChild(template);
+         		list.appendChild(template.content.firstChild);
+         	}
+         }
+         
+         function getCookie(cookieName){
+         	var name = cookieName + "=";
+           		var cookie = document.cookie.split(';');
+           		for(var i = 0; i < cookie.length; i++) {
+               		var entry = cookie[i];
+         		entry.replace(/ /g,'');
+         		//alert(entry + entry.indexOf(name));
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+         		}
+         	}
+           		return "";
+         }
+         
+         //Save anychanges to the cookie
+         function saveToCookie(){
+         	
+         }
+         
+         //placehodler shopping cart initialization
+         function foo(){
+         	var bar = [];
+         	bar[0] = new Object();
+         	bar[1] = new Object();
+         	bar[0].id = "1";
+         	bar[0].quantity = 5;
+         	bar[1].id = "2";
+         	bar[1].quantity = 1;
+         	document.cookie = "userName=" + userName + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+         	document.cookie = "shoppingCart=" + JSON.stringify(bar) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+         }
+         
+         /*
+         		var div = document.createElement("div");
+         		div.setAttribute("class", "container");
+         		div.appendChild(document.createTextNode("id=" + shoppingCart[i].id + "Quantity=" + shoppingCart[i].quantity));
+         		var image = document.createElement("image");
+         		image.setAttribute("src", "eCommerceAssets/images/potato.jpg");
+         		var itemName = document.create
+         		var button = document.createElement("button");
+         		button.setAttribute("type", "submit");
+         		button.setAttribute("class", "removeButton");
+         		button.appendChild(document.createTextNode("Remove Item"));
+         		div.appendChild(button);
+         		list.appendChild(div);
+         */
+      </script>
+   </body>
 </html>
-
-
