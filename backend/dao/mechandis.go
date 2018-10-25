@@ -29,7 +29,7 @@ func (md *MechandisDao) InsertNewMechanDis(merchandis *protocal.Merchandise) (er
 }
 
 func (md *MechandisDao) UpdateMerchandise(merchandise *protocal.Merchandise) (err error) {
-	err = daoFunctionLogWapper(merchandise, &mysqlOptions{Filter: map[string]interface{}{"mid=?": merchandise.Mid, "quantity=?": 11}}, updateRecorder)
+	err = daoFunctionLogWapper(merchandise, &mysqlOptions{Filter: map[string]interface{}{"mid=?": merchandise.Mid}}, updateRecorder)
 	return
 }
 
