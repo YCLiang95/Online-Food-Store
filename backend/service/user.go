@@ -14,6 +14,7 @@ var(
 
 
 func Register(email,password string)error{
+
 	if err:=dao.GetInstance().Register(email,password);err!=nil {
 		return RegisterError
 	}
@@ -21,6 +22,7 @@ func Register(email,password string)error{
 }
 
 func Login(email,password string)( *protocal.ProjectUser,error) {
+
 	user, err := dao.GetInstance().GetUser(email)
 	if err != nil{
 		return nil,UserSystemErr

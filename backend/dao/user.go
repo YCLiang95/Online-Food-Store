@@ -22,8 +22,8 @@ func (ui *UserDaoInstance) Register(email, password string) (err error) {
 }
 
 func (ui *UserDaoInstance) GetUser(email string) (user *protocal.ProjectUser, err error) {
-
 	user= &protocal.ProjectUser{Email:email}
+
 	if err = daoFunctionLogWapper(user,nil,getRecorder); err != nil {
 		user = nil
 		return

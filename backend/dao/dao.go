@@ -36,6 +36,30 @@ func getRecorder(sqlEnginer *xorm.Engine, bean interface{}, options *mysqlOption
 	return
 }
 
+
+func updateRecorder(sqlEngine *xorm.Engine, bean interface{}, options *mysqlOptions) (err error) {
+	var (
+		filterMap map[string]interface{}
+		ok        bool
+		session   *xorm.Session
+		updateCount int64
+	)
+	if filterMap, ok = options.Filter.(map[string]interface{}); !ok {
+		err = errors.New("illegal filter, please set to map")
+		return
+	}
+	session = sqlEngine.NewSession()
+	for key, value := range filterMap {
+		session=session.Where(key, value)
+	}
+
+	if updateCount, err = session.Update(bean);updateCount==0&&err==nil{
+	err = errors.New("nothing is changed")
+		return
+	}
+	return
+}
+
 func findRecorders(sqlEnginer *xorm.Engine, bean interface{}, options *mysqlOptions) (err error) {
 	var (
 		mysqlSession *xorm.Session
@@ -44,27 +68,20 @@ func findRecorders(sqlEnginer *xorm.Engine, bean interface{}, options *mysqlOpti
 		err = sqlEnginer.Find(bean)
 		return
 	}
-
+	mysqlSession = sqlEnginer.NewSession()
 	if options.TableName != "" {
 		mysqlSession = sqlEnginer.Table(options.TableName)
 	}
 	if options.OrderBy != "" {
-		if mysqlSession == nil {
-			mysqlSession = sqlEnginer.OrderBy(options.OrderBy)
-		} else {
-			mysqlSession = mysqlSession.OrderBy(options.OrderBy)
-		}
+		mysqlSession = mysqlSession.OrderBy(options.OrderBy)
 	}
 	if options.LimitStart < 0 || options.Count <= 0 {
 		err = errors.New("option params is incorrect")
 		return
 	}
 	if options.LimitStart != 0 || options.Count != 0 {
-		if mysqlSession == nil {
-			mysqlSession = sqlEnginer.Limit(options.LimitStart, options.Count)
-		} else {
-			mysqlSession = mysqlSession.Limit(options.LimitStart, options.Count)
-		}
+		mysqlSession = mysqlSession.Limit(options.LimitStart, options.Count)
+
 	}
 	if options.Filter != nil {
 		err = mysqlSession.Find(bean, options.Filter)

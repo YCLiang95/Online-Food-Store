@@ -5,6 +5,8 @@ import (
 	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/response"
 	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/request"
 	"github.com/YCLiang95/CS160Group1OFS/backend/service"
+	"github.com/pkg/errors"
+	"fmt"
 )
 
 
@@ -20,12 +22,25 @@ func Register(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, 
 	return response.GenerateSuccessStruct("register user successfully", "54895786hdfkhas"), nil
 }
 
-
 func Login(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, error) {
 	userRequest := request.UserRequest{}
 	if err := request.GetStructFromRequest(r, &userRequest); err != nil {
 		return nil, err
 	}
+
+	//err := r.ParseForm()
+	//if err != nil {
+	//	return nil, errors.New("5001:系统错误")
+	//}
+	//
+	//email := r.PostForm.Get("email")
+	//password := r.PostForm.Get("password")
+	//
+	//if email==""||password==""{
+	//	return nil, errors.New("5001:系统错误")
+	//}
+
+
 	user, err := service.Login(userRequest.Email, userRequest.Password)
 	if err != nil {
 		return nil, err
