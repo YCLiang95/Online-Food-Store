@@ -90,9 +90,8 @@
      width:120px;
 }
  #checkoutButton {
-     position: absolute;
-     bottom:100px;
-     right: 600px;
+     position: relative;
+	 left : 600px;
      font-family: 'Montserrat', sans-serif;
      font-size: 17px;
      color: white;
@@ -103,5 +102,22 @@
      padding: 10px 100px;
 }
  #checkoutButton:hover {
+     opacity: 0.8;
+}
+
+#returnButton {
+	 position: relative;
+	 left : 600px;
+     font-family: 'Montserrat', sans-serif;
+     font-size: 17px;
+     color: white;
+     font-weight: bold;
+     background-color: rgba(0,150,150,1.0);
+     border: none;
+     cursor: pointer;
+     padding: 10px 100px;
+}
+
+#returnButton:hover {
      opacity: 0.8;
 }
