@@ -106,7 +106,6 @@ line-height: 35px;
 	top: -25px;
 }
 
-
 /* Prices of a products in catalog */
 .productRow .productInfo .price {
 	font-family: 'Montserrat', sans-serif;
@@ -129,6 +128,7 @@ line-height: 35px;
 	text-transform: uppercase;
 	margin-top: 8px;
 }
+
 /* footer */
 #mainWrapper footer {
 	clear: both;

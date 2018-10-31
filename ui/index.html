@@ -19,6 +19,8 @@
   </header>
 	
 	<script>
+		var productList = new Object();
+		
 		function load(){
 			var name = getUserName();
 			if (name == ""){
@@ -28,6 +30,46 @@
 				document.getElementById("Login/Register").innerHTML = name;
 				document.getElementById("Login/Register").setAttribute("href", "profile.html");
 			}
+			getInventory();
+			displayProduct();
+		}
+		
+		function displayProduct(){
+			var list = document.getElementById("productRow");
+			
+			for (var i = 0; i < productList.length; i ++){
+				var container = `<div class = "productInfo">
+          			<div><img alt="sample" src="eCommerceAssets/images/apple.jpg"></div>
+          			<p class="productContent">${productList[i].name}</p>
+          			<p class="productWeight">${productList[i].weight.toFixed(1)} lb / item</p>
+          			<p class="price">$ ${productList[i].price.toFixed(2)}</p>
+					<button type="button" name="button" class="buyButton" onclick="AddToCart(${i})">
+						<a>Add to Cart</a>
+					</button>
+				</div>`;
+				var template = document.createElement("template");
+        		template.innerHTML = container;
+        		list.appendChild(template.content.firstChild);
+			}
+		}
+		
+		function getInventory(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						productList = s.data;
+					} else alert("Failed to obtain product list");
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+    		xhttp.send(); 
+			return false;
+		}
+		
+		function AddToCart(id){
+			alert("Add to Cart" + id);
 		}
 		
 		function getUserName(){
@@ -40,7 +82,7 @@
 			}
 		}
     	return "";
-	}
+		}
 	</script>
 	
   <section id="offer"> 
@@ -49,11 +91,25 @@
   </section>
 
   <div id="content">
-  
     <section class="mainContent">
-      <div class="productRow">
+      <div id="productRow" class="productRow">
         
 
+      </div>
+    </section>
+  </div>
+	
+  <footer>
+    <div>
+      <p>All Rights Reserved.</p>
+    </div>
+  </footer>
+	
+</div>
+</body>
+</html>
+
+<!--
 <article class="productInfo">
           <div><img alt="sample" src="eCommerceAssets/images/apple.jpg"></div>
           <p class="productContent">Apple</p>
@@ -93,7 +149,7 @@
           <p class="productWeight">0.5 lb / item</p>
           <p class="price">$1.64</p>
           <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
+		  </article>
 
 <article class="productInfo">
           <div><img alt="sample" src="eCommerceAssets/images/garlic.jpg"></div>          
@@ -182,17 +238,4 @@
           <p class="price">$1.29</p>
           <input type="button" name="button" value="Add to Cart" class="buyButton">
         </article>
-
-      </div>
-    </section>
-  </div>
-	
-  <footer>
-    <div>
-      <p>All Rights Reserved.</p>
-    </div>
-  </footer>
-	
-</div>
-</body>
-</html>
+-->
