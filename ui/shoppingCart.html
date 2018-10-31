@@ -33,11 +33,8 @@
                    </button>
                  </div>
                <p class="price">$ 0.47</p>
-               <p class="weight">0.5 lb</p>
-               
-               
+               <p class="weight">0.5 lb</p>    
                </div>
-               
                -->
          </div>
          <button id="checkoutButton" type="Submit">Check Out</button>
@@ -45,35 +42,82 @@
       <script>
          var shoppingCart = new Object();
          var userName = "";
+		  var t = false;
          
          //Sent request to the server for specific item data
          function quary(id){
          	
          }
-         
+
          //Load the shopping cart content from cookie
          function loadShoppingCart(){
          	userName = getCookie("userName");
          	if (userName == '') userName = "Guest";
          	document.getElementById("shoppingCartTitle").innerHTML = userName + "'s shopping cart.";
-         	foo();
-         	//alert(document.cookie);
-         	//alert(getCookie("shoppingCart"));
+			 
+			 //debug shopping cart
+			 if (!t){
+         		foo();
+				t = true;
+			 }
+
          	shoppingCart = JSON.parse(getCookie("shoppingCart"));
          	var list = document.getElementById("itemList");
          	for (var i = 0; i < shoppingCart.length; i ++){
          		var container =`<div class = "container">
-         			<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
-         			<p class="itemName">Potatoes! Tpye ${shoppingCart[i].id}<p>
-         			<p class = "itemQuantity">Quantity: ${shoppingCart[i].quantity}<p>
-         			<button class="removeButton" type="Submit">Remove Item</button>
-         		</div>`;
+				<div class="removeDiv">
+                	<button class="removeButton" type="button" onclick="AddRemove(${shoppingCart[i].id}, ${-shoppingCart[i].quantity})">
+               			<img src="eCommerceAssets/images/delete.png" alt="" />
+                	</button>
+               	</div>
+               	<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
+                <div class="description">
+               		<p class="itemName">Potato! Tpye ${shoppingCart[i].id}<p>
+               		<p class="wt">0.5 lb / item<p>
+                </div>
+               
+                <div class="quantity">
+                	<button class="plus" type="button" onclick="AddRemove(${shoppingCart[i].id},1)">
+                    	<img src="eCommerceAssets/images/plus.png" alt="" />
+                    </button>	
+               		<p class = "itemQuantity">${shoppingCart[i].quantity}<p>
+               
+                	<button class="minus" type="button" onclick="AddRemove(${shoppingCart[i].id},-1)">
+                		<img src="eCommerceAssets/images/minus.png" alt="" />
+                	</button>
+                </div>
+               	<p class="price">$ 0.47</p>
+               	<p class="weight">0.5 lb</p>
+               	</div>`;
          		var template = document.createElement("template");
          		template.innerHTML = container;
          		//list.appendChild(template);
          		list.appendChild(template.content.firstChild);
          	}
          }
+		  
+		 function emptyList(){
+			 var list = document.getElementById("itemList");
+			 while (list.firstChild) {
+    			list.removeChild(list.firstChild);
+			 }
+		 }
+		  
+		 function AddRemove(id, count){
+			 shoppingCart = JSON.parse(getCookie("shoppingCart"));
+			 for (var i = 0; i < shoppingCart.length; i ++){
+				 if (shoppingCart[i].id == id){
+					 shoppingCart[i].quantity += count;
+					 if (shoppingCart[i].quantity <= 0){
+						 shoppingCart.splice(i, 1);
+					 }
+					 break;
+				 }
+			 }
+			 saveToCookie();
+			 emptyList();
+			 loadShoppingCart();
+		 }
          
          function getCookie(cookieName){
          	var name = cookieName + "=";
@@ -91,7 +135,7 @@
          
          //Save anychanges to the cookie
          function saveToCookie(){
-         	
+         	document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
          }
          
          //placehodler shopping cart initialization

@@ -26,6 +26,11 @@
      display: flex;
      align-items: center;
 }
+.removeDiv {
+	 position: relative;
+     left: 20px;
+     width: 60px;
+}
  .removeButton {
      border: none;
      background-color: white;
