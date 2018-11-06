@@ -8,6 +8,9 @@
 <body onLoad="load()">
 	<select id="productList">
 	</select>
+	
+	<div id="productWindow">
+	</div>
 	<script>
 		var productList = new Object();
 		
@@ -17,13 +20,16 @@
 		}
 		
 		function displayProduct(){
-			var list = document.getElementById("productRow");
+			var list = document.getElementById("productList");
 			
 			for (var i = 0; i < productList.length; i ++){
 				var container = `<option value="${productList[i].mid}">${productList[i].name}</option>`;
-				var template = document.createElement("template");
-        		template.innerHTML = container;
-        		list.appendChild(template.content.firstChild);
+				var option = document.createElement("option");
+				option.innerHTML = container;
+				list.add(option);
+				//var template = document.createElement("template");
+        		//template.innerHTML = container;
+        		//list.appendChild(template.content.firstChild);
 			}
 		}
 		
