@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Inventory</title>
+</head>
+
+<body onLoad="load()">
+	<select id="productList">
+	</select>
+	<script>
+		var productList = new Object();
+		
+		function load(){
+			getInventory();
+			displayProduct();
+		}
+		
+		function displayProduct(){
+			var list = document.getElementById("productRow");
+			
+			for (var i = 0; i < productList.length; i ++){
+				var container = `<option value="${productList[i].mid}">${productList[i].name}</option>`;
+				var template = document.createElement("template");
+        		template.innerHTML = container;
+        		list.appendChild(template.content.firstChild);
+			}
+		}
+		
+		function getInventory(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						productList = s.data;
+					} else alert("Failed to obtain product list");
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+    		xhttp.send(); 
+			return false;
+		}
+		
+		function save(){
+			
+		}
+		
+		function update(){
+			
+		}
+	</script>
+</body>
+</html>
