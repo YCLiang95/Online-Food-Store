@@ -15,14 +15,15 @@
 		  <a href="#" title="StoreLocation">Store Location</a>
 		  <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
 		  <a href="Tracking.html" title="Tracking">Tracking</a>
-		  <a href="shoppingCart.html" title="Cart">Cart</a></div>
+		  <a href="shoppingCart.html" title="Cart" id ="CartLink">Cart</a></div>
   </header>
 	
 	<script>
 		var productList = new Object();
+		var shoppingCart = [];
 		
 		function load(){
-			var name = getUserName();
+			var name = getCookie("userName");
 			if (name == ""){
 				document.getElementById("Login/Register").innerHTML = "Login/Register";
 				document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
@@ -30,6 +31,10 @@
 				document.getElementById("Login/Register").innerHTML = name;
 				document.getElementById("Login/Register").setAttribute("href", "profile.html");
 			}
+			shoppingCart = JSON.parse(getCookie("shoppingCart"));
+			if (shoppingCart == "") shoppingCart = [];
+			var cl = document.getElementById("CartLink");
+			cl.innerHTML = "Cart(" + shoppingCart.length + ")";
 			getInventory();
 			displayProduct();
 		}
@@ -39,7 +44,7 @@
 			
 			for (var i = 0; i < productList.length; i ++){
 				var container = `<div class = "productInfo">
-          			<div><img alt="sample" src="eCommerceAssets/images/apple.jpg"></div>
+          			<div><img alt="sample" src="${productList[i].imagerl}"></div>
           			<p class="productContent">${productList[i].name}</p>
           			<p class="productWeight">${productList[i].weight.toFixed(1)} lb / item</p>
           			<p class="price">$ ${productList[i].price.toFixed(2)}</p>
@@ -68,21 +73,40 @@
 			return false;
 		}
 		
-		function AddToCart(id){
-			alert("Add to Cart" + id);
+		function AddToCart(index){
+			var b = false;
+			for (var i = 0; i < shoppingCart.length; i ++){
+				if (shoppingCart[i].id == productList[index].mid){
+					b = true;
+					shoppingCart[i].quantity += 1;
+					break;
+				}
+			}
+			if (!b){
+				var t = shoppingCart.length;
+				shoppingCart[t] = new Object();
+				shoppingCart[t].id = productList[index].mid;
+				shoppingCart[t].quantity = 1;
+			}
+			document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+			alert(productList[index].name + " added to Cart");
+			var cl = document.getElementById("CartLink");
+			cl.innerHTML = "Cart(" + shoppingCart.length + ")";
 		}
 		
-		function getUserName(){
-    	var cookie = document.cookie.split(';');
-    	for(var i = 0; i < cookie.length; i++) {
-        	var entry = cookie[i];
-			entry.replace(/ /g,'');
-        	if (entry.indexOf("userName") >= 0) {
-            	return entry.substring(entry.indexOf("userName") + 9, entry.length);
-			}
-		}
-    	return "";
-		}
+         function getCookie(cookieName){
+         	var name = cookieName + "=";
+           		var cookie = document.cookie.split(';');
+           		for(var i = 0; i < cookie.length; i++) {
+               		var entry = cookie[i];
+         		entry.replace(/ /g,'');
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+         		}
+         	}
+           		return "";
+         }
+		
 	</script>
 	
   <section id="offer"> 

@@ -2,12 +2,18 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Untitled Document</title>
+<title>profile Page</title>
 </head>
 <body>
 	<p><a>A placeholder for account profile page.</a></p>
 	<button onClick="logout()">Logout</button>
+	<button onClick="toInventoryManagement()">InventoryManagement</button>
 	<script>
+		
+		function getOrderList(){
+			
+		}
+		
 		function logout(){
 			document.cookie="userName=;" + "expires=Thu, 01 Jan 1970 00:00:01 GMT" ;
 			location.href="index.html";

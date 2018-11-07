@@ -7,7 +7,7 @@
 </head>
 
 <body onLoad="message()">
-	<img src="eCommerceAssets/images/success.png"/>
+	<img src="eCommerceAssets/images/success.png" alt = "">
 	<div id="msg">
 		<p>LOGIN SUCCESSFUL</p>
 		<a>Welcom back, </a><a id="userNameText">Username</a>
@@ -19,16 +19,16 @@
 		}
 		
 		function getUserName(){
-    	var cookie = document.cookie.split(';');
-    	for(var i = 0; i < cookie.length; i++) {
-        	var entry = cookie[i];
-			entry.replace(/ /g,'');
-        	if (entry.indexOf("userName") >= 0) {
-            	return entry.substring(entry.indexOf("userName") + 9, entry.length);
+    		var cookie = document.cookie.split(';');
+    		for(var i = 0; i < cookie.length; i++) {
+        		var entry = cookie[i];
+				entry.replace(/ /g,'');
+        		if (entry.indexOf("userName") >= 0) {
+            		return entry.substring(entry.indexOf("userName") + 9, entry.length);
+				}
 			}
+    		return "";
 		}
-    	return "";
-	}
 	</script>
 </body>
 </html>
