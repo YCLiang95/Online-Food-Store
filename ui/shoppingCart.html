@@ -37,6 +37,10 @@
                </div>
                -->
          </div>
+		 	<p class="price" id="totalPrice">$ 0.47</p>
+            <p class="weight" id="totalWeight">0.5 lb</p>    
+		 <div>
+		 </div>
 		 <form action="checkout.html">
          	<button id="checkoutButton" type="Submit">Check Out</button>
 		 </form>
@@ -67,13 +71,16 @@
          function loadShoppingCart(){	 
          	shoppingCart = JSON.parse(getCookie("shoppingCart"));
          	var list = document.getElementById("itemList");
+			var tPrice = 0;
+			var tWeight = 0;
          	for (var i = 0; i < shoppingCart.length; i ++){
 				var j = 0;
 				for (j = 0; j < productList.length; j ++){
 					if (productList[j].mid == shoppingCart[i].id)
 						break;
 				}
-
+				tPrice += productList[j].price * shoppingCart[i].quantity;
+				tWeight += productList[j].weight * shoppingCart[i].quantity;
          		var container =`<div class = "container">
 				<div class="removeDiv">
                 	<button class="removeButton" type="button" onclick="AddRemove(${shoppingCart[i].id}, ${-shoppingCart[i].quantity})">
@@ -99,10 +106,13 @@
                	<p class="price">$ ${(productList[j].price * shoppingCart[i].quantity).toFixed(2)}</p>
                	<p class="weight">${(productList[j].weight * shoppingCart[i].quantity).toFixed(1)} lb</p>
                	</div>`;
+				
          		var template = document.createElement("template");
          		template.innerHTML = container;
          		list.appendChild(template.content.firstChild);
          	}
+			 document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
+			 document.getElementById("totalWeight").innerHTML = "Total: " + tWeight.toFixed(1) + "lb";
          }
 		  
 		 function emptyList(){
