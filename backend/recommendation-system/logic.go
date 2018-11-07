@@ -114,5 +114,5 @@ func main() {
 	fmt.Println("ZipCode with highest density population in San Mateo: ", largestZipCodeSM)
 	fmt.Println("ZipCode with highest density population in San Jose: ", largestZipCodeSJ)
 
-	// pass these values to frontend rendering
+	// pass these values to frontend
 }
