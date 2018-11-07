@@ -6,8 +6,20 @@
 </head>
 
 <body onLoad="load()">
-	<select id="selectList" onChange="display()">
+	<form method="post" id="productForm">
+	<select id="selectList" onChange="display()" name="mid">
 	</select>
+	<article class="productInfo" id="productInfo">
+          <div><img id="prodcutImage" alt="sample" src="eCommerceAssets/images/watermelon.jpg"></div>
+		  <p class="productImageURL">Product image URL<input type="text" id="URLInput" name="imageUrl" value="N/A"></p>
+          <p class="productContent">Product Name<input type="text" id="nameInput" name="name" value="N/A"></p>
+          <p class="productWeight"><input type="text" id="weightInput" name="weight" value="N/A"> lb / item</p>
+          <p class="price"> Price <input type="text" id="priceInput" name="price" value="N/A"> </p>
+		  <p class="Quantity"> Quantity <input type="text" id="quantityInput" name="quantity" value="N/A"></p>
+          <input type="button" name="button" value="Save to Server" class="buyButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/update')">
+		  <input type="button" name="button" value="Create new product" class="buyButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/save')">
+	</article>
+	</form>
 	
 	<div id="productWindow">
 	</div>
@@ -21,7 +33,6 @@
 		
 		function getProductList(){
 			var list = document.getElementById("selectList");
-			
 			for (var i = 0; i < productList.length; i ++){
 				//var container = `<option value="${productList[i].mid}">${productList[i].name}</option>`;
 				var option = document.createElement("option");
@@ -31,6 +42,8 @@
 				//option.innerHTML = container;
 				list.add(option);
 			}
+			
+			display();
 		}
 		
 		function getInventory(){
@@ -50,36 +63,34 @@
 		
 		function display(){
 			var list = document.getElementById("selectList");
-			alert(list.value + "Selected" + " mid: " +list.options[list.selectedIndex].value);
+			for (var i = 0; i < productList.length; i++)
+				if (productList[i].mid == list.value) {
+						document.getElementById("prodcutImage").src = productList[i].imagerl;
+						document.getElementById("nameInput").value = productList[i].name;
+						document.getElementById("priceInput").value = productList[i].price;
+						document.getElementById("weightInput").value = productList[i].weight;
+						//It seems there are 2 typo in the back end
+						document.getElementById("quantityInput").value = productList[i].quantify;
+						document.getElementById("URLInput").value = productList[i].imagerl;
+					break;
+				}
 		}
 		
-		function save(){
+		function update(url){
 			var xhttp = new XMLHttpRequest();
+			var data = new FormData (document.getElementById("productForm"));
+
 			xhttp.onreadystatechange = function() {
         		if (this.readyState == 4 && this.status == 200) {
 					var s = JSON.parse(this.responseText);
 					if (s.code == 200){
-						productList = s.data;
-					} else alert("Failed to obtain product list");
+						alert("Successful!");
+						location.reload();
+					} else alert(s.message);
        			}	
     		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/save", false);
-    		xhttp.send(); 
-			return false;
-		}
-		
-		function update(){
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					var s = JSON.parse(this.responseText);
-					if (s.code == 200){
-						productList = s.data;
-					} else alert("Failed to obtain product list");
-       			}	
-    		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/update", false);
-    		xhttp.send(); 
+    		xhttp.open("POST", url, false);
+    		xhttp.send(data); 
 			return false;
 		}
 	</script>

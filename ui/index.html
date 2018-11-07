@@ -44,7 +44,7 @@
 			
 			for (var i = 0; i < productList.length; i ++){
 				var container = `<div class = "productInfo">
-          			<div><img alt="sample" src="eCommerceAssets/images/potato.jpg"></div>
+          			<div><img alt="sample" src="${productList[i].imagerl}"></div>
           			<p class="productContent">${productList[i].name}</p>
           			<p class="productWeight">${productList[i].weight.toFixed(1)} lb / item</p>
           			<p class="price">$ ${productList[i].price.toFixed(2)}</p>
