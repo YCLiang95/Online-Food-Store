@@ -7,16 +7,107 @@
 <link href="eCommerceAssets/styles/eCommerceStyle.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body onLoad="load()">
 <div id="mainWrapper">
   <header> 
     <div id="logo"> OFS </div>
 	  <div id="headerLinks">
-		  <a href="#" title="StoreLocation">Store Location</a>
-		  <a href="LoginRegister.html" title="Login/Register">Login/Register</a>
-		  <a href="tracking.html" title="Tracking">Tracking</a>
-		  <a href="shoppingCart.html" title="Cart">Cart</a></div>
+		  <a href="StoreLocation.html" title="StoreLocation">Store Location</a>
+		  <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
+		  <a href="Tracking.html" title="Tracking">Tracking</a>
+		  <a href="shoppingCart.html" title="Cart" id ="CartLink">Cart</a></div>
   </header>
+	
+	<script>
+		var productList = new Object();
+		var shoppingCart = [];
+		
+		function load(){
+			var name = getCookie("userName");
+			if (name == ""){
+				document.getElementById("Login/Register").innerHTML = "Login/Register";
+				document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
+			} else {
+				document.getElementById("Login/Register").innerHTML = name;
+				document.getElementById("Login/Register").setAttribute("href", "profile.html");
+			}
+			shoppingCart = JSON.parse(getCookie("shoppingCart"));
+			if (shoppingCart == "") shoppingCart = [];
+			var cl = document.getElementById("CartLink");
+			cl.innerHTML = "Cart(" + shoppingCart.length + ")";
+			getInventory();
+			displayProduct();
+		}
+		
+		function displayProduct(){
+			var list = document.getElementById("productRow");
+			
+			for (var i = 0; i < productList.length; i ++){
+				var container = `<div class = "productInfo">
+          			<div><img alt="sample" src="${productList[i].imagerl}"></div>
+          			<p class="productContent">${productList[i].name}</p>
+          			<p class="productWeight">${productList[i].weight.toFixed(1)} lb / item</p>
+          			<p class="price">$ ${productList[i].price.toFixed(2)}</p>
+					<button type="button" name="button" class="buyButton" onclick="AddToCart(${i})">
+						<a>Add to Cart</a>
+					</button>
+				</div>`;
+				var template = document.createElement("template");
+        		template.innerHTML = container;
+        		list.appendChild(template.content.firstChild);
+			}
+		}
+		
+		function getInventory(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						productList = s.data;
+					} else alert("Failed to obtain product list");
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+    		xhttp.send(); 
+			return false;
+		}
+		
+		function AddToCart(index){
+			var b = false;
+			for (var i = 0; i < shoppingCart.length; i ++){
+				if (shoppingCart[i].id == productList[index].mid){
+					b = true;
+					shoppingCart[i].quantity += 1;
+					break;
+				}
+			}
+			if (!b){
+				var t = shoppingCart.length;
+				shoppingCart[t] = new Object();
+				shoppingCart[t].id = productList[index].mid;
+				shoppingCart[t].quantity = 1;
+			}
+			document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+			alert(productList[index].name + " added to Cart");
+			var cl = document.getElementById("CartLink");
+			cl.innerHTML = "Cart(" + shoppingCart.length + ")";
+		}
+		
+         function getCookie(cookieName){
+         	var name = cookieName + "=";
+           		var cookie = document.cookie.split(';');
+           		for(var i = 0; i < cookie.length; i++) {
+               		var entry = cookie[i];
+         		entry.replace(/ /g,'');
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+         		}
+         	}
+           		return "";
+         }
+		
+	</script>
 	
   <section id="offer"> 
     <h2>Organic Food Store</h2>
@@ -24,11 +115,25 @@
   </section>
 
   <div id="content">
-  
     <section class="mainContent">
-      <div class="productRow">
+      <div id="productRow" class="productRow">
         
 
+      </div>
+    </section>
+  </div>
+	
+  <footer>
+    <div>
+      <p>All Rights Reserved.</p>
+    </div>
+  </footer>
+	
+</div>
+</body>
+</html>
+
+<!--
 <article class="productInfo">
           <div><img alt="sample" src="eCommerceAssets/images/apple.jpg"></div>
           <p class="productContent">Apple</p>
@@ -68,7 +173,7 @@
           <p class="productWeight">0.5 lb / item</p>
           <p class="price">$1.64</p>
           <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
+		  </article>
 
 <article class="productInfo">
           <div><img alt="sample" src="eCommerceAssets/images/garlic.jpg"></div>          
@@ -157,17 +262,4 @@
           <p class="price">$1.29</p>
           <input type="button" name="button" value="Add to Cart" class="buyButton">
         </article>
-
-      </div>
-    </section>
-  </div>
-	
-  <footer>
-    <div>
-      <p>All Rights Reserved.</p>
-    </div>
-  </footer>
-	
-</div>
-</body>
-</html>
+-->

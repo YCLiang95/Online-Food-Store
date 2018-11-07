@@ -1,17 +1,202 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Shopping Cart</title>
-</head>
-	<section>
-	<a>This is the shopping cart place holder.</a>
-	<a>This page will display the shopping cart content</a>
-</section>
-<body>
-<section>
-	<a></a>
-	<a href="#">Proced to check out</a>
-</section>
-</body>
+   <head>
+      <meta charset="utf-8">
+      <title>Shopping Cart</title>
+      <link href="eCommerceAssets/styles/ShoppingCart.css" rel="stylesheet" type="text/css">
+   </head>
+   <body onload="loadPage()">
+      <section>
+         <a></a>
+         <p><a id="shoppingCartTitle">shopping Cart</a></p>
+         <div id = "itemList">
+            <!--
+               <div class = "container">
+                   	<button class="removeButton" type="submit">
+               	<img src="eCommerceAssets/images/delete.png" alt="" />
+               </button>
+               	
+               	<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
+                 <div class="description">
+               <p class="itemName">Potato! Tpye ${shoppingCart[i].id}<p>
+               <p class="wt">0.5 lb / item<p>
+                 </div>
+               
+                 <div class="quantity">
+                   <button class="plus" type="button" name="button">
+                     <img src="eCommerceAssets/images/plus.png" alt="" />
+                   </button>	
+               <p class = "itemQuantity">${shoppingCart[i].quantity}<p>
+               
+                   <button class="minus" type="button" name="button">
+                     <img src="eCommerceAssets/images/minus.png" alt="" />
+                   </button>
+                 </div>
+               <p class="price">$ 0.47</p>
+               <p class="weight">0.5 lb</p>    
+               </div>
+               -->
+         </div>
+		 	<p class="price" id="totalPrice">$ 0.47</p>
+            <p class="weight" id="totalWeight">0.5 lb</p>    
+		 <div>
+		 </div>
+		 <form action="checkout.html">
+         	<button id="checkoutButton" type="Submit">Check Out</button>
+		 </form>
+		 <form action="index.html">
+		 	<button id="returnButton" type="Submit">Return to Shop</button>
+		 </form>
+      </section>
+      <script>
+		  
+         var shoppingCart = new Object();
+		 var productList = new Object();
+         var userName = "";
+         
+         //Sent request to the server for specific item data
+         function quary(id){
+         	
+         }
+		  
+		 function loadPage(){
+			userName = getCookie("userName");
+			if (userName == '') userName = "Guest";
+         	document.getElementById("shoppingCartTitle").innerHTML = userName + "'s shopping cart.";
+			getInventory();
+			loadShoppingCart();
+		 }
+
+         //Load the shopping cart content from cookie
+         function loadShoppingCart(){	 
+         	shoppingCart = JSON.parse(getCookie("shoppingCart"));
+         	var list = document.getElementById("itemList");
+			var tPrice = 0;
+			var tWeight = 0;
+         	for (var i = 0; i < shoppingCart.length; i ++){
+				var j = 0;
+				for (j = 0; j < productList.length; j ++){
+					if (productList[j].mid == shoppingCart[i].id)
+						break;
+				}
+				tPrice += productList[j].price * shoppingCart[i].quantity;
+				tWeight += productList[j].weight * shoppingCart[i].quantity;
+         		var container =`<div class = "container">
+				<div class="removeDiv">
+                	<button class="removeButton" type="button" onclick="AddRemove(${shoppingCart[i].id}, ${-shoppingCart[i].quantity})">
+               			<img src="eCommerceAssets/images/delete.png" alt="" />
+                	</button>
+               	</div>
+               	<img class="itemImage" src="${productList[j].imagerl}">
+                <div class="description">
+               		<p class="itemName">${productList[j].name}<p>
+               		<p class="wt">${productList[j].weight.toFixed(1)} lb / item<p>
+                </div>
+               
+                <div class="quantity">
+                	<button class="plus" type="button" onclick="AddRemove(${shoppingCart[i].id},1)">
+                    	<img src="eCommerceAssets/images/plus.png" alt="" />
+                    </button>	
+               		<p class = "itemQuantity">${shoppingCart[i].quantity}<p>
+               
+                	<button class="minus" type="button" onclick="AddRemove(${shoppingCart[i].id},-1)">
+                		<img src="eCommerceAssets/images/minus.png" alt="" />
+                	</button>
+                </div>
+               	<p class="price">$ ${(productList[j].price * shoppingCart[i].quantity).toFixed(2)}</p>
+               	<p class="weight">${(productList[j].weight * shoppingCart[i].quantity).toFixed(1)} lb</p>
+               	</div>`;
+				
+         		var template = document.createElement("template");
+         		template.innerHTML = container;
+         		list.appendChild(template.content.firstChild);
+         	}
+			 document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
+			 document.getElementById("totalWeight").innerHTML = "Total: " + tWeight.toFixed(1) + "lb";
+         }
+		  
+		 function emptyList(){
+			 var list = document.getElementById("itemList");
+			 while (list.firstChild) {
+    			list.removeChild(list.firstChild);
+			 }
+		 }
+		  
+		 function AddRemove(id, count){
+			 shoppingCart = JSON.parse(getCookie("shoppingCart"));
+			 for (var i = 0; i < shoppingCart.length; i ++){
+				 if (shoppingCart[i].id == id){
+					 shoppingCart[i].quantity += count;
+					 if (shoppingCart[i].quantity <= 0){
+						 shoppingCart.splice(i, 1);
+					 }
+					 break;
+				 }
+			 }
+			 saveToCookie();
+			 emptyList();
+			 loadShoppingCart();
+		 }
+         
+         function getCookie(cookieName){
+         	var name = cookieName + "=";
+           		var cookie = document.cookie.split(';');
+           		for(var i = 0; i < cookie.length; i++) {
+               		var entry = cookie[i];
+         		entry.replace(/ /g,'');
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+         		}
+         	}
+           		return "";
+         }
+         
+         //Save anychanges to the cookie
+         function saveToCookie(){
+         	document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+         }
+		  
+		 function getInventory(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						productList = s.data;
+					} else alert("Failed to obtain product list");
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+    		xhttp.send(); 
+			return false;
+		}
+         
+         //placehodler shopping cart initialization
+         function foo(){
+         	var bar = [];
+         	bar[0] = new Object();
+         	bar[1] = new Object();
+         	bar[0].id = "1";
+         	bar[0].quantity = 5;
+         	bar[1].id = "2";
+         	bar[1].quantity = 1;
+         	document.cookie = "shoppingCart=" + JSON.stringify(bar) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+         }
+         
+         /*
+         		var div = document.createElement("div");
+         		div.setAttribute("class", "container");
+         		div.appendChild(document.createTextNode("id=" + shoppingCart[i].id + "Quantity=" + shoppingCart[i].quantity));
+         		var image = document.createElement("image");
+         		image.setAttribute("src", "eCommerceAssets/images/potato.jpg");
+         		var itemName = document.create
+         		var button = document.createElement("button");
+         		button.setAttribute("type", "submit");
+         		button.setAttribute("class", "removeButton");
+         		button.appendChild(document.createTextNode("Remove Item"));
+         		div.appendChild(button);
+         		list.appendChild(div);
+         */
+      </script>
+   </body>
 </html>

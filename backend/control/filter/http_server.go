@@ -3,8 +3,8 @@ package filter
 import (
 	"os"
 	"net/http"
-	"github.com/cs160/project/utils"
-	"github.com/cs160/project/control/api"
+	"github.com/YCLiang95/CS160Group1OFS/backend/utils"
+	"github.com/YCLiang95/CS160Group1OFS/backend/control/api"
 )
 
 type HttpServer struct {
@@ -13,8 +13,14 @@ type HttpServer struct {
 }
 
 func NewHttpServer(port string) *HttpServer {
+
 	http.HandleFunc("/cs160/user/register", BrowserWapper(api.Register))
 	http.HandleFunc("/cs160/user/login", BrowserWapper(api.Login))
+	http.HandleFunc("/cs160/mechandise/list",BrowserWapper(api.List))
+	http.HandleFunc("/cs160/mechandise/save",BrowserWapper(api.SaveMerchandis))
+	http.HandleFunc("/cs160/mechandise/update",BrowserWapper(api.UpdateMerchandis))
+	http.HandleFunc("/cs160/mechandise/get",BrowserWapper(api.GetMerchandise))
+
 	server := new(http.Server)
 	server.Addr = ":" + port
 	server.Handler = nil

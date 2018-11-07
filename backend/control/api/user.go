@@ -2,10 +2,13 @@ package api
 
 import (
 	"net/http"
-	"github.com/cs160/project/control/api/model/response"
-	"github.com/cs160/project/control/api/model/request"
-	"github.com/cs160/project/service"
+	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/response"
+	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/request"
+	"github.com/YCLiang95/CS160Group1OFS/backend/service"
+
 )
+
+
 
 func Register(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, error) {
 	userRequest := request.UserRequest{}
@@ -23,6 +26,20 @@ func Login(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, err
 	if err := request.GetStructFromRequest(r, &userRequest); err != nil {
 		return nil, err
 	}
+
+	//err := r.ParseForm()
+	//if err != nil {
+	//	return nil, errors.New("5001:系统错误")
+	//}
+	//
+	//email := r.PostForm.Get("email")
+	//password := r.PostForm.Get("password")
+	//
+	//if email==""||password==""{
+	//	return nil, errors.New("5001:系统错误")
+	//}
+
+
 	user, err := service.Login(userRequest.Email, userRequest.Password)
 	if err != nil {
 		return nil, err
@@ -34,3 +51,4 @@ func Login(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, err
 	}
 	return response.GenerateSuccessStruct("login successfully", userResponse), nil
 }
+

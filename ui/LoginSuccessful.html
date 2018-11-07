@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>LoginSuccessful</title>
+<link href="eCommerceAssets/styles/LoginSucess.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onLoad="message()">
+	<img src="eCommerceAssets/images/success.png" alt = "">
+	<div id="msg">
+		<p>LOGIN SUCCESSFUL</p>
+		<a>Welcom back, </a><a id="userNameText">Username</a>
+	</div>
+	<a href="index.html">Back to Shopping</a>
+	<script>
+		function message(){
+			document.getElementById("userNameText").innerHTML = " " + getUserName() + "!";
+		}
+		
+		function getUserName(){
+    		var cookie = document.cookie.split(';');
+    		for(var i = 0; i < cookie.length; i++) {
+        		var entry = cookie[i];
+				entry.replace(/ /g,'');
+        		if (entry.indexOf("userName") >= 0) {
+            		return entry.substring(entry.indexOf("userName") + 9, entry.length);
+				}
+			}
+    		return "";
+		}
+	</script>
+</body>
+</html>
