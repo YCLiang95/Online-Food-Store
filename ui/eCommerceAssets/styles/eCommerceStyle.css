@@ -40,8 +40,8 @@ header {
 #offer {
 	font-family: 'Montserrat', sans-serif;
 	clear: both;
-font-size: 30px;
-line-height: 35px;
+	font-size: 30px;
+	line-height: 35px;
 	color: white;
 	background-image: url("../images/organic.jpg");
 	background-repeat:no-repeat;
@@ -296,4 +296,6 @@ header #headerLinks a {
 	width: 100%;
 	padding-left: 0px;
 }
+
+
 }
