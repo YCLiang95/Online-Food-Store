@@ -120,6 +120,6 @@
      cursor: pointer;
 }
  #returnButton:hover {
-     color: rgba(0,150,150,0.8);
+     color: rgba(0,130,130,1.0);
      text-decoration:underline;
 }
