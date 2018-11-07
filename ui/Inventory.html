@@ -6,7 +6,7 @@
 </head>
 
 <body onLoad="load()">
-	<select id="productList">
+	<select id="selectList" onChange="display()">
 	</select>
 	
 	<div id="productWindow">
@@ -16,20 +16,20 @@
 		
 		function load(){
 			getInventory();
-			displayProduct();
+			getProductList();
 		}
 		
-		function displayProduct(){
-			var list = document.getElementById("productList");
+		function getProductList(){
+			var list = document.getElementById("selectList");
 			
 			for (var i = 0; i < productList.length; i ++){
-				var container = `<option value="${productList[i].mid}">${productList[i].name}</option>`;
+				//var container = `<option value="${productList[i].mid}">${productList[i].name}</option>`;
 				var option = document.createElement("option");
-				option.innerHTML = container;
+				option.setAttribute("value", productList[i].mid);
+				var text = document.createTextNode(productList[i].name);
+				option.appendChild(text);
+				//option.innerHTML = container;
 				list.add(option);
-				//var template = document.createElement("template");
-        		//template.innerHTML = container;
-        		//list.appendChild(template.content.firstChild);
 			}
 		}
 		
@@ -48,12 +48,39 @@
 			return false;
 		}
 		
+		function display(){
+			var list = document.getElementById("selectList");
+			alert(list.value + "Selected" + " mid: " +list.options[list.selectedIndex].value);
+		}
+		
 		function save(){
-			
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						productList = s.data;
+					} else alert("Failed to obtain product list");
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/save", false);
+    		xhttp.send(); 
+			return false;
 		}
 		
 		function update(){
-			
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						productList = s.data;
+					} else alert("Failed to obtain product list");
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/update", false);
+    		xhttp.send(); 
+			return false;
 		}
 	</script>
 </body>
