@@ -1,20 +1,62 @@
 @charset "utf-8";
 /* CSS Document */
 
-ul {
-  display: flex;
-  flex-direction: column;
+#welcomeMessage{
+position: absolute;
+	width:1200px;
+	left: 50%;
+	margin-left: -600px;
+	height: 171px;
+	font-weight: bold;
+     	font-size: 40px;
+     	color: white;
+	background-image: url("../images/profile.jpg");
+	background-repeat:no-repeat;
+	line-height: 171px;
+	padding-left: 200px;
+}
+
+#historyList {
+	position: absolute;
+	top: 250px;
+	width:1200px;
+	left: 50%;
+	margin-left: -600px;
+  	display: flex;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 17px;
+ 	flex-direction: column;
 }
 
 ul li {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-}
-span {
+	display: flex;
+ 	flex-direction: row-reverse;
+ 	justify-content: space-between;
+	align-items: center;
 }
 
-ul p {
-	
+#buttons{
+	display: flex;
+  	justify-content: space-between;
+  	align-items: center;
+	position: absolute;
+	width: 1200px;
+	left: 50%;
+	margin-left: -600px;
+	top:200px;
+}
+#logoutButton,
+#returnButton,
+#inventoryButton
+{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 17px;
+	color: white;
+	font-weight: bold;
+	background-color: rgba(0,150,150,1.0);	
+	border: none;
+	cursor: pointer;
+	float: left;
+	width:33%;
+	height: 50px;
 }

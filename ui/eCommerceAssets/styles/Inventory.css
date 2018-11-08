@@ -90,13 +90,11 @@
 	background-color: rgba(0,150,150,1.0);	
 	border: none;
 	cursor: pointer;
-    	width: 49%;
+    	width: 32%;
 	height: 50px;
 }
 
 .buyButton:hover {
 	opacity: 0.8;
 }
-
-
 

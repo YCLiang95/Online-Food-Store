@@ -36,6 +36,10 @@ header {
 	padding-left: 66px;
 	font-size: 14px;
 }
+
+#headerLinks a:nth-of-type(3){
+	padding:0px;
+}
 /* Offer text banner*/
 #offer {
 	font-family: 'Montserrat', sans-serif;
@@ -295,7 +299,4 @@ header #headerLinks a {
 	text-align: center;
 	width: 100%;
 	padding-left: 0px;
-}
-
-
 }

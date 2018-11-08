@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link href="eCommerceAssets/styles/profile.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>profile Page</title>
 </head>
 <body onLoad="getUserName()">
@@ -12,9 +13,11 @@
 		<li>11/7/2018<span> order content </span><p>order number</p></li>
 		</ul>
 	</div>
+	<div id = "buttons">
 	<button id="logoutButton" onClick="logout()">Logout</button>
-	<button id="returnButton" onClick="window.location.href=`index.html`">Return Home</button>
-	<button id="inventoryButton" onClick="toInventoryManagement()">InventoryManagement</button>
+	<button id="returnButton" onClick="window.location.href=`index.html`"><i class="fa fa-home"></i> Return Home</button>
+	<button id="inventoryButton" onClick="toInventoryManagement()">Inventory Management</button>
+	</div>
 	<script>
 		var username = "";
 		
