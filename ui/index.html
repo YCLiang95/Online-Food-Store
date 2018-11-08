@@ -34,8 +34,13 @@
 				document.getElementById("Login/Register").innerHTML = name;
 				document.getElementById("Login/Register").setAttribute("href", "profile.html");
 			}
-			shoppingCart = JSON.parse(getCookie("shoppingCart"));
-			if (shoppingCart == "") shoppingCart = [];
+			var shoppingCartCookie = getCookie("shoppingCart");
+			if (shoppingCartCookie.localeCompare("")) shoppingCart = [];
+			else {
+				//alert(shoppingCartCookie );
+				shoppingCart = JSON.parse(shoppingCartCookie);
+				
+			}
 			var cl = document.getElementById("CartLink");
 			cl.innerHTML = "Cart(" + shoppingCart.length + ")";
 			getInventory();
