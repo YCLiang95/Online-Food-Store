@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+ul li {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+span {
+}
+
+ul p {
+	
+}
