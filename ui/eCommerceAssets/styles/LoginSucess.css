@@ -1,0 +1,57 @@
+
+
+body { 
+	position: absolute;
+	top: 50%;
+	margin-top: -150px;
+	height: 300px;
+	left: 50%;
+	margin-left: -400px;
+	width: 800px;	
+	text-align:center;
+	border-radius: 10px;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+}
+
+img {
+	position: relative;
+	top: -35px;
+	width: 10%;
+}
+
+#msg p{
+	position: relative;
+	top: -50px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 20px;
+}
+
+#msg a{
+	position: relative;
+	top: -10px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 30px;
+}
+
+#userNameText{
+	color: rgba(0,150,150,1.0);
+}
+
+[href]{
+	position: relative;
+	top: 70px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 17px;
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+	background-color: rgba(0,150,150,1.0);	
+	padding: 10px 50px 10px 50px;
+} 
+
+a:link {color: white;}
+a:visited {color: white;}
+[href]:hover {opacity: 0.8;}
+a:active {color: white;}
+
+
