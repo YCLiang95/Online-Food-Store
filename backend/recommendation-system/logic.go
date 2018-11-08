@@ -7,21 +7,17 @@ import (
 	"io"
 	"log"
 	"os"
+	"sort"
 	"strconv"
-)
 
-type Data struct {
-	zipcode       string  // `json:"zipcode"`
-	population    int64   // `json:"population"`
-	landSqMile    float64 //  `json:"land_sq_mile"`
-	densitySqMile float64 // `json:"density_sq_mile"`
-}
+	types "./types"
+)
 
 func main() {
 
 	csvFile, _ := os.Open("data/population-density-per-zipcode.csv")
 	reader := csv.NewReader(bufio.NewReader(csvFile))
-	data := make(map[string]Data) // create a map,k: on zip code, v: Data object
+	data := make(map[string]types.Data) // create a map,k: on zip code, v: Data object
 	for {
 		line, err := reader.Read()
 		if err == io.EOF {
@@ -36,15 +32,12 @@ func main() {
 		landSqMile, err := strconv.ParseFloat(line[2], 32)
 		densitySqMile, err := strconv.ParseFloat(line[3], 32)
 
-		dataObj := Data{zipcode, population, landSqMile, densitySqMile}
+		dataObj := types.Data{zipcode, population, landSqMile, densitySqMile}
 
 		if line[0] == "94404" {
 			fmt.Println(dataObj)
 			data[zipcode] = dataObj
-
-			// fmt.Println("FUCK")
 		} else {
-			//fmt.Print(dataObj)
 			data[zipcode] = dataObj
 		}
 	}
@@ -70,7 +63,7 @@ func main() {
 		for i := 0; i < len(arr); i++ {
 			zipcode := arr[i]                         // get zip code from list
 			dataOjb := data[zipcode]                  // get Data object based on zipcode
-			densityPerSqMile := dataOjb.densitySqMile // get the density per sq mile from the object
+			densityPerSqMile := dataOjb.DensitySqMile // get the density per sq mile from the object
 			k := CountyZip{zipcode, key}
 			densityMap[k] = densityPerSqMile // put density in the map for each zip code
 		}
@@ -81,5 +74,45 @@ func main() {
 	}
 
 	// Need to sort based on value
+	// Connect with frontend
 
+	// create a map to store san mateo values
+	densityMapSanMateo := make(map[float64]CountyZip)
+	densityMapSanJose := make(map[float64]CountyZip)
+	var keysSanMateo = make([]float64, 100)
+	var keysSanJose = make([]float64, 100)
+
+	// split into two hashmaps
+	counterSanMateo := 0
+	counterSanJose := 0
+	for key, value := range densityMap {
+		if key.county == "San Mateo" {
+			// add to array containing san mateo zipcodes
+			// reverse key value pair
+			densityMapSanMateo[value] = key
+			keysSanMateo[counterSanMateo] = value
+			counterSanMateo++
+
+		} else {
+			// add to array containining san jose zipcodes
+			// reverse key value pair
+			densityMapSanJose[value] = key
+			keysSanJose[counterSanJose] = value
+			counterSanJose++
+		}
+	}
+	sort.Float64s(keysSanMateo)
+	sort.Float64s(keysSanJose)
+
+	// find the zipcode with the highest density for both cities
+	largestKeySM := keysSanMateo[len(keysSanMateo)-1]
+	largestKeySJ := keysSanJose[len(keysSanJose)-1]
+
+	largestZipCodeSJ := densityMapSanJose[largestKeySJ].zipcode
+	largestZipCodeSM := densityMapSanMateo[largestKeySM].zipcode
+
+	fmt.Println("ZipCode with highest density population in San Mateo: ", largestZipCodeSM)
+	fmt.Println("ZipCode with highest density population in San Jose: ", largestZipCodeSJ)
+
+	// pass these values to frontend
 }
