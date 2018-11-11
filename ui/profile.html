@@ -1,58 +1,66 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<link href="eCommerceAssets/styles/profile.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>profile Page</title>
-</head>
-<body onLoad="getUserName()">
-	<p><a id="welcomeMessage">A placeholder for account profile page.</a></p>
-	<div id="historyList">
-		<ul>
-		<li>11/7/2018<span> order content </span><p>order number</p></li>
-		</ul>
-	</div>
-	<div id = "buttons">
-	<button id="logoutButton" onClick="logout()">Logout</button>
-	<button id="returnButton" onClick="window.location.href=`index.html`"><i class="fa fa-home"></i> Return Home</button>
-	<button id="inventoryButton" onClick="toInventoryManagement()">Inventory Management</button>
-	</div>
-	<script>
-		var username = "";
-		
-		function getOrderList(){
-			var orderList = [];
-			
-			for (var i = 0; i < orderList.length; i ++){
-				var container = ``;
-			}
-		}
-		
-		function toInventoryManagement(){
-			if (username == "admin"){
-				window.location.href = "inventory.html";
-			} else {
-				alert("Sorry, this is for employees only.");	
-			}
-		}
-		
-		function getUserName(){
-    		var cookie = document.cookie.split(';');
-    		for(var i = 0; i < cookie.length; i++) {
-        		var entry = cookie[i];
-				entry.replace(/ /g,'');
-        		if (entry.indexOf("userName") >= 0) {
-            		username = entry.substring(entry.indexOf("userName") + 9, entry.length);
-				}
-			}
-			document.getElementById("welcomeMessage").innerHTML = username + "'s profile page."
-		}
-		
-		function logout(){
-			document.cookie="userName=;" + "expires=Thu, 01 Jan 1970 00:00:01 GMT" ;
-			location.href="index.html";
-		}
-	</script>
-</body>
+   <head>
+      <meta charset="utf-8">
+      <link href="eCommerceAssets/styles/profile.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+      <title>profile Page</title>
+   </head>
+   <body onLoad="getUserName()">
+      <p><a id="welcomeMessage">A placeholder for account profile page.</a></p>
+      <div class="mainContent">
+         <div class = "buttons">	
+            <button id="inventoryButton" onClick="toInventoryManagement()">Manage Inventory</button><br>
+            <button id="returnButton" onClick="window.location.href=`index.html`"><i class="fas fa-home"></i>Return Home</button><br>
+            <button id="logoutButton" onClick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button><br>         
+         </div>
+         <div class="orderHistory">
+            <h3>Order History</h3>
+            <div id="historyList">
+               <ul>
+                  <li>
+                     11/7/2018<span> order content </span>
+                     <p>order number</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <script>
+         var username = "";
+         
+         function getOrderList(){
+         	var orderList = [];
+         	
+         	for (var i = 0; i < orderList.length; i ++){
+         		var container = ``;
+         	}
+         }
+         
+         function toInventoryManagement(){
+         	if (username == "admin"){
+         		window.location.href = "inventory.html";
+         	} else {
+         		alert("Sorry, this is for employees only.");	
+         	}
+         }
+         
+         function getUserName(){
+           		var cookie = document.cookie.split(';');
+           		for(var i = 0; i < cookie.length; i++) {
+               		var entry = cookie[i];
+         		entry.replace(/ /g,'');
+               		if (entry.indexOf("userName") >= 0) {
+                   		username = entry.substring(entry.indexOf("userName") + 9, entry.length);
+         		}
+         	}
+         	document.getElementById("welcomeMessage").innerHTML = username + "'s profile page."
+         }
+         
+         function logout(){
+         	document.cookie="userName=;" + "expires=Thu, 01 Jan 1970 00:00:01 GMT" ;
+         	location.href="index.html";
+         }
+      </script>
+   </body>
 </html>

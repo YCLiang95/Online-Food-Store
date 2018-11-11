@@ -2,11 +2,11 @@
 /* CSS Document */
 
 #welcomeMessage{
-position: absolute;
-	width:1200px;
-	left: 50%;
-	margin-left: -600px;
-	height: 171px;
+	position:absolute;
+	width:1000px;
+	left:50%;
+	top:50px;
+	margin-left:-600px;
 	font-weight: bold;
      	font-size: 40px;
      	color: white;
@@ -16,34 +16,47 @@ position: absolute;
 	padding-left: 200px;
 }
 
-#historyList {
-	position: absolute;
-	top: 250px;
+.mainContent{
+	background-color: rgba(0,150,150,0.1);
+	position:absolute;
 	width:1200px;
-	left: 50%;
-	margin-left: -600px;
-  	display: flex;
+	height:70%;
+	left:50%;
+	top:231px;
+	margin-left:-600px;
+}
+
+.orderHistory{
+	float:right;
+	width:929px;
+	height:100%;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 17px;
+	background-color: rgba(255,255,255,0.5);
+
+}
+
+h3{
+	margin-left:20px;
+}
+
+ul {
+	display: flex;
  	flex-direction: column;
 }
 
 ul li {
+	margin-top:-10px;
 	display: flex;
  	flex-direction: row-reverse;
  	justify-content: space-between;
 	align-items: center;
 }
 
-#buttons{
-	display: flex;
-  	justify-content: space-between;
-  	align-items: center;
-	position: absolute;
-	width: 1200px;
-	left: 50%;
-	margin-left: -600px;
-	top:200px;
+.buttons{
+	float:left;
+	width:270px;
+	text-align:center;
 }
 #logoutButton,
 #returnButton,
@@ -56,7 +69,39 @@ ul li {
 	background-color: rgba(0,150,150,1.0);	
 	border: none;
 	cursor: pointer;
-	float: left;
-	width:33%;
+	width:250px;
 	height: 50px;
+	margin-top:10px;
+}
+
+ #returnButton {
+	text-align:left;
+	padding-left:48px;
+	color: rgba(0,150,150,1.0);
+	background-color: rgba(240,240,240,0.9);
+}
+ #returnButton:hover {
+     color: rgba(0,130,130,1.0);
+     text-decoration:underline;
+}
+
+#inventoryButton:hover{
+	opacity:0.8;
+}
+#logoutButton{
+	text-align:left;
+	color:rgba(120,120,120,1.0);
+	padding-left:50px;
+	background-color: rgba(0,150,150,0.0);	
+}
+
+#logoutButton:hover{
+	color:red;
+}
+
+:focus{
+	outline:none;
+}
+[class~=fas]{
+	margin:0px 10px 0px 5px;
 }
