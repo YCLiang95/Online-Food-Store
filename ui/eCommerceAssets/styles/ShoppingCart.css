@@ -1,3 +1,7 @@
+:focus{
+	outline:none;
+}
+
 #shoppingCartTitle {
      position: absolute;
      top: 50px;
@@ -91,6 +95,7 @@
  #checkoutButton {
      position: absolute;
      left : 50%;
+     margin-top:30px;
      margin-left: 100px;
      width: 300px;
      height: 50px;
@@ -108,6 +113,7 @@
  #returnButton {
      position: absolute;
      left:50%;
+     margin-top:30px;
      margin-left:-210px;
      width: 300px;
      height: 50px;
@@ -122,4 +128,16 @@
  #returnButton:hover {
      color: rgba(0,130,130,1.0);
      text-decoration:underline;
+}
+ #totalPrice, #totalWeight{
+     width:200px;
+     position:relative;
+     margin-left:70%;
+     font-size: 20px;
+}
+ #totalWeight{
+     margin-top:-10px;
+}
+ [class~=fas]{
+     margin:0px 10px 0px 5px;
 }

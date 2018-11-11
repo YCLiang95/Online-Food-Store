@@ -1,65 +1,64 @@
 <!doctype html>
-
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Store Location</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="eCommerceAssets/styles/eCommerceStyle.css" rel="stylesheet" type="text/css">
-  <meta name="author" content="Danil Kolesnikov">
-</head>
 
-<body onLoad="load()">
-    <div id="mainWrapper">
-      <header> 
-        <div id="logo"> OFS </div>
-          <div id="headerLinks">
-              <a href="StoreLocation.html" title="StoreLocation">Store Location</a>
-              <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
-              <a href="tracking.html" title="Tracking">Tracking</a>
-              <a href="shoppingCart.html" title="Cart">Cart</a></div>
-      </header>
+   <head>
+      <meta charset="utf-8">
+      <title>Store Location</title>
+      <link href="eCommerceAssets/styles/eCommerceStyle.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+      <meta name="author" content="Danil Kolesnikov">
+   </head>
 
-      <script>
-		function load(){
-			var name = getUserName();
-			if (name == ""){
-				document.getElementById("Login/Register").innerHTML = "Login/Register";
-				document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
-			} else {
-				document.getElementById("Login/Register").innerHTML = name;
-				document.getElementById("Login/Register").setAttribute("href", "profile.html");
-			}
-		}
-		
-		function getUserName(){
-    	var cookie = document.cookie.split(';');
-    	for(var i = 0; i < cookie.length; i++) {
-        	var entry = cookie[i];
-			entry.replace(/ /g,'');
-        	if (entry.indexOf("userName") >= 0) {
-            	return entry.substring(entry.indexOf("userName") + 9, entry.length);
-			}
-		}
-    	return "";
-	}
-	</script>
+   <body onLoad="load()">
+      <div id="mainWrapper">
+         <header>
+            <div id="logo"> OFS </div>
+            <div id="headerLinks">
+               <a href="index.html" title="home"><span class="fas fa-home"></span> Return Home</a>
+               <a><span class="fas fa-user"></span></a>
+               <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
+               <a href="Tracking.html" title="Tracking"><span class="fas fa-map-marked-alt"></span> Tracking</a>
+               <a href="shoppingCart.html" title="Cart" id ="CartLink"><span class="fas fa-shopping-cart"></span> Cart</a>	
+            </div>
+         </header>
 
-    <section id="offer"> 
-      <h2>Organic Food Store</h2>
-      <p>Store Locations by City</p>
-     </section>
+         <section id="offer">
+            <h2>Organic Food Store</h2>
+            <p>Store Locations by City</p>
+         </section>
 
-     <img style="PADDING-LEFT: 30%"
-      id="map" src="https://maps.googleapis.com/maps/api/staticmap?center=Bay+Area,+CA&zoom=8&scale=false&size=640x300&maptype=roadmap&key=AIzaSyDmLCKzt_7UZBrajANa7dMbIv9xLv3xtyk&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0x0000ff%7Clabel:2%7CSan+Mateo,+CA&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7CSan+Jose,+CA" alt="Google Map of Bay Area, CA">
+         <img id="map" src="https://maps.googleapis.com/maps/api/staticmap?center=Bay+Area,+CA&zoom=8&scale=false&size=640x300&maptype=roadmap&key=AIzaSyDmLCKzt_7UZBrajANa7dMbIv9xLv3xtyk&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0x0000ff%7Clabel:2%7CSan+Mateo,+CA&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7CSan+Jose,+CA" alt="Google Map of Bay Area, CA">
 
-     <h3 style="font-family: 'Montserrat', sans-serif;">San Jose</h3>
-     <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=95116&key=AIzaSyDmLCKzt_7UZBrajANa7dMbIv9xLv3xtyk" allowfullscreen></iframe>
+         <h3>San Jose</h3>
+         <iframe width="100%" height="450" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=95116&key=AIzaSyDmLCKzt_7UZBrajANa7dMbIv9xLv3xtyk" allowfullscreen></iframe>
 
-     <h3 style="font-family: 'Montserrat', sans-serif;">San Mateo</h3>
-     <iframe width="100%" height="450" frameborder="0" style="border:0; padding-bottom: 100px" src="https://www.google.com/maps/embed/v1/place?q=94401&key=AIzaSyDmLCKzt_7UZBrajANa7dMbIv9xLv3xtyk" allowfullscreen></iframe>
+         <h3>San Mateo</h3>
+         <iframe width="100%" height="450" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=94401&key=AIzaSyDmLCKzt_7UZBrajANa7dMbIv9xLv3xtyk" allowfullscreen></iframe>
 
-
-
-</body>
+         <script>
+            function load(){
+            	var name = getUserName();
+            	if (name == ""){
+            		document.getElementById("Login/Register").innerHTML = "Login/Register";
+            		document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
+            	} else {
+            		document.getElementById("Login/Register").innerHTML = name;
+            		document.getElementById("Login/Register").setAttribute("href", "profile.html");
+            	}
+            }
+            
+            function getUserName(){
+              	var cookie = document.cookie.split(';');
+              	for(var i = 0; i < cookie.length; i++) {
+                  	var entry = cookie[i];
+            	entry.replace(/ /g,'');
+                  	if (entry.indexOf("userName") >= 0) {
+                      	return entry.substring(entry.indexOf("userName") + 9, entry.length);
+            	}
+            }
+              	return "";
+            }
+         </script>
+      </div>
+   </body>
 </html>

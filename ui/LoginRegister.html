@@ -1,96 +1,97 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Food Store Login and Register</title>
-<link href="eCommerceAssets/styles/LoginRegister.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-	<div id="message">
-		<h3>This is the login and registration page.</h3>
-	</div>
+   <head>
+      <meta charset="utf-8">
+      <title>Online Food Store Login and Register</title>
+      <link href="eCommerceAssets/styles/LoginRegister.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+   </head>
 
-<div id="inputbox">
-	<p><form id="loginForm" name="NloginForm" method="post" accept-charset="UTF-8">
-		<p>
-			<h5><label for="email" id="label_email">User Name</label></h5>
-			<input type="text" placeholder="enter user name" name = "email" id = "input_email">
-		</p>
-		<p>
-   			<h5><label for="password" id="label_password">Password</label></h5>
-			<input type="password" placeholder="enter password" name = "password" id = "input_password">
-		</p>
+   <body>
+      <div id="message">
+         <h3>This is the login and registration page.</h3>
+      </div>
+
+      <div id="inputbox">
+         <p>
+         <form id="loginForm" name="NloginForm" method="post" accept-charset="UTF-8">
+            <p>
+            <h5><label for="email" id="label_email"><i class="fas fa-user"></i>User Name</label></h5>
+            <input type="text" placeholder="enter user name" name = "email" id = "input_email">
+            </p>
+            <p>
+            <h5><label for="password" id="label_password"><i class="fas fa-key"></i>Password</label></h5>
+            <input type="password" placeholder="enter password" name = "password" id = "input_password">
+            </p>
+            <p>
+               <button onclick="return login();" id="button_login">Login</button>
+               <button onclick="register();" id="button_register">Register</button>
+            </p>
+         </form>
+         </p>
 	
-		<p>
-		<button onclick="return login();" id="button_login">Login</button>
-		<button onclick="register();" id="button_register">Register</button>
-		</p>
-	</form></p>	
+         <script>
+            function login(){
+            	var xhttp = new XMLHttpRequest();
+            	var data = new FormData(document.getElementById ('loginForm'));
+            	xhttp.onreadystatechange = function() {
+                  		if (this.readyState == 4 && this.status == 200) {
+            			validateLogin(this);
+                 			}	
+              		};
+              		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/login", false);
+              		xhttp.send(data); 
+            	return false;
+            }
+            
+            function register(){
+            	var xhttp = new XMLHttpRequest();
+            	var data = new FormData(document.getElementById ('loginForm'));
+            	xhttp.onreadystatechange = function() {
+                  		if (this.readyState == 4 && this.status == 200) {
+            			validateLogin(this);
+                 			}	
+              		};
+              		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/register", false);
+              		xhttp.send(data); 
+            	return false;
+            }
+            
+            function validateLogin(xhttp){
+            var x = JSON.parse(xhttp.responseText);
+            
+            if (x.code == 200) {
+            	var shoppingCart = getCookie("shoppingCart");
+            	var userName = document.getElementById("input_email").value;
+            	document.cookie = "userName=" + userName + '; expires=Thu, 01 Jan 2020 00:00:01 GMT'; 
+            	document.cookie = "shoppingCart=" + shoppingCart + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+            	window.location.href = "loginSuccessful.html";
+            	return false;
+            } else {
+            	alert(x.message);
+            	return false;
+            }
+            }
+            
+            function getCookie(cookieName){
+            var name = cookieName + "=";
+              	var cookie = document.cookie.split(';');
+              	for(var i = 0; i < cookie.length; i++) {
+                  	var entry = cookie[i];
+            	entry.replace(/ /g,'');
+                  	if (entry.indexOf(name) == 0) {
+                      	return entry.substring(name.length, entry.length);
+            	}
+            }
+              	return "";
+            }
+         </script>
+      </div>
 
-	<script>
-		function login(){
-			var xhttp = new XMLHttpRequest();
-			var data = new FormData(document.getElementById ('loginForm'));
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					validateLogin(this);
-       			}	
-    		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/login", false);
-    		xhttp.send(data); 
-			return false;
-		}
-		
-		function register(){
-			var xhttp = new XMLHttpRequest();
-			var data = new FormData(document.getElementById ('loginForm'));
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					validateLogin(this);
-       			}	
-    		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/register", false);
-    		xhttp.send(data); 
-			return false;
-		}
-		
-	function validateLogin(xhttp){
-		var x = JSON.parse(xhttp.responseText);
-
-		if (x.code == 200) {
-			var shoppingCart = getCookie("shoppingCart");
-			var userName = document.getElementById("input_email").value;
-			document.cookie = "userName=" + userName + '; expires=Thu, 01 Jan 2020 00:00:01 GMT'; 
-			document.cookie = "shoppingCart=" + shoppingCart + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
-			window.location.href = "loginSuccessful.html";
-			return false;
-		} else {
-			alert(x.message);
-			return false;
-		}
-	}
-		
-	function getCookie(cookieName){
-		var name = cookieName + "=";
-    	var cookie = document.cookie.split(';');
-    	for(var i = 0; i < cookie.length; i++) {
-        	var entry = cookie[i];
-			entry.replace(/ /g,'');
-        	if (entry.indexOf(name) == 0) {
-            	return entry.substring(name.length, entry.length);
-			}
-		}
-    	return "";
-	}
-	</script>
-
-</div>
-
-<div id="returnHome">
-<form action = "index.html">
-<button type="submit" id="button_submit">Return Home</button>
-</form>
-</div>
-</body>
+      <div id="returnHome">
+         <form action = "index.html">
+            <button type="submit" id="button_submit"><i class="fas fa-home"></i>Return Home</button>
+         </form>
+      </div>
+   </body>
 </html>

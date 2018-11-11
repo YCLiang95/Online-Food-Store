@@ -3,28 +3,35 @@
 a:hover {
 	color: rgba(255,255,255,1.00);
 }
+:focus{
+	outline:none;
+}
 /*header*/
 header {
 	font-family: 'Montserrat', sans-serif;
 	font-size: 30px;
 	font-style: normal;
 	font-weight: 400;
+	width:1501px;
 }
 /* Logo placeholder*/
 #logo {
 	float: left;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width: 100px;
+	width: 101px;
 	text-align: center;
 	color: rgba(255,255,255,1.00);
 	background-color: rgba(0,150,150,1.00);
 }
+[class~=fas]{
+	margin-right:3px;
+}
+
 /* div for Links in header */
 #headerLinks {
-	float: left;
-	width: calc( 100% - 139px );
-	text-align: right;
+	text-align:right;
+	margin-right:10px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	background-color: rgba(255,255,255,1.00);
@@ -32,7 +39,7 @@ header {
 /* Links in header */
 #headerLinks a {
 	text-decoration: none;
-	color: rgba(0,0,0,1.00);
+	color: rgba(0,50,50,1.00);
 	padding-left: 66px;
 	font-size: 14px;
 }
@@ -43,6 +50,7 @@ header {
 /* Offer text banner*/
 #offer {
 	font-family: 'Montserrat', sans-serif;
+	width: 1501px;
 	clear: both;
 	font-size: 30px;
 	line-height: 35px;
@@ -133,6 +141,18 @@ header {
 	margin-top: 8px;
 }
 
+/* maps */
+h3{
+	font-family: 'Montserrat', sans-serif;
+}
+#map{
+	margin-left:30%;
+}
+body{
+	overflow: scroll; 
+	padding-bottom: 100px;
+}
+
 /* footer */
 #mainWrapper footer {
 	clear: both;
@@ -142,6 +162,7 @@ header {
 	font-style: normal;
 	font-weight: 200;
 	text-align: center;
+	width: 1501px;
 }
 /*Each footer content */
 #mainWrapper footer div {
@@ -162,141 +183,4 @@ footer div a {
 /* Container for links in footer */
 footer .footerlinks {
 	margin-top: -15px;
-}
-
-/* Media query for tablets */
-@media screen and (max-width:700px) {
-/* Unordered List of links */
-#menubar .menu ul {
-	display: inline;
-}
-/*list elements */
-#menubar .menu ul li {
-	display: inline;
-	font-size: medium;
-	padding-left: 0%;
-	padding-right: 0%;
-}
-/* offer banners content */
-#mainWrapper #offer p {
-	font-size: small;
-}
-/* main content region of page */
-#mainWrapper #content .mainContent {
-	overflow: hidden;
-	width: 95%;
-	margin-top: 40px;
-}
-/* Prices of products in catalog view */
-.productRow .productInfo .price {
-	font-size: 19px;
-}
-/* Content holders in catalog view */
-.productRow .productInfo .productContent {
-	font-size: 16px;
-}
-/* Buy buttons in catalog view */
-.productRow .productInfo .buyButton {
-	font-size: 15px;
-}
-/* Container for links in footer */
-#mainWrapper footer .footerlinks {
-	float: none;
-	width: 100%;
-	position: relative;
-	top: 17px;
-	clear: both;
-	text-align: center;
-	left: 0%;
-	padding-bottom: 19px;
-}
-/* Container for each footer divisions */
-#mainWrapper footer div {
-	width: 44%;
-	text-align: justify;
-	font-size: 15px;
-}
-/* Links in footer */
-.footerlinks p a {
-	padding-top: 0px;
-	padding-bottom: 0px;
-	display: inline;
-	padding-right: 35px;
-}
-/* Footer region */
-#mainWrapper footer {
-	padding-left: 16px;
-	overflow: hidden;
-}
-/* Links in header */
-header #headerLinks a {
-	padding-left: 0px;
-	padding-right: 30px;
-}
-/* Offer- Text banner */
-#mainWrapper #offer {
-	padding-left: 22%;
-}
-/* Paragraphs in footer */
-footer .footerlinks p {
-	display: inline;
-}
-}
-
-/*media query for small screen devices */
-@media screen and (max-width:480px) {
-/*Container for links in header */
-#mainWrapper header #headerLinks {
-	width: 100%;
-	text-align: center;
-	background-color: rgba(190,190,190,1.00);
-	padding-bottom: 21px;
-}
-/* Logo placeholder*/
-#mainWrapper header #logo {
-	width: 100%;
-	text-align: center;
-}
-/* Links in header */
-header #headerLinks a {
-	text-align: center;
-	padding-right: 15px;
-	padding-left: 0px;
-}
-/*Offer - Text Banner */
-#mainWrapper #offer {
-	padding-left: 0px;
-	text-align: center;
-}
-/* Each product in catalog view */
-.mainContent .productRow .productInfo {
-	width: 100%;
-	display: block;
-	padding-left: 0px;
-	padding-right: 0px;
-	position: relative;
-	left: -2%;
-}
-#mainWrapper footer div {
-	width: 100%;
-	margin-left: -16px;
-	text-align: justify;
-	padding-bottom: 16px;
-	overflow: auto;
-}
-/* Unordered list for menu elements */
-.menu ul {
-	position: relative;
-	padding-left: 24%;
-}
-/* Container for links in footer */
-#mainWrapper footer .footerlinks {
-	padding-left: 8%;
-}
-/* Main content */
-#mainwrapper #content .mainContent {
-	margin-top: -81px;
-	text-align: center;
-	width: 100%;
-	padding-left: 0px;
 }

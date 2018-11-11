@@ -1,273 +1,270 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Organic food store</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="eCommerceAssets/styles/eCommerceStyle.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+   <head>
+      <meta charset="utf-8">
+      <title>Organic food store</title>
+      <link href="eCommerceAssets/styles/eCommerceStyle.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+   </head>
 
-</head>
+   <body onLoad="load()">
+      <div id="mainWrapper">
 
-<body onLoad="load()">
-<div id="mainWrapper">
-  <header> 
-    <div id="logo"> OFS </div>
-	  <div id="headerLinks">
-		  <a href="StoreLocation.html" title="StoreLocation"><span class="fas fa-map-marker-alt"></span> Store Location</a>
-	  	<a><span class="fas fa-user"></span></a>
-		  <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
-		  <a href="Tracking.html" title="Tracking"><span class="fas fa-map-marked-alt"></span> Tracking</a>
-		  <a href="shoppingCart.html" title="Cart" id ="CartLink"><span class="fas fa-shopping-cart"></span> Cart</a></div>
-  </header>
-	
-	<script>
-		var productList = new Object();
-		var shoppingCart = [];
-		
-		function load(){
-			var name = getCookie("userName");
-			if (name == ""){
-				document.getElementById("Login/Register").innerHTML = "Login/Register";
-				document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
-			} else {
-				document.getElementById("Login/Register").innerHTML = name;
-				document.getElementById("Login/Register").setAttribute("href", "profile.html");
-			}
-			var shoppingCartCookie = getCookie("shoppingCart");
-			if (shoppingCartCookie.localeCompare("")) shoppingCart = [];
-			else {
-				//alert(shoppingCartCookie );
-				shoppingCart = JSON.parse(shoppingCartCookie);
-				
-			}
-			var cl = document.getElementById("CartLink");
-			cl.innerHTML = "Cart(" + shoppingCart.length + ")";
-			getInventory();
-			displayProduct();
-		}
-		
-		function displayProduct(){
-			var list = document.getElementById("productRow");
-			
-			for (var i = 0; i < productList.length; i ++){
-				var container = `<div class = "productInfo">
-          			<div><img alt="sample" src="${productList[i].imagerl}"></div>
-          			<p class="productContent">${productList[i].name}</p>
-          			<p class="productWeight">${productList[i].weight.toFixed(1)} lb / item</p>
-          			<p class="price">$ ${productList[i].price.toFixed(2)}</p>
-					<button type="button" name="button" class="buyButton" onclick="AddToCart(${i})">
-						<a>Add to Cart</a>
-					</button>
-				</div>`;
-				var template = document.createElement("template");
-        		template.innerHTML = container;
-        		list.appendChild(template.content.firstChild);
-			}
-		}
-		
-		function getInventory(){
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					var s = JSON.parse(this.responseText);
-					if (s.code == 200){
-						productList = s.data;
-					} else alert("Failed to obtain product list");
-       			}	
-    		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
-    		xhttp.send(); 
-			return false;
-		}
-		
-		function AddToCart(index){
-			var b = false;
-			for (var i = 0; i < shoppingCart.length; i ++){
-				if (shoppingCart[i].id == productList[index].mid){
-					b = true;
-					shoppingCart[i].quantity += 1;
-					break;
-				}
-			}
-			if (!b){
-				var t = shoppingCart.length;
-				shoppingCart[t] = new Object();
-				shoppingCart[t].id = productList[index].mid;
-				shoppingCart[t].quantity = 1;
-			}
-			document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
-			alert(productList[index].name + " added to Cart");
-			var cl = document.getElementById("CartLink");
-			cl.innerHTML = "Cart(" + shoppingCart.length + ")";
-		}
-		
-         function getCookie(cookieName){
-         	var name = cookieName + "=";
-           		var cookie = document.cookie.split(';');
-           		for(var i = 0; i < cookie.length; i++) {
-               		var entry = cookie[i];
-         		entry.replace(/ /g,'');
-               		if (entry.indexOf(name) >= 0) {
-                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
-         		}
-         	}
-           		return "";
-         }
-		
-	</script>
-	
-  <section id="offer"> 
-    <h2>Organic Food Store</h2>
-    <p>Get fresh organic food delivered straight to your door</p>
-  </section>
+         <header>
+            <div id="logo"> OFS </div>
+            <div id="headerLinks">
+               <a href="StoreLocation.html" title="StoreLocation"><span class="fas fa-map-marker-alt"></span> Store Location</a>
+               <a><span class="fas fa-user"></span></a>
+               <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
+               <a href="Tracking.html" title="Tracking"><span class="fas fa-map-marked-alt"></span> Tracking</a>
+               <a href="shoppingCart.html" title="Cart" id ="CartLink"><span class="fas fa-shopping-cart"></span> Cart</a>
+            </div>
+         </header>
 
-  <div id="content">
-    <section class="mainContent">
-      <div id="productRow" class="productRow">
-        
+         <script>
+            var productList = new Object();
+            var shoppingCart = [];
+            
+            function load(){
+            	var name = getCookie("userName");
+            	if (name == ""){
+            		document.getElementById("Login/Register").innerHTML = "Login/Register";
+            		document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
+            	} else {
+            		document.getElementById("Login/Register").innerHTML = name;
+            		document.getElementById("Login/Register").setAttribute("href", "profile.html");
+            	}
+            	var shoppingCartCookie = getCookie("shoppingCart");
+            	if (shoppingCartCookie.localeCompare("")) shoppingCart = [];
+            	else {
+            		//alert(shoppingCartCookie );
+            		shoppingCart = JSON.parse(shoppingCartCookie);
+            		
+            	}
+            	var cl = document.getElementById("CartLink");
+            	cl.innerHTML = "Cart(" + shoppingCart.length + ")";
+            	getInventory();
+            	displayProduct();
+            }
+            
+            function displayProduct(){
+            	var list = document.getElementById("productRow");
+            	
+            	for (var i = 0; i < productList.length; i ++){
+            		var container = `<div class = "productInfo">
+                    			<div><img alt="sample" src="${productList[i].imagerl}"></div>
+                    			<p class="productContent">${productList[i].name}</p>
+                    			<p class="productWeight">${productList[i].weight.toFixed(1)} lb / item</p>
+                    			<p class="price">$ ${productList[i].price.toFixed(2)}</p>
+            			<button type="button" name="button" class="buyButton" onclick="AddToCart(${i})">
+            				<a>Add to Cart</a>
+            			</button>
+            		</div>`;
+            		var template = document.createElement("template");
+                  		template.innerHTML = container;
+                  		list.appendChild(template.content.firstChild);
+            	}
+            }
+            
+            function getInventory(){
+            	var xhttp = new XMLHttpRequest();
+            	xhttp.onreadystatechange = function() {
+                  		if (this.readyState == 4 && this.status == 200) {
+            			var s = JSON.parse(this.responseText);
+            			if (s.code == 200){
+            				productList = s.data;
+            			} else alert("Failed to obtain product list");
+                 			}	
+              		};
+              		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+              		xhttp.send(); 
+            	return false;
+            }
+            
+            function AddToCart(index){
+            	var b = false;
+            	for (var i = 0; i < shoppingCart.length; i ++){
+            		if (shoppingCart[i].id == productList[index].mid){
+            			b = true;
+            			shoppingCart[i].quantity += 1;
+            			break;
+            		}
+            	}
+            	if (!b){
+            		var t = shoppingCart.length;
+            		shoppingCart[t] = new Object();
+            		shoppingCart[t].id = productList[index].mid;
+            		shoppingCart[t].quantity = 1;
+            	}
+            	document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+            	alert(productList[index].name + " added to Cart");
+            	var cl = document.getElementById("CartLink");
+            	cl.innerHTML = "Cart(" + shoppingCart.length + ")";
+            }
+            
+                   function getCookie(cookieName){
+                   	var name = cookieName + "=";
+                     		var cookie = document.cookie.split(';');
+                     		for(var i = 0; i < cookie.length; i++) {
+                         		var entry = cookie[i];
+                   		entry.replace(/ /g,'');
+                         		if (entry.indexOf(name) >= 0) {
+                             		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+                   		}
+                   	}
+                     		return "";
+                   }
+            
+         </script>
+
+         <section id="offer">
+            <h2>Organic Food Store</h2>
+            <p>Get fresh organic food delivered straight to your door</p>
+         </section>
+
+         <div id="content">
+            <section class="mainContent">
+               <div id="productRow" class="productRow">
+               </div>
+            </section>
+         </div>
+
+         <footer>
+            <div>
+               <p>All Rights Reserved.</p>
+            </div>
+         </footer>
 
       </div>
-    </section>
-  </div>
-	
-  <footer>
-    <div>
-      <p>All Rights Reserved.</p>
-    </div>
-  </footer>
-	
-</div>
-</body>
+   </body>
 </html>
-
 <!--
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/apple.jpg"></div>
-          <p class="productContent">Apple</p>
-          <p class="productWeight">0.5 lb / item</p>
-          <p class="price">$1.60</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/avocado.jpg"></div>
-          <p class="productContent">Avocado</p>
-          <p class="productWeight">0.3 lb / item</p>
-          <p class="price">$2.29</p>
-
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/banana.jpg"></div>          
-          <p class="productContent">Banana</p>
-          <p class="productWeight">1 lb / item</p>
-          <p class="price">$0.69</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/carrot.jpg"></div>          
-          <p class="productContent">Carrot</p>
-          <p class="productWeight">0.1 lb / item</p>
-          <p class="price">$0.13</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/cucumber.jpg"></div>          
-          <p class="productContent">Cucumber</p>
-          <p class="productWeight">0.5 lb / item</p>
-          <p class="price">$1.64</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-		  </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/garlic.jpg"></div>          
-          <p class="productContent">Garlic</p>
-          <p class="productWeight">1 lb / item</p>
-          <p class="price">$5.99</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/grape.jpg"></div>          
-          <p class="productContent">Grape</p>
-          <p class="productWeight">1 lb / item</p>
-          <p class="price">$3.99</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/grapefruit.jpg"></div>          
-          <p class="productContent">Grapefruit</p>
-          <p class="productWeight">0.3 lb / item</p>
-          <p class="price">$0.56</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/melon.jpg"></div>          
-          <p class="productContent">Melon</p>
-          <p class="productWeight">1 lb / item</p>
-          <p class="price">$4.99</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/pear.jpg"></div>          
-          <p class="productContent">Pear</p>
-          <p class="productWeight">0.3 lb / item</p>
-          <p class="price">$1.08</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/pineapple.jpg"></div>          
-          <p class="productContent">Pineapple</p>
-          <p class="productWeight">1 lb / item</p>
-          <p class="price">$4.99</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/potato.jpg"></div>          
-          <p class="productContent">Potato</p>
-          <p class="productWeight">0.5 lb / item</p>
-          <p class="price">$0.47</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/strawberry.jpg"></div>          
-          <p class="productContent">Strawberry</p>
-          <p class="productWeight">1 lb / item</p>
-          <p class="price">$4.99</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/tomato.jpg"></div>          
-          <p class="productContent">Tomato</p>
-          <p class="productWeight">0.2 lb / item</p>
-          <p class="price">$0.67</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
-
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/watermelon.jpg"></div>          
-          <p class="productContent">Watermelon</p>
-          <p class="productWeight">1 lb / item</p>
-          <p class="price">$4.99</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        
-</article>
-<article class="productInfo">
-          <div><img alt="sample" src="eCommerceAssets/images/zucchini.jpg"></div>          
-          <p class="productContent">Zucchini</p>
-          <p class="productWeight">0.4 lb / item</p>
-          <p class="price">$1.29</p>
-          <input type="button" name="button" value="Add to Cart" class="buyButton">
-        </article>
--->
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/apple.jpg"></div>
+             <p class="productContent">Apple</p>
+             <p class="productWeight">0.5 lb / item</p>
+             <p class="price">$1.60</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/avocado.jpg"></div>
+             <p class="productContent">Avocado</p>
+             <p class="productWeight">0.3 lb / item</p>
+             <p class="price">$2.29</p>
+   
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/banana.jpg"></div>          
+             <p class="productContent">Banana</p>
+             <p class="productWeight">1 lb / item</p>
+             <p class="price">$0.69</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/carrot.jpg"></div>          
+             <p class="productContent">Carrot</p>
+             <p class="productWeight">0.1 lb / item</p>
+             <p class="price">$0.13</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/cucumber.jpg"></div>          
+             <p class="productContent">Cucumber</p>
+             <p class="productWeight">0.5 lb / item</p>
+             <p class="price">$1.64</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+   		  </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/garlic.jpg"></div>          
+             <p class="productContent">Garlic</p>
+             <p class="productWeight">1 lb / item</p>
+             <p class="price">$5.99</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/grape.jpg"></div>          
+             <p class="productContent">Grape</p>
+             <p class="productWeight">1 lb / item</p>
+             <p class="price">$3.99</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/grapefruit.jpg"></div>          
+             <p class="productContent">Grapefruit</p>
+             <p class="productWeight">0.3 lb / item</p>
+             <p class="price">$0.56</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/melon.jpg"></div>          
+             <p class="productContent">Melon</p>
+             <p class="productWeight">1 lb / item</p>
+             <p class="price">$4.99</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/pear.jpg"></div>          
+             <p class="productContent">Pear</p>
+             <p class="productWeight">0.3 lb / item</p>
+             <p class="price">$1.08</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/pineapple.jpg"></div>          
+             <p class="productContent">Pineapple</p>
+             <p class="productWeight">1 lb / item</p>
+             <p class="price">$4.99</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/potato.jpg"></div>          
+             <p class="productContent">Potato</p>
+             <p class="productWeight">0.5 lb / item</p>
+             <p class="price">$0.47</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/strawberry.jpg"></div>          
+             <p class="productContent">Strawberry</p>
+             <p class="productWeight">1 lb / item</p>
+             <p class="price">$4.99</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/tomato.jpg"></div>          
+             <p class="productContent">Tomato</p>
+             <p class="productWeight">0.2 lb / item</p>
+             <p class="price">$0.67</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/watermelon.jpg"></div>          
+             <p class="productContent">Watermelon</p>
+             <p class="productWeight">1 lb / item</p>
+             <p class="price">$4.99</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           
+   </article>
+   <article class="productInfo">
+             <div><img alt="sample" src="eCommerceAssets/images/zucchini.jpg"></div>          
+             <p class="productContent">Zucchini</p>
+             <p class="productWeight">0.4 lb / item</p>
+             <p class="price">$1.29</p>
+             <input type="button" name="button" value="Add to Cart" class="buyButton">
+           </article>
+   -->
