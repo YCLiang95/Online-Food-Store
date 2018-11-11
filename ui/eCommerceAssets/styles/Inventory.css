@@ -1,100 +1,139 @@
-#productForm{
-	position: absolute;
-	top: 260px;
-	width: 800px;
-	left: 50%;
-	margin-left: -400px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 17px;
-	font-weight: bold;
-	color: rgba(0,100,100,1.0);
+:focus{
+     outline:none;
 }
 
-#InventoryTitle {
-	position: absolute;
-	top:50px;
-	left: 50%;
-	margin-left: -400px;
-     	width: 800px;
-     	height: 100%;
-	background-image: url("../images/inventory.png");
-     	background-repeat:no-repeat;
-	font-family: 'Montserrat', sans-serif;
-     	padding:80px;
-     	font-weight: bold;
-     	font-size: 40px;
-     	color: white;
+ #InventoryTitle {
+     position: absolute;
+     top:50px;
+     left: 50%;
+     margin-left: -400px;
+     width: 800px;
+     height: 100%;
+     background-image: url("../images/inventory.png");
+     background-repeat:no-repeat;
+     font-family: 'Montserrat', sans-serif;
+     padding:80px;
+     font-weight: bold;
+     font-size: 40px;
+     color: white;
 }
 
-#selectList{
-	font-family: 'Montserrat', sans-serif;
-	font-size: 17px;
-	width:155px;
-	padding:2px 8px;
+ #productForm{
+     background-color: rgba(0,150,150,0.1);
+     position: absolute;
+     top: 250px;
+     width: 770px;
+     left: 50%;
+     margin-left: -400px;
+     font-family: 'Montserrat', sans-serif;
+     padding:15px;
 }
 
-#prodcutImage{
-	position: absolute;
-	width:155px;
+ div.instruction{
+     color: black;
+     font-size:14px;
+     font-weight:normal;
+     padding:2px 20px;
+     border-top:rgba(0,150,150,0.2) solid;
+     border-bottom:rgba(0,150,150,0.2) solid;
+}
+ p.instruction{
+     padding-left:25px;
+     margin-top:-10px;
+     line-height:150%;
+}
+ #selectList{
+     width:120px;
+     text-align:center;
+     text-align-last: center;
 }
 
-.productImageURL,
-.productContent,
-.productWeight,
-.price,
-.Quantity
-{
-	position: relative;
-	left:165px;
+ .productInfo{
+     color:rgba(0,100,100,1.0);
+     font-weight:bold;
+     padding:20px;
+     margin-top:20px;
 }
 
-#URLInput,
-#nameInput,
-#weightInput,
-#priceInput,
-#quantityInput
-{
-	margin-left:10px;
-	text-align: center;
-	padding: 5px 0px;
+ .info{
+     margin:-10px 0px 20px;
+     padding:0px 15px;
+     display:flex;
+     justify-content:space-between;
+     align-items:center;
+}
+ #prodcutImage{
+     border-radius: 10px;
+     box-shadow: 0 1px 5px rgba(0,150,150,0.75);
+}
+ .infoText{
+     width:530px;
+}
+ .productWeight{
+     float:right;
+}
+ [type=text]{
+     margin-left:10px;
+     text-align:center;
+     padding: 5px 0px;
+     border:none;
+     opacity: 0.85;
+}
+ [type=text]:hover{
+     opacity:1;
+}
+ #URLInput, #nameInput {
+     width:360px;
+     float:right;
+}
+ #weightInput{
+     width:100px;
+     margin-right:10px;
+}
+ #priceInput, #quantityInput {
+     width:150px;
 }
 
-#URLInput{
-	width: 450px;
+ .buttons{
+     display:flex;
+     justify-content: space-between;
+     align-items: center;
+     margin:30px -35px -30px;
+     width:770px;
+     padding:0px 15px;
+}
+ .return, .saveButton{
+     font-family: 'Montserrat', sans-serif;
+     font-size: 17px;
+     color: rgba(0,150,150,1.0);
+     font-weight: bold;
+     background-color: rgba(0,0,0,0.0);
+     border: none;
+     cursor: pointer;
+}
+ .saveButton{
+     height:50px;
+     color:white;
+     background-color: rgba(0,150,150,1.0);
+     width:32%;
+}
+ .home{
+     text-align:center;
+     line-height:50px;
+     height: 50px;
+     color:rgba(0,150,150,1.0);
+     background-color: rgba(240,240,240,0.9);
+     border: none;
+     width:32%;
+}
+ .return:hover {
+     color: rgba(0,130,130,1.0);
+     text-decoration:underline;
+}
+ .saveButton:hover{
+     opacity:0.8;
 }
 
-#nameInput{
-	width: 491px;
+ [class~=fas]{
+     padding:0px 5px;
 }
-
-#weightInput{
-	width: 100px;
-	margin-right:15px;
-
-}
-
-#priceInput{
-	width: 150px;
-}
-
-#quantityInput{
-	width: 123px;
-}
-
-.buyButton{
-	margin-top:100px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 17px;
-	color: white;
-	font-weight: bold;
-	background-color: rgba(0,150,150,1.0);	
-	border: none;
-	cursor: pointer;
-    	width: 32%;
-	height: 50px;
-}
-
-.buyButton:hover {
-	opacity: 0.8;
-}
-
