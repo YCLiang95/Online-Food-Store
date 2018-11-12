@@ -3,8 +3,10 @@
    <head>
       <meta charset="utf-8">
       <title>Shopping Cart</title>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
       <link href="eCommerceAssets/styles/ShoppingCart.css" rel="stylesheet" type="text/css">
    </head>
+
    <body onload="loadPage()">
       <section>
          <a></a>
@@ -36,53 +38,56 @@
                <p class="weight">0.5 lb</p>    
                </div>
                -->
+
          </div>
-		 	<p class="price" id="totalPrice">$ 0.47</p>
-            <p class="weight" id="totalWeight">0.5 lb</p>    
-		 <div>
-		 </div>
-		 <form action="checkout.html">
-         	<button id="checkoutButton" type="Submit">Check Out</button>
-		 </form>
-		 <form action="index.html">
-		 	<button id="returnButton" type="Submit">Return to Shop</button>
-		 </form>
+         <p class="price" id="totalPrice">Total	:  $ 0.00</p>
+         <p class="weight" id="totalWeight">Weight: 0.0 lb</p>
+         <div>
+         </div>
+
+         <form action="checkout.html">
+            <button id="checkoutButton" type="Submit">Check Out</button>
+         </form>
+
+         <form action="index.html">
+            <button id="returnButton" type="Submit"><i class="fas fa-home"></i>Return to Shop</button>
+         </form>
       </section>
+
       <script>
-		  
          var shoppingCart = new Object();
-		 var productList = new Object();
+         var productList = new Object();
          var userName = "";
          
          //Sent request to the server for specific item data
          function quary(id){
          	
          }
-		  
-		 function loadPage(){
-			userName = getCookie("userName");
-			if (userName == '') userName = "Guest";
+         
+         function loadPage(){
+         userName = getCookie("userName");
+         if (userName == '') userName = "Guest";
          	document.getElementById("shoppingCartTitle").innerHTML = userName + "'s shopping cart.";
-			getInventory();
-			loadShoppingCart();
-		 }
-
+         getInventory();
+         loadShoppingCart();
+         }
+         
          //Load the shopping cart content from cookie
          function loadShoppingCart(){	 
          	shoppingCart = JSON.parse(getCookie("shoppingCart"));
          	var list = document.getElementById("itemList");
-			var tPrice = 0;
-			var tWeight = 0;
+         var tPrice = 0;
+         var tWeight = 0;
          	for (var i = 0; i < shoppingCart.length; i ++){
-				var j = 0;
-				for (j = 0; j < productList.length; j ++){
-					if (productList[j].mid == shoppingCart[i].id)
-						break;
-				}
-				tPrice += productList[j].price * shoppingCart[i].quantity;
-				tWeight += productList[j].weight * shoppingCart[i].quantity;
+         var j = 0;
+         for (j = 0; j < productList.length; j ++){
+         if (productList[j].mid == shoppingCart[i].id)
+         break;
+         }
+         tPrice += productList[j].price * shoppingCart[i].quantity;
+         tWeight += productList[j].weight * shoppingCart[i].quantity;
          		var container =`<div class = "container">
-				<div class="removeDiv">
+         <div class="removeDiv">
                 	<button class="removeButton" type="button" onclick="AddRemove(${shoppingCart[i].id}, ${-shoppingCart[i].quantity})">
                			<img src="eCommerceAssets/images/delete.png" alt="" />
                 	</button>
@@ -106,37 +111,37 @@
                	<p class="price">$ ${(productList[j].price * shoppingCart[i].quantity).toFixed(2)}</p>
                	<p class="weight">${(productList[j].weight * shoppingCart[i].quantity).toFixed(1)} lb</p>
                	</div>`;
-				
+         
          		var template = document.createElement("template");
          		template.innerHTML = container;
          		list.appendChild(template.content.firstChild);
          	}
-			 document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
-			 document.getElementById("totalWeight").innerHTML = "Total: " + tWeight.toFixed(1) + "lb";
+         document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
+         document.getElementById("totalWeight").innerHTML = "Weight: " + tWeight.toFixed(1) + "lb";
          }
-		  
-		 function emptyList(){
-			 var list = document.getElementById("itemList");
-			 while (list.firstChild) {
-    			list.removeChild(list.firstChild);
-			 }
-		 }
-		  
-		 function AddRemove(id, count){
-			 shoppingCart = JSON.parse(getCookie("shoppingCart"));
-			 for (var i = 0; i < shoppingCart.length; i ++){
-				 if (shoppingCart[i].id == id){
-					 shoppingCart[i].quantity += count;
-					 if (shoppingCart[i].quantity <= 0){
-						 shoppingCart.splice(i, 1);
-					 }
-					 break;
-				 }
-			 }
-			 saveToCookie();
-			 emptyList();
-			 loadShoppingCart();
-		 }
+         
+         function emptyList(){
+         var list = document.getElementById("itemList");
+         while (list.firstChild) {
+         list.removeChild(list.firstChild);
+         }
+         }
+         
+         function AddRemove(id, count){
+         shoppingCart = JSON.parse(getCookie("shoppingCart"));
+         for (var i = 0; i < shoppingCart.length; i ++){
+         if (shoppingCart[i].id == id){
+         shoppingCart[i].quantity += count;
+         if (shoppingCart[i].quantity <= 0){
+         shoppingCart.splice(i, 1);
+         }
+         break;
+         }
+         }
+         saveToCookie();
+         emptyList();
+         loadShoppingCart();
+         }
          
          function getCookie(cookieName){
          	var name = cookieName + "=";
@@ -155,21 +160,21 @@
          function saveToCookie(){
          	document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
          }
-		  
-		 function getInventory(){
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					var s = JSON.parse(this.responseText);
-					if (s.code == 200){
-						productList = s.data;
-					} else alert("Failed to obtain product list");
-       			}	
-    		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
-    		xhttp.send(); 
-			return false;
-		}
+         
+         function getInventory(){
+         var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+         	if (this.readyState == 4 && this.status == 200) {
+         var s = JSON.parse(this.responseText);
+         if (s.code == 200){
+         productList = s.data;
+         } else alert("Failed to obtain product list");
+         	}	
+         };
+         xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+         xhttp.send(); 
+         return false;
+         }
          
          //placehodler shopping cart initialization
          function foo(){

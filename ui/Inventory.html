@@ -1,98 +1,109 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Inventory</title>
-</head>
-
-<body onLoad="load()">
-	<form method="post" id="productForm">
-	<select id="selectList" onChange="display()" name="mid">
-	</select>
-	<article class="productInfo" id="productInfo">
-          <div><img id="prodcutImage" alt="sample" src="eCommerceAssets/images/watermelon.jpg"></div>
-		  <p class="productImageURL">Product image URL<input type="text" id="URLInput" name="imageUrl" value="N/A"></p>
-          <p class="productContent">Product Name<input type="text" id="nameInput" name="name" value="N/A"></p>
-          <p class="productWeight"><input type="text" id="weightInput" name="weight" value="N/A"> lb / item</p>
-          <p class="price"> Price <input type="text" id="priceInput" name="price" value="N/A"> </p>
-		  <p class="Quantity"> Quantity <input type="text" id="quantityInput" name="quantity" value="N/A"></p>
-          <input type="button" name="button" value="Save to Server" class="buyButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/update')">
-		  <input type="button" name="button" value="Create new product" class="buyButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/save')">
-	</article>
-	</form>
-	
-	<div id="productWindow">
-	</div>
-	<script>
-		var productList = new Object();
-		
-		function load(){
-			getInventory();
-			getProductList();
-		}
-		
-		function getProductList(){
-			var list = document.getElementById("selectList");
-			for (var i = 0; i < productList.length; i ++){
-				//var container = `<option value="${productList[i].mid}">${productList[i].name}</option>`;
-				var option = document.createElement("option");
-				option.setAttribute("value", productList[i].mid);
-				var text = document.createTextNode(productList[i].name);
-				option.appendChild(text);
-				//option.innerHTML = container;
-				list.add(option);
-			}
-			
-			display();
-		}
-		
-		function getInventory(){
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					var s = JSON.parse(this.responseText);
-					if (s.code == 200){
-						productList = s.data;
-					} else alert("Failed to obtain product list");
-       			}	
-    		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
-    		xhttp.send(); 
-			return false;
-		}
-		
-		function display(){
-			var list = document.getElementById("selectList");
-			for (var i = 0; i < productList.length; i++)
-				if (productList[i].mid == list.value) {
-						document.getElementById("prodcutImage").src = productList[i].imagerl;
-						document.getElementById("nameInput").value = productList[i].name;
-						document.getElementById("priceInput").value = productList[i].price;
-						document.getElementById("weightInput").value = productList[i].weight;
-						//It seems there are 2 typo in the back end
-						document.getElementById("quantityInput").value = productList[i].quantify;
-						document.getElementById("URLInput").value = productList[i].imagerl;
-					break;
-				}
-		}
-		
-		function update(url){
-			var xhttp = new XMLHttpRequest();
-			var data = new FormData (document.getElementById("productForm"));
-
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					var s = JSON.parse(this.responseText);
-					if (s.code == 200){
-						alert("Successful!");
-						location.reload();
-					} else alert(s.message);
-       			}	
-    		};
-    		xhttp.open("POST", url, false);
-    		xhttp.send(data); 
-			return false;
-		}
-	</script>
-</body>
+   <head>
+      <meta charset="utf-8">
+      <title>Inventory</title>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+      <link href="eCommerceAssets/styles/Inventory.css" rel="stylesheet" type="text/css">
+   </head>
+   <body onLoad="load()">
+      <p><a id="InventoryTitle">Inventory Manage</a></p>
+      <form method="post" id="productForm">
+         <div class="instruction">
+            <h3><span class="fas fa-info-circle"></span>INSTRUCTION:</h3>
+            <p class="instruction"><b>Update Existing Products: </b>Choose Product:
+               <select id="selectList" onChange="display()" name="mid"></select><span class="fas fa-arrow-right"></span>Update Info<span class="fas fa-arrow-right"></span>Click "Save to Server"<br>OR <b>Add New Product:</b> Fill in Info<span class="fas fa-arrow-right"></span>Click "Create New Product"
+            </p>
+         </div>
+         <article class="productInfo" id="productInfo">
+            <div class="info">
+               <div><img id="prodcutImage" alt="sample" src="eCommerceAssets/images/watermelon.jpg"></div>
+               <section class="infoText">
+                  <p class="productImageURL">Product image URL:<input type="text" id="URLInput" name="imageUrl" value="N/A"></p>
+                  <p class="productContent">Product Name:<input type="text" id="nameInput" name="name" value="N/A"></p>
+                  <p class="price">Price ($):<input type="text" id="priceInput" name="price" value="N/A"> <span class="productWeight">Weight:<input type="text" id="weightInput" name="weight" value="N/A"> lb / item<span></p>
+                  <p class="Quantity">Quantity:<input type="text" id="quantityInput" name="quantity" value="N/A"></p>
+               </section>
+            </div>
+            <div class="buttons">
+               <p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="return" onClick="window.location.href=`index.html`"></p>
+               <input type="button" name="button" value="Save to Server" class="saveButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/update')">
+               <input type="button" name="button" value="Create new product" class="saveButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/save')">
+            </div>
+         </article>
+      </form>
+      <div id="productWindow">
+      </div>
+      <script>
+         var productList = new Object();
+          
+          function load(){
+          	getInventory();
+          	getProductList();
+          }
+          
+          function getProductList(){
+          	var list = document.getElementById("selectList");
+          	for (var i = 0; i < productList.length; i ++){
+          		//var container = `<option value="${productList[i].mid}">${productList[i].name}</option>`;
+          		var option = document.createElement("option");
+          		option.setAttribute("value", productList[i].mid);
+          		var text = document.createTextNode(productList[i].name);
+          		option.appendChild(text);
+          		//option.innerHTML = container;
+          		list.add(option);
+          	}
+          	
+          	display();
+          }
+          
+          function getInventory(){
+          	var xhttp = new XMLHttpRequest();
+          	xhttp.onreadystatechange = function() {
+                		if (this.readyState == 4 && this.status == 200) {
+          			var s = JSON.parse(this.responseText);
+          			if (s.code == 200){
+          				productList = s.data;
+          			} else alert("Failed to obtain product list");
+               			}	
+            		};
+            		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+            		xhttp.send(); 
+          	return false;
+          }
+          
+          function display(){
+          	var list = document.getElementById("selectList");
+          	for (var i = 0; i < productList.length; i++)
+          		if (productList[i].mid == list.value) {
+          				document.getElementById("prodcutImage").src = productList[i].imagerl;
+          				document.getElementById("nameInput").value = productList[i].name;
+          				document.getElementById("priceInput").value = productList[i].price;
+          				document.getElementById("weightInput").value = productList[i].weight;
+          				//It seems there are 2 typo in the back end
+          				document.getElementById("quantityInput").value = productList[i].quantify;
+          				document.getElementById("URLInput").value = productList[i].imagerl;
+          			break;
+          		}
+          }
+          
+          function update(url){
+          	var xhttp = new XMLHttpRequest();
+          	var data = new FormData (document.getElementById("productForm"));
+          
+          	xhttp.onreadystatechange = function() {
+                		if (this.readyState == 4 && this.status == 200) {
+          			var s = JSON.parse(this.responseText);
+          			if (s.code == 200){
+          				alert("Successful!");
+          				location.reload();
+          			} else alert(s.message);
+               			}	
+            		};
+            		xhttp.open("POST", url, false);
+            		xhttp.send(data); 
+          	return false;
+          }
+      </script>
+   </body>
 </html>

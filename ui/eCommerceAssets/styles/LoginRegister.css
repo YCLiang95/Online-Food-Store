@@ -1,3 +1,7 @@
+:focus{
+	outline:none;
+}
+
 #message {
 	display: none
 }
@@ -6,10 +10,10 @@
 	position: absolute;
 	top: 300px;	
 	left: 50%;
-	margin-left: -250px;
+	margin-left: -275px;
 	width: 500px;
 	background-color: rgba(0,150,150,0.2);
-	padding:2% 2% 5% 1.5%;
+	padding:30px 25px 30px;
 }
 
 /* Logo placeholder*/
@@ -19,10 +23,9 @@
 	background-image: url("../images/login.png");
 	background-repeat:no-repeat;
   	left: 50%;
-	margin-left: -250px;
-	width: 500px;
+	margin-left: -275px;
+	width: 550px;
 	height: 175px;
-	padding:2% 2% 5% 1.5%;
 }
 
 #input_email,
@@ -58,6 +61,15 @@
 	font-weight:normal;
 }
 
+[class~=fas]{
+	margin:0px 10px 0px 5px;
+}
+
+[class="fas fa-user"],
+[class="fas fa-key"]{
+	color:rgba(0,100,100,1.0);
+}
+
 #label_password 
 {
 	top: 0px;
@@ -75,6 +87,7 @@
 	cursor: pointer;
 	float: left;
     	width: 49%;
+	margin-top:30px;
 	height: 50px;
 }
 
@@ -95,6 +108,7 @@
 }
 
 #button_submit {
+	margin: 20px 10px;
 	font-family: 'Montserrat', sans-serif;
 	background-color: rgba(0,150,150,0.0);	
 	color: white;
