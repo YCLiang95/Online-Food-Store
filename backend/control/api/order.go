@@ -30,6 +30,11 @@ func PlaceOrder(w http.ResponseWriter, r *http.Request) (model *protocal.Respons
 
 	}
 	service.PlaceOrder(orderRequest.Uid,orderRequest.PaymentType,orderRequestDetail,deliveryRequest)
+	model = &protocal.ResponseModel{
+		Data:nil,
+		Code:200,
+		Message:"place orders successfully",
+	}
 	return
 ERR:
 
@@ -44,6 +49,7 @@ func GetOrders(w http.ResponseWriter, r *http.Request) (model *protocal.Response
 		count int
 		startIndex int
 		orders []*protocal.OrderResponse
+		uid int
 	)
 
 	if err=r.ParseForm();err!=nil{
@@ -56,11 +62,14 @@ func GetOrders(w http.ResponseWriter, r *http.Request) (model *protocal.Response
 	if count,err=strconv.Atoi(r.Form.Get("count"));err!=nil{
 		goto ERR
 	}
+	if uid,err=strconv.Atoi(r.Form.Get("uid"));err!=nil{
+		goto ERR
+	}
 
 
 	startIndex = (page - 1) * count
 
-   if orders,err=service.GetOrders(3,startIndex,count);err!=nil{
+   if orders,err=service.GetOrders(int64(uid),startIndex,count);err!=nil{
    	fmt.Println(err)
 	   goto ERR
    }

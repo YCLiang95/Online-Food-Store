@@ -8,7 +8,7 @@ type Order struct {
 	Status                int64       `json:"status"`
 	OrderId               string    `json:"order_id"`
 	CreateTime            time.Time `json:"create_time"`
-	UpdateTime            time.Time
+	UpdateTime            *time.Time  `json:"update_time,omitempty"`
 	TotalMerchandisePrice float64   `json:"total_merchandise_price"`
 	TotalPaymentPrice     float64   `json:"total_payment_price"`
 	PaymentMethod         int       `json:"payment_method"`
@@ -28,7 +28,6 @@ type Delivery struct {
 	CreateTime time.Time `json:"create_time"`
 	Status     int64      `json:"status"`
 	Oid        int64     `json:"oid"`
-	UpdateTime time.Time `json:"update_time"`
 	DeliveryId string    `json:"delivery_id"`
 }
 

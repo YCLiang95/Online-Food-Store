@@ -85,6 +85,7 @@ func (od *OrderDao) GetOrdersByUid(uid int64, startIndex, count int) (orders []*
 			orderResponse := new(protocal.OrderResponse)
 			orderResponse.Order.Oid = value["oid"].(int64)
 			orderResponse.Order.Uid = uid
+			orderResponse.Order.UpdateTime = nil
 			orderResponse.Order.Status = value["status"].(int64)
 			orderResponse.Order.CreateTime, _ = time.Parse("2006-01-02 15:04:05", string(value["create_time"].([]byte)))
 			orderResponse.Order.TotalMerchandisePrice = float64(value["total_merchandise_price"].(float32))
