@@ -2,28 +2,26 @@ package api
 
 import (
 	"net/http"
-	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/response"
-	"github.com/YCLiang95/CS160Group1OFS/backend/control/api/model/request"
+
 	"github.com/YCLiang95/CS160Group1OFS/backend/service"
 
+	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
 )
 
-
-
-func Register(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, error) {
-	userRequest := request.UserRequest{}
-	if err := request.GetStructFromRequest(r, &userRequest); err != nil {
+func Register(w http.ResponseWriter, r *http.Request) (*protocal.ResponseModel, error) {
+	userRequest := protocal.UserRequest{}
+	if err := GetStructFromRequest(r, &userRequest); err != nil {
 		return nil, err
 	}
 	if err := service.Register(userRequest.Email, userRequest.Password); err != nil {
 		return nil, err
 	}
-	return response.GenerateSuccessStruct("register user successfully", "54895786hdfkhas"), nil
+	return protocal.GenerateSuccessStruct("register user successfully", "54895786hdfkhas"), nil
 }
 
-func Login(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, error) {
-	userRequest := request.UserRequest{}
-	if err := request.GetStructFromRequest(r, &userRequest); err != nil {
+func Login(w http.ResponseWriter, r *http.Request) (*protocal.ResponseModel, error) {
+	userRequest := protocal.UserRequest{}
+	if err := GetStructFromRequest(r, &userRequest); err != nil {
 		return nil, err
 	}
 
@@ -39,16 +37,14 @@ func Login(w http.ResponseWriter, r *http.Request) (*response.ResponseModel, err
 	//	return nil, errors.New("5001:系统错误")
 	//}
 
-
 	user, err := service.Login(userRequest.Email, userRequest.Password)
 	if err != nil {
 		return nil, err
 	}
-	userResponse := &response.UserRegisterReponse{
+	userResponse := &protocal.UserRegisterReponse{
 		Email: user.Email,
 		Uid:   user.Uid,
 		Token: "99504859hjfkaflkd",
 	}
-	return response.GenerateSuccessStruct("login successfully", userResponse), nil
+	return protocal.GenerateSuccessStruct("login successfully", userResponse), nil
 }
-
