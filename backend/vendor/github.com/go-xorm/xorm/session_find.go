@@ -90,7 +90,6 @@ func (session *Session) find(rowsSlicePtr interface{}, condiBean ...interface{})
 			tp = tpNonStruct
 		}
 	}
-
 	var table = session.statement.RefTable
 
 	var addedTableName = (len(session.statement.JoinStr) > 0)

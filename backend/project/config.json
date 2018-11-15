@@ -1,0 +1,16 @@
+{
+	"mysql": {
+		"userName": "cs160",
+		"address": "47.254.94.78",
+		"port": "3306",
+		"dbName": "cs_160_project",
+		"password": "GetAInCS160!",
+		"maxIdel": 4096,
+		"maxOpen": 4096
+	},
+	"redis": {
+		"maxIdle": 1,
+		"timeOut": 10,
+		"host": "127.0.0.1:6960"
+	}
+}

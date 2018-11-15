@@ -10,15 +10,20 @@ import (
 )
 
 type mysqlOptions struct {
-	OrderBy    string
-	LimitStart int
-	Count      int
-	TableName  string
-	Filter     interface{}
+	OrderBy           string
+	LimitStart        int
+	Count             int
+	TableName         string
+	Filter            interface{}
+	Join              string
+	JoinCondition     string
+	JoinTable         string
+	Where             string
+	TransactionParams []interface{}
 }
 
-func daoFunctionLogWapper(bean interface{}, options *mysqlOptions, daofunc func(sqlEnginer *xorm.Engine, data interface{}, options *mysqlOptions)error) ( err error) {
-	if  err = daofunc(mysql_utils.GetInstance(), bean, options); err != nil {
+func daoFunctionLogWapper(bean interface{}, options *mysqlOptions, daofunc func(sqlEnginer *xorm.Engine, data interface{}, options *mysqlOptions) error) (err error) {
+	if err = daofunc(mysql_utils.GetInstance(), bean, options); err != nil {
 		tableName := reflect.TypeOf(bean).String()
 		LoggerFomat(bean, tableName, err)
 
@@ -27,21 +32,41 @@ func daoFunctionLogWapper(bean interface{}, options *mysqlOptions, daofunc func(
 }
 
 func saveRecorders(sqlEnginer *xorm.Engine, data interface{}, options *mysqlOptions) (err error) {
-	_,err = sqlEnginer.Insert(data)
+	_, err = sqlEnginer.Insert(data)
 	return
 }
 
 func getRecorder(sqlEnginer *xorm.Engine, bean interface{}, options *mysqlOptions) (err error) {
-	_,err=sqlEnginer.Get(bean)
+	_, err = sqlEnginer.Get(bean)
 	return
 }
 
+func insertRecordersWithTransaction(sqlEngine *xorm.Engine, bean interface{}, options *mysqlOptions) (err error) {
+	var (
+		mysqlSession *xorm.Session
+	)
+	mysqlSession = sqlEngine.NewSession()
+	if err = mysqlSession.Begin(); err != nil {
+		return
+	}
+	for _, value := range options.TransactionParams {
+		if _, err = mysqlSession.Insert(value); err != nil {
+			mysqlSession.Rollback()
+			return
+		}
+	}
+	if err = mysqlSession.Commit(); err != nil {
+		mysqlSession.Rollback()
+		return
+	}
+	return
+}
 
 func updateRecorder(sqlEngine *xorm.Engine, bean interface{}, options *mysqlOptions) (err error) {
 	var (
-		filterMap map[string]interface{}
-		ok        bool
-		session   *xorm.Session
+		filterMap   map[string]interface{}
+		ok          bool
+		session     *xorm.Session
 		updateCount int64
 	)
 	if filterMap, ok = options.Filter.(map[string]interface{}); !ok {
@@ -50,11 +75,11 @@ func updateRecorder(sqlEngine *xorm.Engine, bean interface{}, options *mysqlOpti
 	}
 	session = sqlEngine.NewSession()
 	for key, value := range filterMap {
-		session=session.Where(key, value)
+		session = session.Where(key, value)
 	}
 
-	if updateCount, err = session.Update(bean);updateCount==0&&err==nil{
-	err = errors.New("nothing is changed")
+	if updateCount, err = session.Update(bean); updateCount == 0 && err == nil {
+		err = errors.New("nothing is changed")
 		return
 	}
 	return
@@ -75,14 +100,20 @@ func findRecorders(sqlEnginer *xorm.Engine, bean interface{}, options *mysqlOpti
 	if options.OrderBy != "" {
 		mysqlSession = mysqlSession.OrderBy(options.OrderBy)
 	}
-	if options.LimitStart < 0 || options.Count <= 0 {
+	if options.Where != "" {
+		mysqlSession = mysqlSession.Where(options.Where)
+	}
+	if options.LimitStart < 0 || options.Count < 0 {
 		err = errors.New("option params is incorrect")
 		return
 	}
+	if options.Join != "" && options.JoinCondition != "" && options.JoinTable != "" {
+		mysqlSession = mysqlSession.Join(options.Join, options.JoinTable, options.JoinCondition)
+	}
 	if options.LimitStart != 0 || options.Count != 0 {
 		mysqlSession = mysqlSession.Limit(options.LimitStart, options.Count)
-
 	}
+
 	if options.Filter != nil {
 		err = mysqlSession.Find(bean, options.Filter)
 	} else {
@@ -91,8 +122,7 @@ func findRecorders(sqlEnginer *xorm.Engine, bean interface{}, options *mysqlOpti
 	return
 }
 
-
-func LoggerFomat(params interface{},table string, err error) {
+func LoggerFomat(params interface{}, table string, err error) {
 	utils.Logger.Error(fmt.Sprintf(`
 ########MYSQL ERROR########
 
@@ -103,5 +133,5 @@ PARAMS:%v
 Table: %v
 
 ###########################
-      `, err,params,table))
+      `, err, params, table))
 }

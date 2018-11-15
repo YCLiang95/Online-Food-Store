@@ -2,6 +2,8 @@ package dao
 
 import (
 	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
+	"strconv"
+	"strings"
 )
 
 type MechandisDao struct{}
@@ -38,3 +40,24 @@ func (nd *MechandisDao) GetMerchandiseByPrimaryKey(mid int64) (merchandis *proto
 	err = daoFunctionLogWapper(merchandis, nil, getRecorder)
 	return
 }
+
+
+func (nd *MechandisDao) GetMerchandises(orderDetail []protocal.OrderReequestDetail) (merchandises map[int64]*protocal.Merchandise, err error) {
+
+	condition:="`mid` IN ("
+
+	midStrings:=make([]string,len(orderDetail))
+
+	for i:=0;i<len(midStrings);i++{
+		midStrings[i] = strconv.Itoa(int(orderDetail[i].Mid))
+	}
+	condition+=strings.Join(midStrings,",")
+
+	condition+=")"
+
+	merchandises = make(map[int64]*protocal.Merchandise)
+	err = daoFunctionLogWapper(&merchandises, &mysqlOptions{Where:condition}, findRecorders)
+	return
+}
+
+
