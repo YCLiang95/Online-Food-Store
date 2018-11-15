@@ -5,10 +5,34 @@
 <title>Checkout</title>
 </head>
 <body>
-	This is the checkout page
+	Check out
+	<form method="post" id="checkoutForm">
+	<article class="productInfo" id="productInfo">
+		  <p class="Address">Address 1<input type="text" id="addressInput1" name="imageUrl" value="N/A"></p>
+          <p class="Address">Address 2<input type="text" id="addressInput2" name="name" value="N/A"></p>
+          <p class="Zipcode">Zip code<input type="text" id="weightInput" name="weight" value="N/A"></p>
+          <p class="price"> Total price: </p>
+		  <p class="weight"> Total weight: </p>
+		  <input type="button" name="button" value="Place order" class="buyButton" onClick="checkout()">
+		  <input type="button" value="Return Home" class="buyButton" onClick="window.location.href=`index.html`">
+	</article>
+	</form>
 	<script>
 		function checkout(){
-			
+			var xhttp = new XMLHttpRequest();
+			var data = new FormData (document.getElementById("checkoutForm"));
+
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						alert("Successful!");
+					} else alert(s.message);
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+    		xhttp.send(data); 
+			return false;
 		}
 	</script>
 </body>
