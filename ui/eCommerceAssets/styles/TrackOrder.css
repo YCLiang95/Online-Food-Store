@@ -1,3 +1,7 @@
+:focus{
+	outline:none;
+}
+
 iframe{
 	position: absolute;
 	top: 200px;
@@ -23,11 +27,13 @@ iframe{
 	color: white;
 	font-size: 20px;
 	border: none;
-	margin: 20px;
+	margin: 20px 20px;
 }
 
 #button_submit:hover {
 	color: rgba(0,150,150,1.0);
 }
 
-
+[class~=fas]{
+	margin:0px 10px 0px 5px;
+}

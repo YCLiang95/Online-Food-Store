@@ -1,4 +1,6 @@
-
+:focus{
+	outline:none;
+}
 
 body { 
 	position: absolute;
@@ -10,7 +12,7 @@ body {
 	width: 800px;	
 	text-align:center;
 	border-radius: 10px;
-	box-shadow: 0 1px 5px rgba(0,0,0,0.75);
+	box-shadow: 2px rgba(0,0,0,0.75);
 }
 
 img {
@@ -48,6 +50,10 @@ img {
 	background-color: rgba(0,150,150,1.0);	
 	padding: 10px 50px 10px 50px;
 } 
+
+[class~=fas]{
+	margin:0px 10px 0px 5px;
+}
 
 a:link {color: white;}
 a:visited {color: white;}
