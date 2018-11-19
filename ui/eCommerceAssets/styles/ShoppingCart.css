@@ -7,8 +7,7 @@
      top: 50px;
      left: 50%;
      margin-left: -400px;
-     width: 800px;
-     height: 100%;
+     width: 640px;
      background-image: url("../images/shoppingcart.png");
      background-repeat:no-repeat;
      padding:80px;
@@ -17,12 +16,21 @@
      font-size: 40px;
      color: white;
 }
- section {
+.mainContent {
      width: 800px;
      height: 100%;
      margin: 249px auto;
      display: flex;
      flex-direction: column;
+     align-items: flex-end;
+
+}
+#itemList{
+     display: flex;
+     align-items: center;
+     flex-direction: column;
+     align-items: center;
+     margin-bottom:10px;
 }
  .container {
      height: 120px;
@@ -78,7 +86,8 @@
      border: none;
      cursor: pointer;
 }
- .price {
+ .price,
+ .weight {
      font-family: 'Montserrat', sans-serif;
      font-size: 18px;
      font-weight: bold;
@@ -86,19 +95,24 @@
      text-align: center;
 }
  .weight{
-     font-family: 'Montserrat', sans-serif;
-     font-size: 18px;
+     font-weight: normal;    
      color: rgba(127,127,127,1.0);
-     text-align: center;
-     width:120px;
 }
- #checkoutButton {
-     position: absolute;
-     left : 50%;
-     margin-top:30px;
-     margin-left: 100px;
-     width: 300px;
+ #totalPrice, #totalWeight{
+     width:250px;
+     font-size: 20px;
+	margin-bottom:-10px;
+}
+.buttons{
+	margin-top: 50px;
+	display:flex;
+	justify-content: flex-end;	
+}
+ #checkoutButton,
+ #returnButton{
+     width: 250px;
      height: 50px;
+     margin-left:10px;
      font-family: 'Montserrat', sans-serif;
      font-size: 17px;
      color: white;
@@ -111,15 +125,6 @@
      opacity: 0.8;
 }
  #returnButton {
-     position: absolute;
-     left:50%;
-     margin-top:30px;
-     margin-left:-210px;
-     width: 300px;
-     height: 50px;
-     font-family: 'Montserrat', sans-serif;
-     font-size: 17px;
-     font-weight: bold;
      color: rgba(0,150,150,1.0);
      background-color: rgba(240,240,240,0.9);
      border: none;
@@ -128,15 +133,6 @@
  #returnButton:hover {
      color: rgba(0,130,130,1.0);
      text-decoration:underline;
-}
- #totalPrice, #totalWeight{
-     width:200px;
-     position:relative;
-     margin-left:70%;
-     font-size: 20px;
-}
- #totalWeight{
-     margin-top:-10px;
 }
  [class~=fas]{
      margin:0px 10px 0px 5px;

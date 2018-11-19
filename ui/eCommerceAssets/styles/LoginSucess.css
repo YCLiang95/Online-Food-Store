@@ -12,7 +12,7 @@ body {
 	width: 800px;	
 	text-align:center;
 	border-radius: 10px;
-	box-shadow: 2px rgba(0,0,0,0.75);
+	box-shadow: 1px 1px 8px rgba(0,0,0,0.75);
 }
 
 img {

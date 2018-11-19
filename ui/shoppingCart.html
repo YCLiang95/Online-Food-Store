@@ -8,9 +8,8 @@
    </head>
 
    <body onload="loadPage()">
-      <section>
-         <a></a>
-         <p><a id="shoppingCartTitle">shopping Cart</a></p>
+	<p><a id="shoppingCartTitle">shopping Cart</a></p>
+      <section class="mainContent">
          <div id = "itemList">
             <!--
                <div class = "container">
@@ -20,7 +19,7 @@
                	
                	<img class="itemImage" src="eCommerceAssets/images/potato.jpg">
                  <div class="description">
-               <p class="itemName">Potato! Tpye ${shoppingCart[i].id}<p>
+               <p class="itemName">Potato<p>
                <p class="wt">0.5 lb / item<p>
                  </div>
                
@@ -28,7 +27,7 @@
                    <button class="plus" type="button" name="button">
                      <img src="eCommerceAssets/images/plus.png" alt="" />
                    </button>	
-               <p class = "itemQuantity">${shoppingCart[i].quantity}<p>
+               <p class = "itemQuantity">1<p>
                
                    <button class="minus" type="button" name="button">
                      <img src="eCommerceAssets/images/minus.png" alt="" />
@@ -37,21 +36,24 @@
                <p class="price">$ 0.47</p>
                <p class="weight">0.5 lb</p>    
                </div>
-               -->
-
+		-->
          </div>
+		
          <p class="price" id="totalPrice">Total	:  $ 0.00</p>
          <p class="weight" id="totalWeight">Weight: 0.0 lb</p>
          <div>
          </div>
+		
+	<div class="buttons">
+         <form action="index.html">
+            <button id="returnButton" type="Submit"><i class="fas fa-home"></i>Return to Shop</button>
+         </form>
 
          <form action="checkout.html">
             <button id="checkoutButton" type="Submit">Check Out</button>
          </form>
+	</div>
 
-         <form action="index.html">
-            <button id="returnButton" type="Submit"><i class="fas fa-home"></i>Return to Shop</button>
-         </form>
       </section>
 
       <script>
