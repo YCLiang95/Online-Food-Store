@@ -7,8 +7,7 @@
      top:50px;
      left: 50%;
      margin-left: -400px;
-     width: 800px;
-     height: 100%;
+     width: 640px;
      background-image: url("../images/inventory.png");
      background-repeat:no-repeat;
      font-family: 'Montserrat', sans-serif;
@@ -64,7 +63,7 @@
 }
  #prodcutImage{
      border-radius: 10px;
-     box-shadow: 0 1px 5px rgba(0,150,150,0.75);
+     box-shadow: 0px 1px 5px rgba(0,150,150,0.75);
 }
  .infoText{
      width:530px;

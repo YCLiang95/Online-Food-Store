@@ -6,13 +6,16 @@ a:hover {
 :focus{
 	outline:none;
 }
+body{
+	overflow: scroll; 
+}
 /*header*/
 header {
 	font-family: 'Montserrat', sans-serif;
 	font-size: 30px;
 	font-style: normal;
 	font-weight: 400;
-	width:1501px;
+	width:1500px;
 }
 /* Logo placeholder*/
 #logo {
@@ -50,7 +53,6 @@ header {
 /* Offer text banner*/
 #offer {
 	font-family: 'Montserrat', sans-serif;
-	width: 1501px;
 	clear: both;
 	font-size: 30px;
 	line-height: 35px;
@@ -77,16 +79,11 @@ header {
 }
 /* Whole page content */
 #mainWrapper {
-	width: 80%;
-	padding-left: 10%;
-}
-/*menu elements */
-.menu ul li {
-	list-style-type: none;
-	font-size: x-large;
-	position: relative;
-	left: -35px;
-	padding-top: 12px;
+	position: absolute;
+	width:1500px;
+	left:50%;
+	margin-left:-750px;
+	margin-bottom: 100px;
 }
 /* Product rows for catalog */
 #content .mainContent .productRow {
@@ -132,7 +129,7 @@ header {
 	position: relative;
 	top: -60px;
 	width: 84%;
-	background-color: rgba(0,200,200,1.00);
+	background-color: rgba(0,150,150,1.00);
 	height: 35px;
 	color: rgba(255,255,255,1.00);
 	border-style: none;
@@ -147,10 +144,6 @@ h3{
 }
 #map{
 	margin-left:30%;
-}
-body{
-	overflow: scroll; 
-	padding-bottom: 100px;
 }
 
 /* footer */

@@ -3,12 +3,47 @@
 <head>
 <meta charset="utf-8">
 <title>Checkout</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+      <link href="eCommerceAssets/styles/Checkout.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	This is the checkout page
+	<div class="checkoutTitle">Check out</div>
+	<div class="mainContent">
+		<form method="post" id="checkoutForm">
+		<article class="productInfo" id="productInfo">
+			<p class="Address">Address 1<input type="text" id="addressInput1" name="imageUrl" value="N/A"></p>
+			<p class="Address">Address 2<input type="text" id="addressInput2" name="name" value="N/A"></p>
+			<p class="Zipcode">Zip code<input type="text" id="weightInput" name="weight" value="N/A"></p>
+			<div class="buttons">
+				<p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
+				<input type="button" name="button" value="Place Order" class="buyButton" onClick="checkout()">
+			</div>
+		</article>
+		</form>
+		<div class="orderInfo">
+     			<p class="price"> Total price: </p>
+			<p class="weight"> Total weight: </p>
+			<p class="cart"><i class="fas fa-shopping-cart"></i><input type="button" value="Back to Cart" class="cartButton" onClick="window.location.href=`shoppingCart.html`"></p>
+		</div>
+	
+	
+	</div>
 	<script>
 		function checkout(){
-			
+			var xhttp = new XMLHttpRequest();
+			var data = new FormData (document.getElementById("checkoutForm"));
+
+			xhttp.onreadystatechange = function() {
+        		if (this.readyState == 4 && this.status == 200) {
+					var s = JSON.parse(this.responseText);
+					if (s.code == 200){
+						alert("Successful!");
+					} else alert(s.message);
+       			}	
+    		};
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+    		xhttp.send(data); 
+			return false;
 		}
 	</script>
 </body>
