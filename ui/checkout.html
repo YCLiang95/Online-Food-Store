@@ -6,14 +6,15 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
       <link href="eCommerceAssets/styles/Checkout.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body onLoad="load()">
 	<div class="checkoutTitle">Check out</div>
 	<div class="mainContent">
 		<form method="post" id="checkoutForm">
 		<article class="productInfo" id="productInfo">
-			<p class="Address">Address 1<input type="text" id="addressInput1" name="imageUrl" value="N/A"></p>
-			<p class="Address">Address 2<input type="text" id="addressInput2" name="name" value="N/A"></p>
-			<p class="Zipcode">Zip code<input type="text" id="weightInput" name="weight" value="N/A"></p>
+			<p class="Address">Address 1<input type="text" id="addressInput1" name="address" value="N/A"></p>
+			<p class="Address">City<input type="text" id="addressInput2" name="city" value="N/A"></p>
+			<p class="Address">State<input type="text" id="addressInput3" name="state" value="N/A"></p>
+			<p class="Zipcode">Zip code<input type="text" id="addressInput4" name="zipcode" value="N/A"></p>
 			<div class="buttons">
 				<p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
 				<input type="button" name="button" value="Place Order" class="buyButton" onClick="checkout()">
@@ -21,30 +22,63 @@
 		</article>
 		</form>
 		<div class="orderInfo">
-     			<p class="price"> Total price: </p>
-			<p class="weight"> Total weight: </p>
+     		<p class="price" id = "tPrice"> Total price: </p>
+			<p class="weight" id = "tWeight"> Total weight: </p>
 			<p class="cart"><i class="fas fa-shopping-cart"></i><input type="button" value="Back to Cart" class="cartButton" onClick="window.location.href=`shoppingCart.html`"></p>
 		</div>
 	
 	
 	</div>
 	<script>
+		function load(){
+			document.getElementById("tPrice").innerHTML = " Total price: $" + getCookie("totalPrice");
+			document.getElementById("tWeight").innerHTML =" Total weight: " + getCookie("totalWeight") + " lb";
+		}
+		
 		function checkout(){
 			var xhttp = new XMLHttpRequest();
-			var data = new FormData (document.getElementById("checkoutForm"));
-
+			var data = new Object();
+			data.deliveryDetail = new Object();
+			data.deliveryDetail.address = document.getElementById("addressInput1").value;
+			data.deliveryDetail.city = document.getElementById("addressInput2").value;
+			data.deliveryDetail.state = document.getElementById("addressInput3").value;
+			data.deliveryDetail.zipcode = document.getElementById("addressInput4").value;
+			data.paymentType = 1;
+			data.uid = getCookie("UID");
+			data.orderDetail = getCookie("shoppingCart");
+			
+			var fd = new FormData();
+			for (var key in data){
+				fd.append(key, data[key]);
+			}
+			
 			xhttp.onreadystatechange = function() {
         		if (this.readyState == 4 && this.status == 200) {
 					var s = JSON.parse(this.responseText);
 					if (s.code == 200){
-						alert("Successful!");
+						location.herf = "orderSuccessful.html";
 					} else alert(s.message);
        			}	
     		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
-    		xhttp.send(data); 
+    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/placeOrder", false);
+    		xhttp.send(fd); 
 			return false;
 		}
+		
+		function getCookie(cookieName){
+         	var name = cookieName + "=";
+           		var cookie = document.cookie.split(';');
+           		for(var i = 0; i < cookie.length; i++) {
+               		var entry = cookie[i];
+         		entry.replace(/ /g,'');
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+         		}
+         	}
+           		return "";
+         }
+		
 	</script>
+
 </body>
 </html>

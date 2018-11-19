@@ -118,8 +118,10 @@
          		template.innerHTML = container;
          		list.appendChild(template.content.firstChild);
          	}
-         document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
-         document.getElementById("totalWeight").innerHTML = "Weight: " + tWeight.toFixed(1) + "lb";
+         	document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
+         	document.getElementById("totalWeight").innerHTML = "Weight: " + tWeight.toFixed(1) + "lb";
+			 document.cookie = "totalPrice=" + tPrice + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+			 document.cookie = "totalWeight=" + tWeight + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
          }
          
          function emptyList(){

@@ -39,7 +39,8 @@
 
 #addressInput1,
 #addressInput2,
-#weightInput{
+#addressInput3,
+#addressInput4{
 	width:95%;
 	padding:10px;
 	font-family: 'Montserrat', sans-serif;
