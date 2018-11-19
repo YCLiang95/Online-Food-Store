@@ -1,0 +1,97 @@
+:focus{
+	outline:none;
+}
+
+.checkoutTitle {
+     position: absolute;
+     top: 50px;
+     left: 50%;
+     margin-left: -400px;
+     width: 800px;
+     background-image: url("../images/checkout.png");
+     background-repeat:no-repeat;
+     padding:80px;
+     font-family: 'Montserrat', sans-serif;
+     font-weight: bold;
+     font-size: 40px;
+     color: white;
+}
+.mainContent {
+     width: 800px;
+     height: 100%;
+     margin: 280px auto;
+     display: flex;
+     align-items:flex-start;
+     justify-content: space-between;
+}
+
+#checkoutForm{
+	width:535px;
+	padding-left:15px;
+}
+
+.Address,
+.Zipcode
+ {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 17px;
+}
+
+#addressInput1,
+#addressInput2,
+#weightInput{
+	width:95%;
+	padding:10px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 17px;
+	text-decoration: none;	
+	opacity: 0.85;
+}
+
+.buttons{
+	display:flex;
+	justify-content: flex-end;
+	align-items: center; 
+}
+[type=button]{
+     font-family: 'Montserrat', sans-serif;
+     font-size: 17px;
+     height:50px;
+     color: rgba(0,150,150,1.0);
+     background-color: rgba(0,0,0,0.0);
+     font-weight: bold;
+     border: none;
+     cursor: pointer;
+}
+.buyButton{
+     color:white;
+     background-color: rgba(0,150,150,1.0);
+     width:250px;
+}
+ .home,.cart{
+     text-align:center;
+     line-height:50px;
+     height: 50px;
+     color:rgba(0,150,150,1.0);
+     background-color: rgba(240,240,240,0.9);
+     border: none;
+     width:250px;
+     margin-right:10px;
+}
+.cart{
+	margin-top:50px;
+	width:100%
+}
+
+.orderInfo{
+	color: rgba(0,100,100,1.0);
+	padding:10px;
+	width:200px;
+	font-family: 'Montserrat', sans-serif;
+     	font-size: 17px;
+	box-shadow: 0px 0px 2px rgba(0,150,150,1.0);
+}
+
+[class~=fas]{
+	margin-right:2px;
+}
