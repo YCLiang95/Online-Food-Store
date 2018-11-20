@@ -6,8 +6,8 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
       <link href="eCommerceAssets/styles/TrackOrder.css" rel="stylesheet" type="text/css">
    </head>
-   <body>
-      <iframe width="600" height="450" frameborder="0" style="border:0" 
+   <body onLoad="load()">
+      <iframe id="map" width="600" height="450" frameborder="0" style="border:0" 
          src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDZ_7y_iYoC3ZZS06q9P6VUjGzfhG0FOoQ
          &origin=san%20jose%20state%20university
          &destination=San%20jose%20airport" 
@@ -18,6 +18,15 @@
          </form>
       </div>
       <script>
+		  var map = new Object();
+		  
+		  function load(){
+			  var para = window.location.search.substring(1);
+			  console.log(para);
+			  map = document.getElementById("map");
+			  map.setAttribute("src", 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyDZ_7y_iYoC3ZZS06q9P6VUjGzfhG0FOoQ&origin=san%20jose%20state%20university&destination=' + para );
+		  }
+		  
          function update(){
          	
          }

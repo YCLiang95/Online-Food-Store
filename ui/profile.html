@@ -4,9 +4,10 @@
       <meta charset="utf-8">
       <link href="eCommerceAssets/styles/profile.css" rel="stylesheet" type="text/css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
       <title>profile Page</title>
    </head>
-   <body onLoad="getUserName()">
+   <body onLoad="load()">
       <p><a id="welcomeMessage">A placeholder for account profile page.</a></p>
       <div class="mainContent">
          <div class = "buttons">	
@@ -14,12 +15,17 @@
             <button id="returnButton" onClick="window.location.href=`index.html`"><i class="fas fa-home"></i>Return Home</button><br>
             <button id="logoutButton" onClick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button><br>         
          </div>
+		  <form id="userForm" method="post" accept-charset="UTF-8">
+			  <input type="hidden" name="uid" value = "48" id="uid">
+			  <input type="hidden" name="count" value = "10" id="count">
+			  <input type="hidden" name="page" value = "1" id="page">
+	      </form>
          <div class="orderHistory">
             <h3>Order History</h3>
             <div id="historyList">
-               <ul>
+				  <ul>
                   <li>
-                     11/7/2018<span> order content </span>
+                     <p>date of purchase</p><span> order Status </span>
                      <p>order number</p>
                   </li>
                </ul>
@@ -28,15 +34,107 @@
       </div>
       <script>
          var username = "";
+		  var orderList = [];
          
-         function getOrderList(){
-         	var orderList = [];
-         	
-         	for (var i = 0; i < orderList.length; i ++){
-         		var container = ``;
-         	}
+		  function load(){
+			  getUserName();
+			  document.getElementById("uid").value = getCookie("UID");
+			  getOrderList();
+		  }
+		  
+         function params(data) {
+             var arr = [];
+             for (var i in data) {
+                 arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
+             }
+             return arr.join('&');
          }
+		  
+         function getOrderList(){
+			// var form = document.createElement("form");
+			//var form = document.querySelector('form');
+  			//var data = new FormData(form);
+			//var data = {uid: 48, page: 1, count: 10};
+			//data.append("uid", getCookie("UID"));
+			
+			//data.append('uid', 48);
+			//data.append('page', 1);
+			//data.append('count', 10);
+			 //var re = {content: data};
+             var uid=parseInt($('#uid').val());
+             var page=parseInt($('#page').val());
+             var count=parseInt($('#count').val());
+             var obj=  {
+                 uid:uid,
+                 page:page,
+                 count:count
+             }
+            obj=params(obj);
+             console.log(obj)
+             $.ajax({
+                 type: "POST",
+                 url: "http://47.254.94.78:8085/cs160/user/order/getOrders",
+                 contentType: "application/x-www-form-urlencoded",
+                 data: obj,
+                 dataType: "json",
+                 success: function (res) {
+//                     if (res.code == 200){
+//                         window.location.herf = "orderSuccessful.html";
+//                     } else {
+//                         console.log(res.message)
+//                     }
+                     console.log(res)
+					 orderList = res.data
+					 displayOrderList()
+                 },
+                 error: function (error) {
+                     console.log(error)
+                 }
+             });
+//			 var data = new FormData(document.getElementById("userForm"));
+//         	var xhttp = new XMLHttpRequest();
+//         	xhttp.onreadystatechange = function() {
+//         		if (this.readyState == 4 && this.status == 200) {
+//         			var s = JSON.parse(this.responseText);
+//         			if (s.code == 200){
+//						productList = s.data;
+//         			} else alert(s.message);
+//         		}
+//         	};
+//         	xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/getOrders", false);
+//			//xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+//			//console.log("uid="+ getCookie("UID") + "&page=1&count=10");
+//			 xhttp.send(data);
+//         	//xhttp.send("uid="+ getCookie("UID") + "&page=1&count=10");
+//			 //orderList.push({order: {create_time: "11/19/2018", oid: 123, status: 1}});
+//			 console.log(orderList.length);
+
+         }
+		  
+		 function displayOrderList(){
+			 var list = document.getElementById("historyList");
+			 console.log(orderList);
+         	for (var i = 0; i < orderList.length; i ++){
+         		var container = `
+			    <ul>
+                   <li>
+                     <a>${orderList[i].order.create_time}</a><a href="Tracking.html?${orderList[i].delivery.address}%20${orderList[i].delivery.city}%20${orderList[i].delivery.state}%20${orderList[i].delivery.zipcode}"> ${orderList[i].order.status == 1 ? "In transit" : "Delivered"} <span class="fas fa-map-marked-alt"></span></a>
+
+                     <p>${orderList[i].order.order_id}<a style="cursor: pointer;" onclick="getDetail(${i})"> <font color="blue">(Detail) </font></a></p>
+                  </li>
+               </ul>`;
+				var template = document.createElement("template");
+         		template.innerHTML = container;
+         		list.appendChild(template.content);
+			}
+		 }
          
+		  function getDetail(index){
+			  console.log("get detail of" + index);
+			  //document.cookie = "orderDetail= JSON.stringify(orderList[i].order_detail);
+			  window.location.href="orderDetail.html?" + JSON.stringify(orderList[index]);
+		  }
+		  
          function toInventoryManagement(){
          	if (username == "admin"){
          		window.location.href = "inventory.html";
@@ -44,16 +142,22 @@
          		alert("Sorry, this is for employees only.");	
          	}
          }
-         
-         function getUserName(){
+		  
+		 function getCookie(cookieName){
+         	var name = cookieName + "=";
            		var cookie = document.cookie.split(';');
            		for(var i = 0; i < cookie.length; i++) {
                		var entry = cookie[i];
          		entry.replace(/ /g,'');
-               		if (entry.indexOf("userName") >= 0) {
-                   		username = entry.substring(entry.indexOf("userName") + 9, entry.length);
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
          		}
          	}
+           		return "";
+         }
+         
+         function getUserName(){
+			username = getCookie("userName");
          	document.getElementById("welcomeMessage").innerHTML = username + "'s profile page."
          }
          

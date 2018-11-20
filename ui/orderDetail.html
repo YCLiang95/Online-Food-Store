@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<link href="eCommerceAssets/styles/orderDetail.css" rel="stylesheet" type="text/css">
+<meta charset="utf-8">
+<title>orderDetail</title>
+</head>
+
+<body onLoad="load()">
+	<div id="orderDetail">
+		<table style="width:80%" id="orderTable">
+			<tr>
+				<th>Time out Purchase</th>
+				<th>Order ID</th>
+				<th>Status</th>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="itemList">
+		<table style="width:80%" id="itemTable">
+			<tr>
+				<th>Merchandaise</th>
+				<th>Amount</th>
+				<th>Price</th>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="address">
+		<table style="width:80%" id="addressTable">
+			<tr>
+				<th>Address</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Zipcode</th>
+			</tr>
+		</table>
+	</div> 
+	
+	<button onClick="window.location.href='profile.html'">Return to Profile</button>
+	<script>
+		function load(){
+			var list = JSON.parse(decodeURI(window.location.search.substring(1)));
+			console.log(list);
+			
+			var orderTable = document.getElementById("orderTable");
+			var container = `<tr>
+								<th>${list.order.create_time}</th>
+								<th>${list.order.order_id}</th>
+								<th>${list.order.status}</th>
+							 </tr>`;
+			var template = document.createElement("template");
+         	template.innerHTML = container;
+         	orderTable.appendChild(template.content);
+			
+			var itemTable = document.getElementById("itemTable");
+			for (var i in list.order_detail){
+         		var container = `<tr>
+									<th>${list.order_detail[i].merchandise_name}</th>
+									<th>${list.order_detail[i].merchandise_count}</th>
+									<th>${list.order_detail[i].merchandise_price.toFixed(2)}</th>
+								</tr>`;
+				var template = document.createElement("template");
+         		template.innerHTML = container;
+         		itemTable.appendChild(template.content);
+			}
+			var container = `<tr>
+								<th>Total</th>
+								<th></th>
+								<th>${list.order.total_merchandise_price.toFixed(2)}</th>
+								</tr>`;
+				var template = document.createElement("template");
+         		template.innerHTML = container;
+         		itemTable.appendChild(template.content);
+			
+				var addressTable = document.getElementById("addressTable");
+				var container = `<tr>
+								<th>${list.delivery.address}</th>
+								<th>${list.delivery.city}</th>
+								<th>${list.delivery.state}</th>
+								<th>${list.delivery.zipcode}</th>
+								</tr>`;
+				var template = document.createElement("template");
+         		template.innerHTML = container;
+         		addressTable.appendChild(template.content);
+			
+		}
+
+	</script>
+</body>
+</html>

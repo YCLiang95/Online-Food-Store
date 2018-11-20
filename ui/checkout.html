@@ -5,46 +5,139 @@
 <title>Checkout</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
       <link href="eCommerceAssets/styles/Checkout.css" rel="stylesheet" type="text/css">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body>
+<body onLoad="load()">
 	<div class="checkoutTitle">Check out</div>
 	<div class="mainContent">
 		<form method="post" id="checkoutForm">
 		<article class="productInfo" id="productInfo">
-			<p class="Address">Address 1<input type="text" id="addressInput1" name="imageUrl" value="N/A"></p>
-			<p class="Address">Address 2<input type="text" id="addressInput2" name="name" value="N/A"></p>
-			<p class="Zipcode">Zip code<input type="text" id="weightInput" name="weight" value="N/A"></p>
+			<p class="Address">Address 1<input type="text" id="addressInput1" name="deliveryDetail[address]" value="N/A"></p>
+			<p class="Address">City<input type="text" id="addressInput2" name="deliveryDetail[city]" value="N/A"></p>
+			<p class="Address">State<input type="text" id="addressInput3" name="deliveryDetail[state]" value="N/A"></p>
+			<p class="Zipcode">Zip code<input type="number" id="addressInput4" name="deliveryDetail[zipcode]" value="95112"></p>
+			<input type="hidden" id = "uid" name="uid" value = "5">
+			<input type="hidden" id = "paymentType"  name="paymentType" value = "1">
+			<input type="hidden" name="orderDetail[0][mid]" value = "1" id="mid">
+			<input type="hidden" name="orderDetail[0][count]" value = "10" id="count">
 			<div class="buttons">
-				<p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
+				<p class="home"><i class="fas fa-home"></i><input type="button " value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
 				<input type="button" name="button" value="Place Order" class="buyButton" onClick="checkout()">
 			</div>
 		</article>
 		</form>
 		<div class="orderInfo">
-     			<p class="price"> Total price: </p>
-			<p class="weight"> Total weight: </p>
+     		<p class="price" id = "tPrice"> Total price: </p>
+			<p class="weight" id = "tWeight"> Total weight: </p>
 			<p class="cart"><i class="fas fa-shopping-cart"></i><input type="button" value="Back to Cart" class="cartButton" onClick="window.location.href=`shoppingCart.html`"></p>
 		</div>
 	
 	
 	</div>
 	<script>
-		function checkout(){
-			var xhttp = new XMLHttpRequest();
-			var data = new FormData (document.getElementById("checkoutForm"));
-
-			xhttp.onreadystatechange = function() {
-        		if (this.readyState == 4 && this.status == 200) {
-					var s = JSON.parse(this.responseText);
-					if (s.code == 200){
-						alert("Successful!");
-					} else alert(s.message);
-       			}	
-    		};
-    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
-    		xhttp.send(data); 
-			return false;
+		function load(){
+			document.getElementById("tPrice").innerHTML = " Total price: $" + getCookie("totalPrice");
+			document.getElementById("tWeight").innerHTML =" Total weight: " + getCookie("totalWeight") + " lb";
 		}
+		
+		function checkout(){
+			//window.location.href = "orderSuccessful.html";
+            var address=$('#addressInput1').val();
+            var city=$('#addressInput2').val();
+            var state=$('#addressInput3').val();
+            var zipcode=parseInt($('#addressInput4').val());
+            var uid=parseInt($('#uid').val());
+            var paymentType=parseInt($('#paymentType').val());
+            var mid=parseInt($('#mid').val());
+            var count=parseInt($('#count').val());
+             var obj=  {
+                 delivery_detail:{
+                     address:address,
+                     city:city,
+                     state:state,
+                     zipcode:zipcode
+
+                 },
+                 paymentType:paymentType,
+                 uid:uid,
+                 order_detail:[
+                {mid:mid,count:count}
+            ]
+
+        }
+           console.log(obj)
+            $.ajax({
+                type: "POST",
+                url: "http://47.254.94.78:8085/cs160/user/order/placeOrder",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(obj),
+                dataType: "json",
+                success: function (res) {
+                    if (res.code == 200){
+						console.log("orderPlaced!");
+						window.location.href = "orderSuccessful.html";
+						document.cookie="shoppingCart=;" + "expires=Thu, 01 Jan 1970 00:00:01 GMT" ;
+					} else {
+                        console.log(res.message)
+					}
+                },
+                error: function (error) {
+                   console.log(error)
+                }
+            });
+/*
+			var xhttp = new XMLHttpRequest();
+			
+			var data = new Object();
+			data.deliveryDetail = new Object();
+			data.deliveryDetail.address = document.getElementById("addressInput1").value;
+			data.deliveryDetail.city = document.getElementById("addressInput2").value;
+			data.deliveryDetail.state = document.getElementById("addressInput3").value;
+			data.deliveryDetail.zipcode = document.getElementById("addressInput4").value;
+			data.paymentType = 1;
+			data.uid = getCookie("UID");
+			data.orderDetail = getCookie("shoppingCart");
+			
+			var fd = new FormData();
+			for (var key in data){
+				fd.append(key, data[key]);
+			}
+			console.log(fd);
+			
+//			var data = new FormData(document.getElementById("checkoutForm"));
+//			console.log(data);
+//			xhttp.onreadystatechange = function() {
+//        		if (this.readyState == 4 && this.status == 200) {
+//					var s = JSON.parse(this.responseText);
+//					if (s.code == 200){
+//						window.location.herf = "orderSuccessful.html";
+//					} else alert(s.message);
+//       			}
+//    		};
+//    		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/placeOrder", false);
+//			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+//			document.cookie = "shoppingCart=" + "[]" + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+//			console.log(JSON.stringify(data));
+//    		//xhttp.send(JSON.stringify(data));
+//			xhttp.send(data);
+//			return false;
+			*/
+		}
+		
+		function getCookie(cookieName){
+         	var name = cookieName + "=";
+           		var cookie = document.cookie.split(';');
+           		for(var i = 0; i < cookie.length; i++) {
+               		var entry = cookie[i];
+         		entry.replace(/ /g,'');
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+         		}
+         	}
+           		return "";
+         }
+		
 	</script>
+
 </body>
 </html>
