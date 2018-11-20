@@ -36,12 +36,16 @@
 		  
          function getOrderList(){
          	var orderList = [];
-			var data = new FormData();
+			// var form = document.createElement("form");
+			//var form = document.querySelector('form');
+  			//var data = new FormData(form);
+			//var data = {uid: 48, page: 1, count: 10};
 			//data.append("uid", getCookie("UID"));
 			
-			data.append('uid', 48);
-			data.append('page', 1);
-			data.append('count', 10);
+			//data.append('uid', 48);
+			//data.append('page', 1);
+			//data.append('count', 10);
+			 //var re = {content: data};
          	var xhttp = new XMLHttpRequest();
          	xhttp.onreadystatechange = function() {
          		if (this.readyState == 4 && this.status == 200) {
@@ -53,7 +57,8 @@
          	};
          	xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/getOrders", false);
 			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-         	xhttp.send(data); 
+			console.log("uid="+ getCookie("UID") + "&page=1&count=10");
+         	xhttp.send("uid="+ getCookie("UID") + "&page=1&count=10"); 
 			 
 			var list = document.getElementById("historyList");
          	for (var i = 0; i < orderList.length; i ++){

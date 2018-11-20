@@ -36,6 +36,7 @@
 		}
 		
 		function checkout(){
+			window.location.href = "orderSuccessful.html";
 			var xhttp = new XMLHttpRequest();
 			var data = new Object();
 			data.deliveryDetail = new Object();
@@ -51,19 +52,20 @@
 			for (var key in data){
 				fd.append(key, data[key]);
 			}
-			console.log();
+			console.log(fd);
 			
 			xhttp.onreadystatechange = function() {
         		if (this.readyState == 4 && this.status == 200) {
 					var s = JSON.parse(this.responseText);
 					if (s.code == 200){
-						location.herf = "orderSuccessful.html";
+						window.location.herf = "orderSuccessful.html";
 					} else alert(s.message);
        			}	
     		};
     		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/placeOrder", false);
 			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    		xhttp.send(fd); 
+			document.cookie = "shoppingCart=" + "[]" + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+    		xhttp.send(JSON.stringify(data)); 
 			return false;
 		}
 		
