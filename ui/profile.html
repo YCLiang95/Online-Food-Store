@@ -4,6 +4,7 @@
       <meta charset="utf-8">
       <link href="eCommerceAssets/styles/profile.css" rel="stylesheet" type="text/css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+      <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
       <title>profile Page</title>
    </head>
    <body onLoad="load()">
@@ -15,16 +16,16 @@
             <button id="logoutButton" onClick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button><br>         
          </div>
 		  <form id="userForm" method="post" accept-charset="UTF-8">
-			  <input type="number" name="uid" value = "48">
-			  <input type="number" name="count" value = "10">
-			  <input type="number" name="page" value = "1">
+			  <input type="number" name="uid" value = "48" id="uid">
+			  <input type="number" name="count" value = "10" id="count">
+			  <input type="number" name="page" value = "1" id="page">
 	      </form>
          <div class="orderHistory">
             <h3>Order History</h3>
             <div id="historyList">
 				  <ul>
                   <li>
-                     11/7/2018<span> order Status </span>
+                     <p>date of purchase</p><span> order Status </span>
                      <p>order number</p>
                   </li>
                </ul>
@@ -39,6 +40,14 @@
 			  getOrderList();
 		  }
 		  
+         function params(data) {
+             var arr = [];
+             for (var i in data) {
+                 arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
+             }
+             return arr.join('&');
+         }
+		  
          function getOrderList(){
          	var orderList = [];
 			// var form = document.createElement("form");
@@ -51,28 +60,63 @@
 			//data.append('page', 1);
 			//data.append('count', 10);
 			 //var re = {content: data};
-			 var data = new FormData(document.getElementById("userForm"));
-         	var xhttp = new XMLHttpRequest();
-         	xhttp.onreadystatechange = function() {
-         		if (this.readyState == 4 && this.status == 200) {
-         			var s = JSON.parse(this.responseText);
-         			if (s.code == 200){
-						productList = s.data;
-         			} else alert(s.message);
-         		}	
-         	};
-         	xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/getOrders", false);
-			//xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			//console.log("uid="+ getCookie("UID") + "&page=1&count=10");
-			 xhttp.send(data);
-         	//xhttp.send("uid="+ getCookie("UID") + "&page=1&count=10"); 
-			 //orderList.push({order: {create_time: "11/19/2018", oid: 123, status: 1}});
-			 console.log(orderList.length);
-			var list = document.getElementById("historyList");
+             var uid=parseInt($('#uid').val());
+             var page=parseInt($('#page').val());
+             var count=parseInt($('#count').val());
+             var obj=  {
+                 uid:uid,
+                 page:page,
+                 count:count
+             }
+            obj=params(obj);
+             console.log(obj)
+             $.ajax({
+                 type: "POST",
+                 url: "http://47.254.94.78:8085/cs160/user/order/getOrders",
+                 contentType: "application/x-www-form-urlencoded",
+                 data: obj,
+                 dataType: "json",
+                 success: function (res) {
+//                     if (res.code == 200){
+//                         window.location.herf = "orderSuccessful.html";
+//                     } else {
+//                         console.log(res.message)
+//                     }
+                     console.log(res)
+					 orderList = res.data
+					 displayOrderList(orderList)
+                 },
+                 error: function (error) {
+                     console.log(error)
+                 }
+             });
+//			 var data = new FormData(document.getElementById("userForm"));
+//         	var xhttp = new XMLHttpRequest();
+//         	xhttp.onreadystatechange = function() {
+//         		if (this.readyState == 4 && this.status == 200) {
+//         			var s = JSON.parse(this.responseText);
+//         			if (s.code == 200){
+//						productList = s.data;
+//         			} else alert(s.message);
+//         		}
+//         	};
+//         	xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/getOrders", false);
+//			//xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+//			//console.log("uid="+ getCookie("UID") + "&page=1&count=10");
+//			 xhttp.send(data);
+//         	//xhttp.send("uid="+ getCookie("UID") + "&page=1&count=10");
+//			 //orderList.push({order: {create_time: "11/19/2018", oid: 123, status: 1}});
+//			 console.log(orderList.length);
+
+         }
+		  
+		 function displayOrderList(orderList){
+			 var list = document.getElementById("historyList");
+			 console.log(orderList);
          	for (var i = 0; i < orderList.length; i ++){
          		var container = `
 			    <ul>
-                  <li>
+                   <li>
                      <a>${orderList[i].order.create_time}</a><span> ${orderList[i].order.status = 0 ? "In transit" : "Delivered"} </span>
                      <p>${orderList[i].order.oid}</p>
                   </li>
@@ -81,7 +125,7 @@
          		template.innerHTML = container;
          		list.appendChild(template.content);
 			}
-         }
+		 }
          
          function toInventoryManagement(){
          	if (username == "admin"){
