@@ -51,6 +51,7 @@
 			for (var key in data){
 				fd.append(key, data[key]);
 			}
+			console.log();
 			
 			xhttp.onreadystatechange = function() {
         		if (this.readyState == 4 && this.status == 200) {
@@ -61,6 +62,7 @@
        			}	
     		};
     		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/placeOrder", false);
+			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     		xhttp.send(fd); 
 			return false;
 		}

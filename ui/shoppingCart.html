@@ -132,19 +132,19 @@
          }
          
          function AddRemove(id, count){
-         shoppingCart = JSON.parse(getCookie("shoppingCart"));
-         for (var i = 0; i < shoppingCart.length; i ++){
-         if (shoppingCart[i].id == id){
-         shoppingCart[i].quantity += count;
-         if (shoppingCart[i].quantity <= 0){
-         shoppingCart.splice(i, 1);
+         	shoppingCart = JSON.parse(getCookie("shoppingCart"));
+         	for (var i = 0; i < shoppingCart.length; i ++){
+         		if (shoppingCart[i].id == id){
+         			shoppingCart[i].quantity += count;
+         			if (shoppingCart[i].quantity <= 0){
+         			shoppingCart.splice(i, 1);
+         		}
+         		break;
+         	}
          }
-         break;
-         }
-         }
-         saveToCookie();
-         emptyList();
-         loadShoppingCart();
+         	saveToCookie();
+         	emptyList();
+         	loadShoppingCart();
          }
          
          function getCookie(cookieName){
