@@ -14,6 +14,11 @@
             <button id="returnButton" onClick="window.location.href=`index.html`"><i class="fas fa-home"></i>Return Home</button><br>
             <button id="logoutButton" onClick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button><br>         
          </div>
+		  <form id="userForm" method="post" accept-charset="UTF-8">
+			  <input type="number" name="uid" value = "48">
+			  <input type="number" name="count" value = "10">
+			  <input type="number" name="page" value = "1">
+	      </form>
          <div class="orderHistory">
             <h3>Order History</h3>
             <div id="historyList">
@@ -46,6 +51,7 @@
 			//data.append('page', 1);
 			//data.append('count', 10);
 			 //var re = {content: data};
+			 var data = new FormData(document.getElementById("userForm"));
          	var xhttp = new XMLHttpRequest();
          	xhttp.onreadystatechange = function() {
          		if (this.readyState == 4 && this.status == 200) {
@@ -56,10 +62,11 @@
          		}	
          	};
          	xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/getOrders", false);
-			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			console.log("uid="+ getCookie("UID") + "&page=1&count=10");
+			//xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			//console.log("uid="+ getCookie("UID") + "&page=1&count=10");
+			 xhttp.send(data);
          	//xhttp.send("uid="+ getCookie("UID") + "&page=1&count=10"); 
-			 orderList.push({order: {create_time: "11/19/2018", oid: 123, status: 1}});
+			 //orderList.push({order: {create_time: "11/19/2018", oid: 123, status: 1}});
 			 console.log(orderList.length);
 			var list = document.getElementById("historyList");
          	for (var i = 0; i < orderList.length; i ++){

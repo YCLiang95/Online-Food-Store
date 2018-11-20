@@ -11,10 +11,14 @@
 	<div class="mainContent">
 		<form method="post" id="checkoutForm">
 		<article class="productInfo" id="productInfo">
-			<p class="Address">Address 1<input type="text" id="addressInput1" name="address" value="N/A"></p>
-			<p class="Address">City<input type="text" id="addressInput2" name="city" value="N/A"></p>
-			<p class="Address">State<input type="text" id="addressInput3" name="state" value="N/A"></p>
-			<p class="Zipcode">Zip code<input type="text" id="addressInput4" name="zipcode" value="N/A"></p>
+			<p class="Address">Address 1<input type="text" id="addressInput1" name="deliveryDetail[address]" value="N/A"></p>
+			<p class="Address">City<input type="text" id="addressInput2" name="deliveryDetail[city]" value="N/A"></p>
+			<p class="Address">State<input type="text" id="addressInput3" name="deliveryDetail[state]" value="N/A"></p>
+			<p class="Zipcode">Zip code<input type="number" id="addressInput4" name="deliveryDetail[zipcode]" value="95112"></p>
+			<input type="number" id = "uid" name="uid" value = "5">
+			<input type="number" id = "paymentType"  name="paymentType" value = "1">
+			<input type="number" name="orderDetail[0][mid]" value = "1">
+			<input type="number" name="orderDetail[0][count]" value = "10">
 			<div class="buttons">
 				<p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
 				<input type="button" name="button" value="Place Order" class="buyButton" onClick="checkout()">
@@ -36,8 +40,9 @@
 		}
 		
 		function checkout(){
-			window.location.href = "orderSuccessful.html";
+			//window.location.href = "orderSuccessful.html";
 			var xhttp = new XMLHttpRequest();
+			/*
 			var data = new Object();
 			data.deliveryDetail = new Object();
 			data.deliveryDetail.address = document.getElementById("addressInput1").value;
@@ -53,7 +58,9 @@
 				fd.append(key, data[key]);
 			}
 			console.log(fd);
-			
+			*/
+			var data = new FormData(document.getElementById("checkoutForm"));
+			console.log(data);
 			xhttp.onreadystatechange = function() {
         		if (this.readyState == 4 && this.status == 200) {
 					var s = JSON.parse(this.responseText);
