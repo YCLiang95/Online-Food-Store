@@ -88,6 +88,12 @@
          }
          tPrice += productList[j].price * shoppingCart[i].quantity;
          tWeight += productList[j].weight * shoppingCart[i].quantity;
+
+          // assume weight is in pounds
+          if(tWeight > 20) {
+            alert("Weight limit reached!")
+         }
+         
          		var container =`<div class = "container">
          <div class="removeDiv">
                 	<button class="removeButton" type="button" onclick="AddRemove(${shoppingCart[i].id}, ${-shoppingCart[i].quantity})">
