@@ -34,6 +34,7 @@
       </div>
       <script>
          var username = "";
+		  var orderList = [];
          
 		  function load(){
 			  getUserName();
@@ -50,7 +51,6 @@
          }
 		  
          function getOrderList(){
-         	var orderList = [];
 			// var form = document.createElement("form");
 			//var form = document.querySelector('form');
   			//var data = new FormData(form);
@@ -85,7 +85,7 @@
 //                     }
                      console.log(res)
 					 orderList = res.data
-					 displayOrderList(orderList)
+					 displayOrderList()
                  },
                  error: function (error) {
                      console.log(error)
@@ -111,15 +111,16 @@
 
          }
 		  
-		 function displayOrderList(orderList){
+		 function displayOrderList(){
 			 var list = document.getElementById("historyList");
 			 console.log(orderList);
          	for (var i = 0; i < orderList.length; i ++){
          		var container = `
 			    <ul>
                    <li>
-                     <a>${orderList[i].order.create_time}</a><a href="Tracking.html?${orderList[i].delivery.address}%20${orderList[i].delivery.city}%20${orderList[i].delivery.state}%20${orderList[i].delivery.zipcode}"> ${orderList[i].order.state = 1 ? "In transit" : "Delivered"} <span class="fas fa-map-marked-alt"></span></a>
-                     <p>${orderList[i].order.oid}</p>
+                     <a>${orderList[i].order.create_time}</a><a href="Tracking.html?${orderList[i].delivery.address}%20${orderList[i].delivery.city}%20${orderList[i].delivery.state}%20${orderList[i].delivery.zipcode}"> ${orderList[i].order.status == 1 ? "In transit" : "Delivered"} <span class="fas fa-map-marked-alt"></span></a>
+
+                     <p>${orderList[i].order.order_id}<a style="cursor: pointer;" onclick="getDetail(${i})"> <font color="blue">(Detail) </font></a></p>
                   </li>
                </ul>`;
 				var template = document.createElement("template");
@@ -128,6 +129,12 @@
 			}
 		 }
          
+		  function getDetail(index){
+			  console.log("get detail of" + index);
+			  //document.cookie = "orderDetail= JSON.stringify(orderList[i].order_detail);
+			  window.location.href="orderDetail.html?" + JSON.stringify(orderList[index]);
+		  }
+		  
          function toInventoryManagement(){
          	if (username == "admin"){
          		window.location.href = "inventory.html";
