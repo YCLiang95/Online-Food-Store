@@ -118,8 +118,10 @@
          		template.innerHTML = container;
          		list.appendChild(template.content.firstChild);
          	}
-         document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
-         document.getElementById("totalWeight").innerHTML = "Weight: " + tWeight.toFixed(1) + "lb";
+         	document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
+         	document.getElementById("totalWeight").innerHTML = "Weight: " + tWeight.toFixed(1) + "lb";
+			 document.cookie = "totalPrice=" + tPrice + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+			 document.cookie = "totalWeight=" + tWeight + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
          }
          
          function emptyList(){
@@ -130,19 +132,19 @@
          }
          
          function AddRemove(id, count){
-         shoppingCart = JSON.parse(getCookie("shoppingCart"));
-         for (var i = 0; i < shoppingCart.length; i ++){
-         if (shoppingCart[i].id == id){
-         shoppingCart[i].quantity += count;
-         if (shoppingCart[i].quantity <= 0){
-         shoppingCart.splice(i, 1);
+         	shoppingCart = JSON.parse(getCookie("shoppingCart"));
+         	for (var i = 0; i < shoppingCart.length; i ++){
+         		if (shoppingCart[i].id == id){
+         			shoppingCart[i].quantity += count;
+         			if (shoppingCart[i].quantity <= 0){
+         			shoppingCart.splice(i, 1);
+         		}
+         		break;
+         	}
          }
-         break;
-         }
-         }
-         saveToCookie();
-         emptyList();
-         loadShoppingCart();
+         	saveToCookie();
+         	emptyList();
+         	loadShoppingCart();
          }
          
          function getCookie(cookieName){

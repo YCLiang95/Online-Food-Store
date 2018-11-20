@@ -35,11 +35,11 @@
             		document.getElementById("Login/Register").setAttribute("href", "profile.html");
             	}
             	var shoppingCartCookie = getCookie("shoppingCart");
-            	if (shoppingCartCookie.localeCompare("")) shoppingCart = [];
-            	else {
-            		//alert(shoppingCartCookie );
+				try{
             		shoppingCart = JSON.parse(shoppingCartCookie);
-            		
+				} catch (error){
+					shoppingCart = [];
+					document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
             	}
             	var cl = document.getElementById("CartLink");
             	cl.innerHTML = "Cart(" + shoppingCart.length + ")";

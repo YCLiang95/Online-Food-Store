@@ -6,7 +6,7 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
       <title>profile Page</title>
    </head>
-   <body onLoad="getUserName()">
+   <body onLoad="load()">
       <p><a id="welcomeMessage">A placeholder for account profile page.</a></p>
       <div class="mainContent">
          <div class = "buttons">	
@@ -29,12 +29,45 @@
       <script>
          var username = "";
          
+		  function load(){
+			  getUserName();
+			  getOrderList();
+		  }
+		  
          function getOrderList(){
          	var orderList = [];
-         	
+			var data = new FormData();
+			//data.append("uid", getCookie("UID"));
+			
+			data.append('uid', 48);
+			data.append('page', 1);
+			data.append('count', 10);
+         	var xhttp = new XMLHttpRequest();
+         	xhttp.onreadystatechange = function() {
+         		if (this.readyState == 4 && this.status == 200) {
+         			var s = JSON.parse(this.responseText);
+         			if (s.code == 200){
+						productList = s.data;
+         			} else alert(s.message);
+         		}	
+         	};
+         	xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/getOrders", false);
+			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+         	xhttp.send(data); 
+			 
+			var list = document.getElementById("historyList");
          	for (var i = 0; i < orderList.length; i ++){
-         		var container = ``;
-         	}
+         		var container = `
+			    <ul>
+                  <li>
+                     ${orderList[i].order.create_time}<span> order content </span>
+                     <p>order number</p>
+                  </li>
+               </ul>`;
+				var template = document.createElement("template");
+         		template.innerHTML = container;
+         		list.appendChild(template.content.firstChild);
+			}
          }
          
          function toInventoryManagement(){
@@ -44,16 +77,22 @@
          		alert("Sorry, this is for employees only.");	
          	}
          }
-         
-         function getUserName(){
+		  
+		 function getCookie(cookieName){
+         	var name = cookieName + "=";
            		var cookie = document.cookie.split(';');
            		for(var i = 0; i < cookie.length; i++) {
                		var entry = cookie[i];
          		entry.replace(/ /g,'');
-               		if (entry.indexOf("userName") >= 0) {
-                   		username = entry.substring(entry.indexOf("userName") + 9, entry.length);
+               		if (entry.indexOf(name) >= 0) {
+                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
          		}
          	}
+           		return "";
+         }
+         
+         function getUserName(){
+			username = getCookie("userName");
          	document.getElementById("welcomeMessage").innerHTML = username + "'s profile page."
          }
          
