@@ -65,7 +65,9 @@
     		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/placeOrder", false);
 			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 			document.cookie = "shoppingCart=" + "[]" + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
-    		xhttp.send(JSON.stringify(data)); 
+			console.log(JSON.stringify(data));
+    		//xhttp.send(JSON.stringify(data)); 
+			xhttp.send(data);
 			return false;
 		}
 		
