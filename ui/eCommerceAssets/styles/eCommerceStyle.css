@@ -3,6 +3,10 @@
 a:hover {
 	color: rgba(255,255,255,1.00);
 }
+
+button:hover {
+	opacity:0.8;
+}
 :focus{
 	outline:none;
 }
@@ -28,7 +32,7 @@ header {
 	background-color: rgba(0,150,150,1.00);
 }
 [class~=fas]{
-	margin-right:3px;
+	margin-right:1px;
 }
 
 /* div for Links in header */
@@ -47,7 +51,8 @@ header {
 	font-size: 14px;
 }
 
-#headerLinks a:nth-of-type(3){
+#headerLinks a:nth-of-type(3),
+#headerLinks a:nth-of-type(5){
 	padding:0px;
 }
 /* Offer text banner*/
@@ -155,7 +160,7 @@ h3{
 	font-style: normal;
 	font-weight: 200;
 	text-align: center;
-	width: 1501px;
+	width: 1500px;
 }
 /*Each footer content */
 #mainWrapper footer div {
