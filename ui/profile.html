@@ -17,9 +17,9 @@
          <div class="orderHistory">
             <h3>Order History</h3>
             <div id="historyList">
-               <ul>
+				  <ul>
                   <li>
-                     11/7/2018<span> order content </span>
+                     11/7/2018<span> order Status </span>
                      <p>order number</p>
                   </li>
                </ul>
@@ -58,20 +58,21 @@
          	xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/order/getOrders", false);
 			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 			console.log("uid="+ getCookie("UID") + "&page=1&count=10");
-         	xhttp.send("uid="+ getCookie("UID") + "&page=1&count=10"); 
-			 
+         	//xhttp.send("uid="+ getCookie("UID") + "&page=1&count=10"); 
+			 orderList.push({order: {create_time: "11/19/2018", oid: 123, status: 1}});
+			 console.log(orderList.length);
 			var list = document.getElementById("historyList");
          	for (var i = 0; i < orderList.length; i ++){
          		var container = `
 			    <ul>
                   <li>
-                     ${orderList[i].order.create_time}<span> order content </span>
-                     <p>order number</p>
+                     <a>${orderList[i].order.create_time}</a><span> ${orderList[i].order.status = 0 ? "In transit" : "Delivered"} </span>
+                     <p>${orderList[i].order.oid}</p>
                   </li>
                </ul>`;
 				var template = document.createElement("template");
          		template.innerHTML = container;
-         		list.appendChild(template.content.firstChild);
+         		list.appendChild(template.content);
 			}
          }
          
