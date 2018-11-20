@@ -49,9 +49,7 @@
             <button id="returnButton" type="Submit"><i class="fas fa-home"></i>Return to Shop</button>
          </form>
 
-         <form action="checkout.html">
-            <button id="checkoutButton" type="Submit">Check Out</button>
-         </form>
+            <button id="checkoutButton" type="button" onClick="checkout()">Check Out</button>
 	</div>
 
       </section>
@@ -61,10 +59,11 @@
          var productList = new Object();
          var userName = "";
          
-         //Sent request to the server for specific item data
-         function quary(id){
-         	
-         }
+		 function checkout(){
+			 if (getCookie("totalWeight") <= 20) {
+				 window.location.href = "checkout.html";
+			 } else alert("Exceeds weight limit");
+		 }
          
          function loadPage(){
          userName = getCookie("userName");
@@ -119,7 +118,9 @@
          		list.appendChild(template.content.firstChild);
          	}
          	document.getElementById("totalPrice").innerHTML = "Total: $" + tPrice.toFixed(2);
-         	document.getElementById("totalWeight").innerHTML = "Weight: " + tWeight.toFixed(1) + "lb";
+			 if (tWeight <= 20)
+         		document.getElementById("totalWeight").innerHTML = "Weight: " + tWeight.toFixed(1) + "lb / 20lb";
+			 else document.getElementById("totalWeight").innerHTML = '<font color="red">' + "Weight:" + tWeight.toFixed(1) + 'lb / 20lb</font>';
 			 document.cookie = "totalPrice=" + tPrice + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
 			 document.cookie = "totalWeight=" + tWeight + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
          }
