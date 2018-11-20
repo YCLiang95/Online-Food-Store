@@ -16,9 +16,9 @@
             <button id="logoutButton" onClick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button><br>         
          </div>
 		  <form id="userForm" method="post" accept-charset="UTF-8">
-			  <input type="number" name="uid" value = "48" id="uid">
-			  <input type="number" name="count" value = "10" id="count">
-			  <input type="number" name="page" value = "1" id="page">
+			  <input type="hidden" name="uid" value = "48" id="uid">
+			  <input type="hidden" name="count" value = "10" id="count">
+			  <input type="hidden" name="page" value = "1" id="page">
 	      </form>
          <div class="orderHistory">
             <h3>Order History</h3>
@@ -37,6 +37,7 @@
          
 		  function load(){
 			  getUserName();
+			  document.getElementById("uid").value = getCookie("UID");
 			  getOrderList();
 		  }
 		  
@@ -117,7 +118,7 @@
          		var container = `
 			    <ul>
                    <li>
-                     <a>${orderList[i].order.create_time}</a><span> ${orderList[i].order.status = 0 ? "In transit" : "Delivered"} </span>
+                     <a>${orderList[i].order.create_time}</a><a href="Tracking.html?${orderList[i].delivery.address}%20${orderList[i].delivery.city}%20${orderList[i].delivery.state}%20${orderList[i].delivery.zipcode}"> ${orderList[i].order.state = 1 ? "In transit" : "Delivered"} <span class="fas fa-map-marked-alt"></span></a>
                      <p>${orderList[i].order.oid}</p>
                   </li>
                </ul>`;

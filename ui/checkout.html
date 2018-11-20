@@ -16,10 +16,10 @@
 			<p class="Address">City<input type="text" id="addressInput2" name="deliveryDetail[city]" value="N/A"></p>
 			<p class="Address">State<input type="text" id="addressInput3" name="deliveryDetail[state]" value="N/A"></p>
 			<p class="Zipcode">Zip code<input type="number" id="addressInput4" name="deliveryDetail[zipcode]" value="95112"></p>
-			<input type="number" id = "uid" name="uid" value = "5">
-			<input type="number" id = "paymentType"  name="paymentType" value = "1">
-			<input type="number" name="orderDetail[0][mid]" value = "1" id="mid">
-			<input type="number" name="orderDetail[0][count]" value = "10" id="count">
+			<input type="hidden" id = "uid" name="uid" value = "5">
+			<input type="hidden" id = "paymentType"  name="paymentType" value = "1">
+			<input type="hidden" name="orderDetail[0][mid]" value = "1" id="mid">
+			<input type="hidden" name="orderDetail[0][count]" value = "10" id="count">
 			<div class="buttons">
 				<p class="home"><i class="fas fa-home"></i><input type="button " value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
 				<input type="button" name="button" value="Place Order" class="buyButton" onClick="checkout()">
@@ -74,7 +74,9 @@
                 dataType: "json",
                 success: function (res) {
                     if (res.code == 200){
-						window.location.herf = "orderSuccessful.html";
+						console.log("orderPlaced!");
+						window.location.href = "orderSuccessful.html";
+						document.cookie="shoppingCart=;" + "expires=Thu, 01 Jan 1970 00:00:01 GMT" ;
 					} else {
                         console.log(res.message)
 					}
@@ -83,9 +85,9 @@
                    console.log(error)
                 }
             });
-
-//			var xhttp = new XMLHttpRequest();
-			/*
+/*
+			var xhttp = new XMLHttpRequest();
+			
 			var data = new Object();
 			data.deliveryDetail = new Object();
 			data.deliveryDetail.address = document.getElementById("addressInput1").value;
@@ -101,7 +103,7 @@
 				fd.append(key, data[key]);
 			}
 			console.log(fd);
-			*/
+			
 //			var data = new FormData(document.getElementById("checkoutForm"));
 //			console.log(data);
 //			xhttp.onreadystatechange = function() {
@@ -119,6 +121,7 @@
 //    		//xhttp.send(JSON.stringify(data));
 //			xhttp.send(data);
 //			return false;
+			*/
 		}
 		
 		function getCookie(cookieName){
