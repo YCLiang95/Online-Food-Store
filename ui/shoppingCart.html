@@ -60,9 +60,10 @@
          var userName = "";
          
 		 function checkout(){
-			 if (getCookie("totalWeight") <= 20) {
-				 window.location.href = "checkout.html";
-			 } else alert("Exceeds weight limit");
+			 if (getCookie("totalWeight") > 20)
+				 alert("Exceeds weight limit!");
+			 else if (shoppingCart.length <= 0) alert("The shopping cart is empty!");
+			 else window.location.href = "checkout.html";;
 		 }
          
          function loadPage(){

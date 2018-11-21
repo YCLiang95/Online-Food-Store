@@ -35,9 +35,15 @@
 	
 	</div>
 	<script>
+		var shoppingCart = [];
 		function load(){
-			document.getElementById("tPrice").innerHTML = " Total price: $" + getCookie("totalPrice");
-			document.getElementById("tWeight").innerHTML =" Total weight: " + getCookie("totalWeight") + " lb";
+			document.getElementById("tPrice").innerHTML = " Total price: $" + parseFloat(getCookie("totalPrice")).toFixed(2);
+			document.getElementById("tWeight").innerHTML =" Total weight: " + parseFloat(getCookie("totalWeight")).toFixed(1) + " lb";
+			document.getElementById("uid").value = getCookie("UID");
+			var cart = JSON.parse(getCookie("shoppingCart"));
+			for (var i in cart){
+				shoppingCart[i] = {mid:cart[i].id, count:cart[i].quantity};	
+			}
 		}
 		
 		function checkout(){
@@ -60,9 +66,10 @@
                  },
                  paymentType:paymentType,
                  uid:uid,
-                 order_detail:[
-                {mid:mid,count:count}
-            ]
+                 //order_detail:[
+                //{mid:mid,count:count}
+            //]
+				 order_detail: shoppingCart
 
         }
            console.log(obj)
