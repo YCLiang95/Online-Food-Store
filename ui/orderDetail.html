@@ -7,8 +7,10 @@
 </head>
 
 <body onLoad="load()">
+	<div class="mainContent">
+	<h2>Order Detail</h2>
 	<div id="orderDetail">
-		<table style="width:80%" id="orderTable">
+		<table id="orderTable">
 			<tr>
 				<th>Time out Purchase</th>
 				<th>Order ID</th>
@@ -18,7 +20,7 @@
 	</div>
 	
 	<div id="itemList">
-		<table style="width:80%" id="itemTable">
+		<table id="itemTable">
 			<tr>
 				<th>Merchandaise</th>
 				<th>Amount</th>
@@ -28,7 +30,7 @@
 	</div>
 	
 	<div id="address">
-		<table style="width:80%" id="addressTable">
+		<table id="addressTable">
 			<tr>
 				<th>Address</th>
 				<th>City</th>
@@ -39,6 +41,7 @@
 	</div> 
 	
 	<button onClick="window.location.href='profile.html'">Return to Profile</button>
+	</div>
 	<script>
 		function load(){
 			var list = JSON.parse(decodeURI(window.location.search.substring(1)));
@@ -46,9 +49,9 @@
 			
 			var orderTable = document.getElementById("orderTable");
 			var container = `<tr>
-								<th>${list.order.create_time}</th>
-								<th>${list.order.order_id}</th>
-								<th>${list.order.status}</th>
+								<td>${list.order.create_time}</td>
+								<td>${list.order.order_id}</td>
+								<td>${list.order.status}</td>
 							 </tr>`;
 			var template = document.createElement("template");
          	template.innerHTML = container;
@@ -57,18 +60,19 @@
 			var itemTable = document.getElementById("itemTable");
 			for (var i in list.order_detail){
          		var container = `<tr>
-									<th>${list.order_detail[i].merchandise_name}</th>
-									<th>${list.order_detail[i].merchandise_count}</th>
-									<th>${list.order_detail[i].merchandise_price.toFixed(2)}</th>
+									<td>${list.order_detail[i].merchandise_name}</th>
+									<td>${list.order_detail[i].merchandise_count}</td>
+									<td>${list.order_detail[i].merchandise_price.toFixed(2)}</td>
 								</tr>`;
 				var template = document.createElement("template");
          		template.innerHTML = container;
          		itemTable.appendChild(template.content);
 			}
 			var container = `<tr>
-								<th>Total</th>
-								<th></th>
-								<th>${list.order.total_merchandise_price.toFixed(2)}</th>
+								<td></td>
+								<td><strong>Total:</strong></td>
+								
+								<td>${list.order.total_merchandise_price.toFixed(2)}</td>
 								</tr>`;
 				var template = document.createElement("template");
          		template.innerHTML = container;
@@ -76,10 +80,10 @@
 			
 				var addressTable = document.getElementById("addressTable");
 				var container = `<tr>
-								<th>${list.delivery.address}</th>
-								<th>${list.delivery.city}</th>
-								<th>${list.delivery.state}</th>
-								<th>${list.delivery.zipcode}</th>
+								<td>${list.delivery.address}</td>
+								<td>${list.delivery.city}</td>
+								<td>${list.delivery.state}</td>
+								<td>${list.delivery.zipcode}</td>
 								</tr>`;
 				var template = document.createElement("template");
          		template.innerHTML = container;

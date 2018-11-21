@@ -40,13 +40,20 @@ h3{
 	margin-left:20px;
 }
 
+#historyList{
+	width:100%;
+	height:85%;
+	overflow:auto;
+	margin-top:-20px;
+}
+
 ul {
 	display: flex;
  	flex-direction: column;
 }
 
-ul li {
-	margin-top:-10px;
+ul li{
+	margin-top:-20px;
 	display: flex;
  	flex-direction: row-reverse;
  	justify-content: space-between;

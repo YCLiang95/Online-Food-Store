@@ -13,11 +13,12 @@
          <header>
             <div id="logo"> OFS </div>
             <div id="headerLinks">
-               <a href="StoreLocation.html" title="StoreLocation"><span class="fas fa-map-marker-alt"></span> Store Location</a>
+               <a href="StoreLocation.html" title="StoreLocation"><span class="fas fa-map-marker-alt"></span>  Store Location</a>
                <a><span class="fas fa-user"></span></a>
                <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
                <!--<a href="Tracking.html" title="Tracking"><span class="fas fa-map-marked-alt"></span> Tracking</a> -->
-               <a href="shoppingCart.html" title="Cart" id ="CartLink"><span class="fas fa-shopping-cart"></span> Cart</a>
+               <a><span class="fas fa-shopping-cart"></span></a>
+               <a href="shoppingCart.html" title="Cart" id ="CartLink">Cart</a>
             </div>
          </header>
 
@@ -49,15 +50,15 @@
             
             function displayProduct(){
             	var list = document.getElementById("productRow");
-            	
+            	console.log(productList[0]);
             	for (var i = 0; i < productList.length; i ++){
             		var container = `<div class = "productInfo">
                     			<div><img alt="sample" src="${productList[i].imagerl}"></div>
                     			<p class="productContent">${productList[i].name}</p>
                     			<p class="productWeight">${productList[i].weight.toFixed(1)} lb / item</p>
                     			<p class="price">$ ${productList[i].price.toFixed(2)}</p>
-            			<button type="button" name="button" class="buyButton" onclick="AddToCart(${i})">
-            				<a>Add to Cart</a>
+            					<button type="button" name="button" class="buyButton" onclick="AddToCart(${i});"}>
+            					<a>${productList[i].quantify >= 0 ? "Add to Cart" : "<font color='red'>Out of Stock</font>"}</a>
             			</button>
             		</div>`;
             		var template = document.createElement("template");
@@ -82,6 +83,10 @@
             }
             
             function AddToCart(index){
+				if (productList[index].quantify <= 0){
+					alert('Sorry, this merchandise is currently out of stock');
+					return false;
+				}
             	var b = false;
             	for (var i = 0; i < shoppingCart.length; i ++){
             		if (shoppingCart[i].id == productList[index].mid){
