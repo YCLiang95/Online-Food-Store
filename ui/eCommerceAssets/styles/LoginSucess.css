@@ -51,13 +51,20 @@ img {
 	padding: 10px 50px 10px 50px;
 } 
 
+[href="index.html"]{
+	color: rgba(0,150,150,1.0);	
+	background-color: rgba(240,240,240,0.9);	
+}
+
+[href="profile.html"]{
+	padding: 10px 80px 10px 80px;
+}
+
 [class~=fas]{
 	margin:0px 10px 0px 5px;
 }
 
-a:link {color: white;}
-a:visited {color: white;}
 [href]:hover {opacity: 0.8;}
-a:active {color: white;}
+
 
 

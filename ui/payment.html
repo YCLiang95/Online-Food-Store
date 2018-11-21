@@ -3,15 +3,26 @@
 <head>
 <meta charset="utf-8">
 <title>payment</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+<link href="eCommerceAssets/styles/Payment.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<a>Select a Payment mdethod.</a>
-	<a>You will be redirected to the payment page of the relative merchant.</a>
-	<div>
-		<button onclick="window.location.href='orderSuccessful.html'">PaLPaY</button>
-		<button onclick="window.location.href='orderSuccessful.html'">Credit Card</button>
-		<button onclick="window.location.href='orderSuccessful.html'">BananaPay</button>
+	<div class="checkoutTitle">Check out - Payment</div>
+	<div class="mainContent">
+		<a>Select a Payment mdethod.</a>
+		<a>You will be redirected to the payment page of the relative merchant.</a>
+
+		<div class="payments">
+			<button onclick="window.location.href='orderSuccessful.html'">PaLPaY</button>
+			<button onclick="window.location.href='orderSuccessful.html'">Credit Card</button>
+			<button onclick="window.location.href='orderSuccessful.html'">BananaPay</button>
+		</div>
+
+		<p class="home"><span class="fas fa-home"></span><input type="button" value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
+
+	
 	</div>
+
 </body>
 </html>
