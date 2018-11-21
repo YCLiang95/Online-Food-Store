@@ -75,7 +75,7 @@
                 success: function (res) {
                     if (res.code == 200){
 						console.log("orderPlaced!");
-						window.location.href = "orderSuccessful.html";
+						window.location.href = "payment.html";
 						document.cookie="shoppingCart=;" + "expires=Thu, 01 Jan 1970 00:00:01 GMT" ;
 					} else {
                         console.log(res.message)
