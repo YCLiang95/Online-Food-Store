@@ -18,6 +18,9 @@
                <a><span class="fas fa-user"></span></a>
                <a href="LoginRegister.html" id="Login/Register">Login/Register</a>
                <a href="shoppingCart.html" title="Cart" id ="CartLink"><span class="fas fa-shopping-cart"></span> Cart</a>	
+               <!--<a href="Tracking.html" title="Tracking"><span class="fas fa-map-marked-alt"></span> Tracking</a> -->
+               <a><span class="fas fa-shopping-cart"></span></a>
+               <a href="shoppingCart.html" title="Cart" id ="CartLink">Cart</a>
             </div>
          </header>
 
@@ -35,8 +38,11 @@
          <iframe width="100%" height="450" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=94401&key=AIzaSyDmLCKzt_7UZBrajANa7dMbIv9xLv3xtyk" allowfullscreen></iframe>
 
          <script>
+            var productList = new Object();
+            var shoppingCart = [];
+            
             function load(){
-            	var name = getUserName();
+            	var name = getCookie("userName");
             	if (name == ""){
             		document.getElementById("Login/Register").innerHTML = "Login/Register";
             		document.getElementById("Login/Register").setAttribute("href", "LoginRegister.html");
@@ -44,19 +50,53 @@
             		document.getElementById("Login/Register").innerHTML = name;
             		document.getElementById("Login/Register").setAttribute("href", "profile.html");
             	}
+            	var shoppingCartCookie = getCookie("shoppingCart");
+				try{
+            		shoppingCart = JSON.parse(shoppingCartCookie);
+				} catch (error){
+					shoppingCart = [];
+					document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+            	}
+            	var cl = document.getElementById("CartLink");
+            	cl.innerHTML = "Cart(" + shoppingCart.length + ")";
+            	getInventory();
+            	displayProduct();
+            }
+                        
+            function AddToCart(index){
+            	var b = false;
+            	for (var i = 0; i < shoppingCart.length; i ++){
+            		if (shoppingCart[i].id == productList[index].mid){
+            			b = true;
+            			shoppingCart[i].quantity += 1;
+            			break;
+            		}
+            	}
+            	if (!b){
+            		var t = shoppingCart.length;
+            		shoppingCart[t] = new Object();
+            		shoppingCart[t].id = productList[index].mid;
+            		shoppingCart[t].quantity = 1;
+            	}
+            	document.cookie = "shoppingCart=" + JSON.stringify(shoppingCart) + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
+            	alert(productList[index].name + " added to Cart");
+            	var cl = document.getElementById("CartLink");
+            	cl.innerHTML = "Cart(" + shoppingCart.length + ")";
             }
             
-            function getUserName(){
-              	var cookie = document.cookie.split(';');
-              	for(var i = 0; i < cookie.length; i++) {
-                  	var entry = cookie[i];
-            	entry.replace(/ /g,'');
-                  	if (entry.indexOf("userName") >= 0) {
-                      	return entry.substring(entry.indexOf("userName") + 9, entry.length);
-            	}
-            }
-              	return "";
-            }
+                   function getCookie(cookieName){
+                   	var name = cookieName + "=";
+                     		var cookie = document.cookie.split(';');
+                     		for(var i = 0; i < cookie.length; i++) {
+                         		var entry = cookie[i];
+                   		entry.replace(/ /g,'');
+                         		if (entry.indexOf(name) >= 0) {
+                             		return entry.substring(entry.indexOf(name) + name.length, entry.length);
+                   		}
+                   	}
+                     		return "";
+                   }
+            
          </script>
       </div>
    </body>
