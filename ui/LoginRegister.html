@@ -30,6 +30,7 @@
          </form>
          </p>
 	
+		 <script src="script\cookie.js"></script>
          <script>
             function login(){
             	var xhttp = new XMLHttpRequest();
@@ -77,18 +78,6 @@
             }
             }
             
-            function getCookie(cookieName){
-            var name = cookieName + "=";
-              	var cookie = document.cookie.split(';');
-              	for(var i = 0; i < cookie.length; i++) {
-                  	var entry = cookie[i];
-            	entry.replace(/ /g,'');
-                  	if (entry.indexOf(name) == 0) {
-                      	return entry.substring(name.length, entry.length);
-            	}
-            }
-              	return "";
-            }
          </script>
       </div>
 
