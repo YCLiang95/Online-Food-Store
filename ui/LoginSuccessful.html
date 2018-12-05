@@ -16,22 +16,11 @@
       </div>
 
       <a href="index.html"><i class="fas fa-home"></i>Back to Shopping</a>
-
+	   
+	   <script src="script\cookie.js"></script>
       <script>
          function message(){
-         	document.getElementById("userNameText").innerHTML = " " + getUserName() + "!";
-         }
-         
-         function getUserName(){
-           		var cookie = document.cookie.split(';');
-           		for(var i = 0; i < cookie.length; i++) {
-               		var entry = cookie[i];
-         		entry.replace(/ /g,'');
-               		if (entry.indexOf("userName") >= 0) {
-                   		return entry.substring(entry.indexOf("userName") + 9, entry.length);
-         		}
-         	}
-           		return "";
+         	document.getElementById("userNameText").innerHTML = " " + getCookie("userName") + "!";
          }
       </script>
    </body>

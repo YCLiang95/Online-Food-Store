@@ -14,7 +14,7 @@
 
       <div id="inputbox">
          <p>
-         <form id="loginForm" name="NloginForm" method="post" accept-charset="UTF-8">
+         <form id="loginForm">
             <p>
             <h5><label for="email" id="label_email"><i class="fas fa-user"></i>User Name</label></h5>
             <input type="text" placeholder="enter user name" name = "email" id = "input_email">
@@ -25,11 +25,13 @@
             </p>
             <p>
                <button onclick="return login();" id="button_login">Login</button>
-               <button onclick="register();" id="button_register">Register</button>
+               <button onclick="return register();" id="button_register">Register</button>
             </p>
          </form>
          </p>
 	
+		 <script src="script\request.js"></script>
+		 <script src="script\cookie.js"></script>
          <script>
             function login(){
             	var xhttp = new XMLHttpRequest();
@@ -38,8 +40,9 @@
                   		if (this.readyState == 4 && this.status == 200) {
             			validateLogin(this);
                  			}	
+						return false;
               		};
-              		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/login", false);
+              		xhttp.open("POST", serverURL + "cs160/user/login", false);
               		xhttp.send(data); 
             	return false;
             }
@@ -51,22 +54,23 @@
                   		if (this.readyState == 4 && this.status == 200) {
             			validateLogin(this);
                  			}	
+						return false;
               		};
-              		xhttp.open("POST", "http://47.254.94.78:8085/cs160/user/register", false);
+              		xhttp.open("POST", serverURL + "cs160/user/register", false);
               		xhttp.send(data); 
             	return false;
             }
             
             function validateLogin(xhttp){
             var x = JSON.parse(xhttp.responseText);
-            
+
             if (x.code == 200) {
             	var shoppingCart = getCookie("shoppingCart");
             	var userName = document.getElementById("input_email").value;
             	document.cookie = "userName=" + x.data.email + '; expires=Thu, 01 Jan 2020 00:00:01 GMT'; 
             	document.cookie = "shoppingCart=" + shoppingCart + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
 				document.cookie = "UID=" + x.data.uid + '; expires=Thu, 01 Jan 2020 00:00:01 GMT';
-            	window.location.href = "loginSuccessful.html";
+            	window.location.href = "LoginSuccessful.html";
             	return false;
             } else {
             	alert(x.message);
@@ -74,18 +78,6 @@
             }
             }
             
-            function getCookie(cookieName){
-            var name = cookieName + "=";
-              	var cookie = document.cookie.split(';');
-              	for(var i = 0; i < cookie.length; i++) {
-                  	var entry = cookie[i];
-            	entry.replace(/ /g,'');
-                  	if (entry.indexOf(name) == 0) {
-                      	return entry.substring(name.length, entry.length);
-            	}
-            }
-              	return "";
-            }
          </script>
       </div>
 

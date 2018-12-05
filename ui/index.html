@@ -22,6 +22,8 @@
             </div>
          </header>
 
+		 <script src="script\cookie.js"></script>
+		 <script src="script\request.js"></script>
          <script>
             var productList = new Object();
             var shoppingCart = [];
@@ -77,8 +79,10 @@
             			} else alert("Failed to obtain product list");
                  			}	
               		};
-              		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
-              		xhttp.send(); 
+				//postRequest("cs160/mechandise/list", xhttp, null);
+				xhttp.open("POST", serverURL + "cs160/mechandise/list", false);
+              	//xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+              	xhttp.send(); 
             	return false;
             }
             
@@ -107,18 +111,7 @@
             	cl.innerHTML = "Cart(" + shoppingCart.length + ")";
             }
             
-                   function getCookie(cookieName){
-                   	var name = cookieName + "=";
-                     		var cookie = document.cookie.split(';');
-                     		for(var i = 0; i < cookie.length; i++) {
-                         		var entry = cookie[i];
-                   		entry.replace(/ /g,'');
-                         		if (entry.indexOf(name) >= 0) {
-                             		return entry.substring(entry.indexOf(name) + name.length, entry.length);
-                   		}
-                   	}
-                     		return "";
-                   }
+
             
          </script>
 
