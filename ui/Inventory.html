@@ -28,8 +28,8 @@
             </div>
             <div class="buttons">
                <p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="return" onClick="window.location.href=`index.html`"></p>
-               <input type="button" name="button" value="Save to Server" class="saveButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/update')">
-               <input type="button" name="button" value="Create new product" class="saveButton" onClick="update('http://47.254.94.78:8085/cs160/mechandise/save')">
+                <input type="button" name="button" value="Save to Server" class="saveButton" onClick="update('cs160/mechandise/update')">
+               <input type="button" name="button" value="Create new product" class="saveButton" onClick="update('cs160/mechandise/save')">
             </div>
          </article>
       </form>
@@ -70,7 +70,7 @@
           			} else alert("Failed to obtain product list");
                			}	
             		};
-            		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+            		xhttp.open("POST", serverURL + "cs160/mechandise/list", false);
             		xhttp.send(); 
           	return false;
           }
@@ -103,7 +103,7 @@
           			} else alert(s.message);
                			}	
             		};
-            		xhttp.open("POST", url, false);
+            		xhttp.open("POST", serverURL + url, false);
             		xhttp.send(data); 
           	return false;
           }
