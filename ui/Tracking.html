@@ -8,16 +8,19 @@
 	   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
    </head>
    <body onLoad="load()">
-      <iframe id="map" width="600" height="450" frameborder="0" style="border:0" 
-         src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDZ_7y_iYoC3ZZS06q9P6VUjGzfhG0FOoQ
-         &origin=san%20jose%20state%20university
-         &destination=San%20jose%20airport" 
-         allowfullscreen></iframe>
+	<div id="mainWrapper">
       <div id="returnHome">
          <form action = "index.html">
             <button type="submit" id="button_submit"><i class="fas fa-home"></i>Return Home</button>
          </form>
       </div>
+	
+      <iframe id="map" width="600" height="450" frameborder="0" style="border:0" 
+         src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDZ_7y_iYoC3ZZS06q9P6VUjGzfhG0FOoQ
+         &origin=san%20jose%20state%20university
+         &destination=San%20jose%20airport" 
+         allowfullscreen></iframe>
+	</div>
 	   
 	  <script src="script\request.js"></script> 
       <script>
