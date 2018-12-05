@@ -37,44 +37,33 @@
                 <form action="">
                     <div class="row collapse">
                         <div class="small-6 columns">
-                            <input placeholder="Card number" type="text" name="number">
+                            <input placeholder="Card number" type="text" name="number" required>
                         </div>
                         <div class="small-6 columns">
-                            <input placeholder="Full name" type="text" name="name">
+                            <input placeholder="Full name" type="text" name="name" required>
                         </div>
                     </div>
                     <div class="row collapse">
                         <div class="small-3 columns">
-                            <input placeholder="MM/YY" type="text" name="expiry">
+                            <input placeholder="MM/YY" type="text" name="expiry" required> 
                         </div>
 
                         <div class="small-3 columns">
-                            <input placeholder="CVC" type="text" name="cvc">
+                            <input placeholder="CVC" type="text" name="cvc" required>
                         </div>
 
-                        <div class="small-6 columns">
-							<!-- <input type="submit" value="Submit" class="button postfix"> -->
-							<button onclick="window.location.href='orderSuccessful.html'">Submit</button>
-
+                        <div class="small-6 columns" style="text-align: center;">
+							<button onclick="window.location.href='orderSuccessful.html'" style="vertical-align: middle; width:120px; height:100px;">Submit</button>
+							<button onclick="window.location.href='index.html'" style="vertical-align: middle;  width:120px; height:100px; background-color: darkred">Cancel</button>
                         </div>
                     </div>
                 </form>
-            </div>
+			</div>
 
-        <!-- <div class="form-container active">
-            <form action="">
-                <input placeholder="Card number" type="tel" name="number">
-                <input placeholder="Full name" type="text" name="name">
-                <input placeholder="MM/YY" type="tel" name="expiry">
-                <input placeholder="CVC" type="number" name="cvc">
-			</form> -->
-			<!-- <button onclick="window.location.href='orderSuccessful.html'">Submit</button> -->
-			<p class="home"><span class="fas fa-home"></span><input type="button" value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
-
-			<!-- <input type="submit" value="Submit" class="button postfix"> -->
         </div>
 
 		<script>
+
 		var card = new Card({
 			form: 'form',
 			container: '.card-wrapper',
@@ -89,7 +78,7 @@
 		</script>
 
 
-	
+
 	</div>
 	</div>
 
