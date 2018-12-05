@@ -55,7 +55,7 @@
             	var data = new FormData(document.getElementById ('loginForm'));
             	xhttp.onreadystatechange = function() {
                   		if (this.readyState == 4 && this.status == 200) {
-            			validateLogin(this);
+            					alert(JSON.parse(this.responseText).message);
                  			}	
 						return false;
               		};
