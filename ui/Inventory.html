@@ -7,7 +7,8 @@
       <link href="eCommerceAssets/styles/Inventory.css" rel="stylesheet" type="text/css">
    </head>
    <body onLoad="load()">
-      <p><a id="InventoryTitle">Inventory Manage</a></p>
+	<div id="mainWrapper">
+      <div id="title"><a id="InventoryTitle">Inventory Manage</a></div>
       <form method="post" id="productForm">
          <div class="instruction">
             <h3><span class="fas fa-info-circle"></span>INSTRUCTION:</h3>
@@ -34,6 +35,7 @@
       </form>
       <div id="productWindow">
       </div>
+	</div>
 	  <script src="script\request.js"></script>
       <script>
          var productList = new Object();

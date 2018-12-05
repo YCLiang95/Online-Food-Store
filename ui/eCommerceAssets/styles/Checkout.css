@@ -2,12 +2,19 @@
 	outline:none;
 }
 
+/* Whole page content */
+#mainWrapper {
+	width:expression(document.body.clientWidth <= 800? "800px": "auto"); 
+	min-width:800px;
+	padding: 150px 5px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-bottom: 100px;
+}
+
 .checkoutTitle {
-     position: absolute;
-     top: 50px;
-     left: 50%;
-     margin-left: -400px;
-     width: 800px;
+     width:640px;
      background-image: url("../images/checkout.png");
      background-repeat:no-repeat;
      padding:80px;
@@ -19,7 +26,6 @@
 .mainContent {
      width: 800px;
      height: 100%;
-     margin: 280px auto;
      display: flex;
      align-items:flex-start;
      justify-content: space-between;

@@ -2,11 +2,18 @@
      outline:none;
 }
 
- #InventoryTitle {
-     position: absolute;
-     top:50px;
-     left: 50%;
-     margin-left: -400px;
+/* Whole page content */
+#mainWrapper {
+	width:expression(document.body.clientWidth <= 800? "800px": "auto"); 
+	min-width:800px;
+	padding: 150px 5px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-bottom: 100px;
+}
+
+ #title {
      width: 640px;
      background-image: url("../images/inventory.png");
      background-repeat:no-repeat;
@@ -18,12 +25,9 @@
 }
 
  #productForm{
+	margin-top:-10px;
      background-color: rgba(0,150,150,0.1);
-     position: absolute;
-     top: 250px;
      width: 770px;
-     left: 50%;
-     margin-left: -400px;
      font-family: 'Montserrat', sans-serif;
      padding:15px;
 }

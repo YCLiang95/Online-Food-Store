@@ -2,23 +2,22 @@
 	outline:none;
 }
 
-iframe{
-	position: absolute;
-	top: 200px;
-	left: 50%;
-	margin-left: -300px;
-	width: 600px;
+/* Whole page content */
+#mainWrapper {
+	width:expression(document.body.clientWidth <= 600? "600px": "auto"); 
+	min-width:600px;
+	padding: 150px 5px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-bottom: 100px;
 }
 
 #returnHome {
-	position: absolute;
-	top: 50px;
 	background-image: url("../images/tracking.png");
 	background-repeat:no-repeat;
-  	left: 50%;
-	margin-left: -300px;
-	width: 600px;
-	height: 150px;
+	width:600px;
+	height:150px;
 }
 
 #button_submit {
