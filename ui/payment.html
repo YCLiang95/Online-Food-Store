@@ -34,7 +34,7 @@
 		<div class="card-wrapper"></div>
 		
 		<div class="form-container">
-                <form action="">
+                <form  action=orderSuccessful.html  method="POST">
                     <div class="row collapse">
                         <div class="small-6 columns">
                             <input placeholder="Card number" type="text" name="number" required>
@@ -52,8 +52,9 @@
                             <input placeholder="CVC" type="text" name="cvc" required>
                         </div>
 
-                        <div class="small-6 columns" style="text-align: center;">
-							<button onclick="window.location.href='orderSuccessful.html'" style="vertical-align: middle; width:120px; height:100px;">Submit</button>
+						<div class="small-6 columns" style="text-align: center;">
+							<!-- Don't use onclick method in the submit button because it will disable builtin HTML form verificatin functionality -->
+							<button type="submit" style="vertical-align: middle; width:120px; height:100px;">Submit</button>
 							<button onclick="window.location.href='index.html'" style="vertical-align: middle;  width:120px; height:100px; background-color: darkred">Cancel</button>
                         </div>
                     </div>
