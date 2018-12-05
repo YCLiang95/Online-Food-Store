@@ -9,6 +9,8 @@ import (
 	"time"
 	"fmt"
 	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
+
+	//"errors"
 )
 
 type serverHandler func(write http.ResponseWriter, request *http.Request) (*protocal.ResponseModel, error)
@@ -16,12 +18,12 @@ type serverHandler func(write http.ResponseWriter, request *http.Request) (*prot
 func BrowserWapper(handler serverHandler) func(w http.ResponseWriter, request *http.Request) {
 	return func(w http.ResponseWriter, request *http.Request) {
 		startTime := time.Now()
-		data, err := handler(w, request)
+
 		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+		w.Header().Add("Access-Control-Allow-Headers", "*")
 		w.Header().Set("content-type", "application/json")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-		w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With")
+		data, err := handler(w, request)
 		endTime := time.Now()
 		usedTime := endTime.Sub(startTime).Seconds()
 
@@ -83,4 +85,6 @@ Response data: %v
 `, request.RequestURI, request.RemoteAddr, timeUsed, request.PostForm, string(resp)))
 	write.WriteHeader(200)
 	write.Write(resp)
-}
+
+	}
+

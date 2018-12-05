@@ -23,6 +23,7 @@ func NewHttpServer(port string) *HttpServer {
 	http.HandleFunc("/cs160/mechandise/get",filter.BrowserWapper(api.GetMerchandise))
     http.HandleFunc("/cs160/user/order/placeOrder",filter.BrowserWapper(api.PlaceOrder))
 	http.HandleFunc("/cs160/user/order/getOrders",filter.BrowserWapper(api.GetOrders))
+	http.HandleFunc("/cs160/user/order/getDelivery",filter.BrowserWapper(api.HandlerDelivery))
 
 	server := new(http.Server)
 	server.Addr = ":" + port
