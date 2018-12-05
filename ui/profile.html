@@ -118,10 +118,11 @@
 			 var list = document.getElementById("historyList");
 			 console.log(orderList);
          	for (var i = 0; i < orderList.length; i ++){
+				//${orderList[i].delivery.address}%20${orderList[i].delivery.city}%20${orderList[i].delivery.state}%20${orderList[i].delivery.zipcode}
          		var container = `
 			    <ul>
                    <li>
-                     <a>${orderList[i].order.create_time}</a><a href="Tracking.html?${orderList[i].delivery.address}%20${orderList[i].delivery.city}%20${orderList[i].delivery.state}%20${orderList[i].delivery.zipcode}"> ${orderList[i].order.status == 1 ? "In transit" : "Delivered"} <span class="fas fa-map-marked-alt"></span></a>
+                     <a>${orderList[i].order.create_time}</a><a href="Tracking.html?${orderList[i].delivery.did}"> ${orderList[i].order.status == 1 ? "In transit" : "Delivered"} <span class="fas fa-map-marked-alt"></span></a>
 
                      <p>${orderList[i].order.order_id}<a style="cursor: pointer;" onclick="getDetail(${i})"> <font color="blue">(Detail) </font></a></p>
                   </li>
