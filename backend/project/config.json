@@ -11,6 +11,11 @@
 	"redis": {
 		"maxIdle": 1,
 		"timeOut": 10,
-		"host": "127.0.0.1:6960"
-	}
+		"host": "127.0.0.1:6379",
+		"db":0,
+		"password":"",
+		"pool_size":1024
+
+	},
+	"googleKey":"AIzaSyDFC1JzMNhhZvnBlguIeSE3UBWKj6IBVKU"
 }

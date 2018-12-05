@@ -65,10 +65,11 @@ func (od *OrderDao) GetOrdersByUid(uid int64, startIndex, count int) (orders []*
 			"`order`.status,"+
 			"`total_merchandise_price`,"+
 			"total_payment_price,"+
+			"payment_method,"+
 			"`delivery`.`delivery_id`,"+
 			"`delivery`.`status` as `delivery_status`,"+
 			"zipcode,"+
-				"did,"+
+			"did,"+
 			"address,"+
 			"city,"+
 			"state,"+
@@ -86,6 +87,7 @@ func (od *OrderDao) GetOrdersByUid(uid int64, startIndex, count int) (orders []*
 			orderResponse.Order.Oid = value["oid"].(int64)
 			orderResponse.Order.Uid = uid
 			orderResponse.Order.UpdateTime = nil
+			orderResponse.Order.PaymentMethod = value["payment_method"].(int64)
 			orderResponse.Order.Status = value["status"].(int64)
 			orderResponse.Order.CreateTime, _ = time.Parse("2006-01-02 15:04:05", string(value["create_time"].([]byte)))
 			orderResponse.Order.TotalMerchandisePrice = float64(value["total_merchandise_price"].(float32))
@@ -101,17 +103,44 @@ func (od *OrderDao) GetOrdersByUid(uid int64, startIndex, count int) (orders []*
 			orderResponse.Delivery.Did = value["did"].(int64)
 			orderResult[value["oid"].(int64)] = orderResponse
 		}
-		orderDetial:=new(protocal.OrderDetail)
+		orderDetial := new(protocal.OrderDetail)
 		orderDetial.MerchandiseId = value["merchandise_id"].(int64)
 		orderDetial.MerchandiseCount = value["merchandise_count"].(int64)
 		orderDetial.MerchandisePrice = float64(value["merchandise_price"].(float32))
 		orderDetial.MerchandiseName = string(value["merchandise_name"].([]byte))
-		orderResult[value["oid"].(int64)].OrderDetail = append(orderResult[value["oid"].(int64)].OrderDetail,orderDetial)
+		orderResult[value["oid"].(int64)].OrderDetail = append(orderResult[value["oid"].(int64)].OrderDetail, orderDetial)
 	}
 
-	orders = make([]*protocal.OrderResponse,0)
-	for _, value := range orderResult{
-		orders = append(orders,value)
+	orders = make([]*protocal.OrderResponse, 0)
+	for _, value := range orderResult {
+		orders = append(orders, value)
 	}
 	return
 }
+
+func (od *OrderDao) GetDeliveryDetail(did int64) (delivery *protocal.Delivery, err error) {
+	delivery = &protocal.Delivery{
+		Did: did,
+	}
+	_, err = mysql_utils.GetInstance().Get(delivery)
+	return
+}
+
+func (od *OrderDao)UpdateDeliveryLocation(orderId string,preX,preY float64,currentX, currentY float64,status int64){
+
+	delivery := &protocal.Delivery{
+          PreX:preX,
+          PreY:preY,
+          CurrentY:currentY,
+          CurrentX:currentX,
+          Status:status,
+	}
+	_,err:=mysql_utils.GetInstance().
+		Table("delivery").
+		Where("delivery_id=?", orderId).
+		Update(delivery)
+		if err!=nil{
+			fmt.Println(err)
+		}
+}
+

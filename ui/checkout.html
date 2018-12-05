@@ -35,6 +35,8 @@
 	
 	
 	</div>
+	<script src="script\cookie.js"></script>
+	<script src="script\request.js"></script>
 	<script>
 		var shoppingCart = [];
 		function load(){
@@ -76,7 +78,7 @@
            console.log(obj)
             $.ajax({
                 type: "POST",
-                url: "http://47.254.94.78:8085/cs160/user/order/placeOrder",
+                url: serverURL + "cs160/user/order/placeOrder",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(obj),
                 dataType: "json",
@@ -131,19 +133,6 @@
 //			return false;
 			*/
 		}
-		
-		function getCookie(cookieName){
-         	var name = cookieName + "=";
-           		var cookie = document.cookie.split(';');
-           		for(var i = 0; i < cookie.length; i++) {
-               		var entry = cookie[i];
-         		entry.replace(/ /g,'');
-               		if (entry.indexOf(name) >= 0) {
-                   		return entry.substring(entry.indexOf(name) + name.length, entry.length);
-         		}
-         	}
-           		return "";
-         }
 		
 	</script>
 	</div>

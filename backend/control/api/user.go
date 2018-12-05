@@ -8,43 +8,37 @@ import (
 	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
 )
 
-func Register(w http.ResponseWriter, r *http.Request) (*protocal.ResponseModel, error) {
+func Register(w http.ResponseWriter, r *http.Request) (response *protocal.ResponseModel, err error) {
+
 	userRequest := protocal.UserRequest{}
-	if err := GetStructFromRequest(r, &userRequest); err != nil {
-		return nil, err
+	if err = GetStructFromRequest(r, &userRequest); err != nil {
+		return
 	}
-	if err := service.Register(userRequest.Email, userRequest.Password); err != nil {
-		return nil, err
+	if err = service.Register(userRequest.Email, userRequest.Password); err != nil {
+		return
 	}
-	return protocal.GenerateSuccessStruct("register user successfully", "54895786hdfkhas"), nil
+
+	return protocal.GenerateSuccessStruct("register user successfully", nil), nil
 }
 
 func Login(w http.ResponseWriter, r *http.Request) (*protocal.ResponseModel, error) {
+	var (
+		token string
+	)
 	userRequest := protocal.UserRequest{}
 	if err := GetStructFromRequest(r, &userRequest); err != nil {
 		return nil, err
 	}
-
-	//err := r.ParseForm()
-	//if err != nil {
-	//	return nil, errors.New("5001:系统错误")
-	//}
-	//
-	//email := r.PostForm.Get("email")
-	//password := r.PostForm.Get("password")
-	//
-	//if email==""||password==""{
-	//	return nil, errors.New("5001:系统错误")
-	//}
-
 	user, err := service.Login(userRequest.Email, userRequest.Password)
 	if err != nil {
 		return nil, err
 	}
+
 	userResponse := &protocal.UserRegisterReponse{
 		Email: user.Email,
 		Uid:   user.Uid,
-		Token: "99504859hjfkaflkd",
+		Token: token,
 	}
+
 	return protocal.GenerateSuccessStruct("login successfully", userResponse), nil
 }
