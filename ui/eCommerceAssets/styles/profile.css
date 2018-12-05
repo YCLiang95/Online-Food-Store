@@ -1,12 +1,20 @@
 @charset "utf-8";
 /* CSS Document */
 
-#welcomeMessage{
-	position:absolute;
+
+/* Whole page content */
+#mainWrapper {
+	width:expression(document.body.clientWidth <= 1200? "1200px": "auto"); 
+	min-width:1200px;
+	padding: 50px 5px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-bottom: 100px;
+}
+
+#title{
 	width:1000px;
-	left:50%;
-	top:50px;
-	margin-left:-600px;
 	font-weight: bold;
      	font-size: 40px;
      	color: white;
@@ -18,22 +26,18 @@
 
 .mainContent{
 	background-color: rgba(0,150,150,0.1);
-	position:absolute;
 	width:1200px;
-	height:70%;
-	left:50%;
-	top:231px;
-	margin-left:-600px;
+	height:600px;
 }
 
 .orderHistory{
+	padding-right:29px;
 	float:right;
-	width:929px;
+	width:900px;
 	height:100%;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 17px;
 	background-color: rgba(255,255,255,0.5);
-
 }
 
 h3{
@@ -42,7 +46,7 @@ h3{
 
 #historyList{
 	width:100%;
-	height:85%;
+	height:80%;
 	overflow:auto;
 	margin-top:-20px;
 }

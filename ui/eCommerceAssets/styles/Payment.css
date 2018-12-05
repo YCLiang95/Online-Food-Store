@@ -1,12 +1,18 @@
 :focus{
 	outline:none;
 }
+	
+#mainWrapper{
+	width:expression(document.body.clientWidth <= 800? "800px": "auto"); 
+	min-width:800px;
+	padding: 100px 5px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-bottom: 100px;
+}
 
 .checkoutTitle {
-	position: absolute;
-	top: 50px;
-	left: 50%;
-	margin-left: -400px;
 	width: 640px;
 	background-image: url("../images/checkout.png");
 	background-repeat:no-repeat;
@@ -16,15 +22,14 @@
 	font-size: 40px;
 	color: white;
 }
+
 .mainContent {
+	padding:25px 10px;
 	font-family: 'Montserrat', sans-serif;
 	font-size:17px;
-     	width: 800px;
+     	width: 780px;
      	height: 100%;
-     	margin: 280px auto;
 }
-
-
 
 .payments{
 	width:600px;

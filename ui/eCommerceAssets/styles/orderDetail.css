@@ -2,15 +2,18 @@
 /* CSS Document */
 
 
+/* Whole page content */
 .mainContent{
+	width:expression(document.body.clientWidth <= 1000? "1000px": "auto"); 
+	min-width:1000px;
+	padding: 150px 5px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	margin-bottom: 100px;
 	font-family: 'Montserrat', sans-serif;
 	font-size: 17px;
 	font-weight:normal;
-	position:absolute;
-	width:1000px;
-	top:100px;
-	left:50%;
-	margin-left:-500px;	
 }
 
 table{
@@ -39,7 +42,6 @@ td strong{
 	color:black;
 }
 
-
 button{
 	font-family: 'Montserrat', sans-serif;
 	font-size: 17px;
@@ -51,7 +53,7 @@ button{
 	margin-top:10px;
 	height: 50px;
 	width:200px;
-	float:right;
+	margin-left:800px;
 }
 
 button:hover {

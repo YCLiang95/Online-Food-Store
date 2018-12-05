@@ -8,14 +8,17 @@
    </head>
 
    <body onLoad="message()">
-      <img src="eCommerceAssets/images/success.png" alt = "">
+	<div id="mainWrapper">
+      	<img src="eCommerceAssets/images/success.png" alt = "">
+		<div id="content">
+      		<div id="msg">
+         			<p>LOGIN SUCCESSFUL</p>
+         			<a>Welcom back, </a><a id="userNameText">Username</a>
+      		</div>
 
-      <div id="msg">
-         <p>LOGIN SUCCESSFUL</p>
-         <a>Welcom back, </a><a id="userNameText">Username</a>
-      </div>
-
-      <a href="index.html"><i class="fas fa-home"></i>Back to Shopping</a>
+      		<a href="index.html"><i class="fas fa-home"></i>Back to Shopping</a>
+		</div>
+	</div>
 
       <script>
          function message(){

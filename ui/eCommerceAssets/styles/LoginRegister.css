@@ -2,15 +2,18 @@
 	outline:none;
 }
 
-#message {
-	display: none
+/* Whole page content */
+#mainWrapper {
+	width:expression(document.body.clientWidth <= 550? "550px": "auto"); 
+	padding:150px 5px;
+	min-width:550px;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
 }
+
 /* inputbox placeholder*/
 #inputbox {
-	position: absolute;
-	top: 300px;	
-	left: 50%;
-	margin-left: -275px;
 	width: 500px;
 	background-color: rgba(0,150,150,0.2);
 	padding:30px 25px 30px;
@@ -18,12 +21,8 @@
 
 /* Logo placeholder*/
 #returnHome {
-	position: absolute;
-	top: 125px;
 	background-image: url("../images/login.png");
 	background-repeat:no-repeat;
-  	left: 50%;
-	margin-left: -275px;
 	width: 550px;
 	height: 175px;
 }
