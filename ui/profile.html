@@ -33,6 +33,8 @@
       </div>
 	   
 	  <script src="script\cookie.js"></script>
+	  <script src="script\request.js"></script>
+	   
       <script>
          var username = "";
 		  var orderList = [];
@@ -74,7 +76,7 @@
              console.log(obj)
              $.ajax({
                  type: "POST",
-                 url: "http://47.254.94.78:8085/cs160/user/order/getOrders",
+                 url: serverURL + "cs160/user/order/getOrders",
                  contentType: "application/x-www-form-urlencoded",
                  data: obj,
                  dataType: "json",
@@ -138,7 +140,7 @@
 		  
          function toInventoryManagement(){
          	if (username == "admin"){
-         		window.location.href = "inventory.html";
+         		window.location.href = "Inventory.html";
          	} else {
          		alert("Sorry, this is for employees only.");	
          	}

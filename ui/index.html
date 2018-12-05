@@ -23,6 +23,7 @@
          </header>
 
 		 <script src="script\cookie.js"></script>
+		 <script src="script\request.js"></script>
          <script>
             var productList = new Object();
             var shoppingCart = [];
@@ -78,8 +79,10 @@
             			} else alert("Failed to obtain product list");
                  			}	
               		};
-              		xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
-              		xhttp.send(); 
+				//postRequest("cs160/mechandise/list", xhttp, null);
+				xhttp.open("POST", serverURL + "cs160/mechandise/list", false);
+              	//xhttp.open("POST", "http://47.254.94.78:8085/cs160/mechandise/list", false);
+              	xhttp.send(); 
             	return false;
             }
             
