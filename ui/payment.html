@@ -2,27 +2,84 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>payment</title>
+<title>Checkout</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 <link href="eCommerceAssets/styles/Payment.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 	<div id="mainWrapper">
-	<div class="checkoutTitle">Check out - Payment</div>
+	<div class="checkoutTitle" style="color: black">Payment</div>
 	<div class="mainContent">
-		<a>Select a Payment mdethod.</a>
-		<a>You will be redirected to the payment page of the relative merchant.</a>
+		<!-- CSS is included via this JavaScript file -->
+		<script src="script/card.js"></script>
 
-		<div class="payments">
-			<button onclick="window.location.href='orderSuccessful.html'">PaLPaY</button>
-			<button onclick="window.location.href='orderSuccessful.html'">Credit Card</button>
-			<button onclick="window.location.href='orderSuccessful.html'">BananaPay</button>
-		</div>
+		<style>
+				.demo-container {
+					width: 100%;
+					max-width: 350px;
+					margin: 50px auto;
+				}
+				form {
+					margin: 30px;
+				}
+				input {
+					width: 200px;
+					margin: 10px auto;
+					display: block;
+				}
+			</style>
 
-		<p class="home"><span class="fas fa-home"></span><input type="button" value="Return Home" class="returnButton" onClick="window.location.href=`index.html`"></p>
+<div class="demo-container">
+		<div class="card-wrapper"></div>
+		
+		<div class="form-container">
+                <form  action=orderSuccessful.html  method="POST">
+                    <div class="row collapse">
+                        <div class="small-6 columns">
+                            <input placeholder="Card number" type="text" name="number" required>
+                        </div>
+                        <div class="small-6 columns">
+                            <input placeholder="Full name" type="text" name="name" required>
+                        </div>
+                    </div>
+                    <div class="row collapse">
+                        <div class="small-3 columns">
+                            <input placeholder="MM/YY" type="text" name="expiry" required> 
+                        </div>
 
-	
+                        <div class="small-3 columns">
+                            <input placeholder="CVC" type="text" name="cvc" required>
+                        </div>
+
+						<div class="small-6 columns" style="text-align: center;">
+							<!-- Don't use onclick method in the submit button because it will disable builtin HTML form verificatin functionality -->
+							<button type="submit" style="vertical-align: middle; width:120px; height:100px;">Submit</button>
+							<button onclick="window.location.href='index.html'" style="vertical-align: middle;  width:120px; height:100px; background-color: darkred">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+			</div>
+
+        </div>
+
+		<script>
+
+		var card = new Card({
+			form: 'form',
+			container: '.card-wrapper',
+
+			placeholders: {
+       			 number: '**** **** **** ****',
+        		name: 'Arya Stark',
+        		expiry: '**/****',
+       			 cvc: '***'
+   			 }
+		});
+		</script>
+
+
+
 	</div>
 	</div>
 
