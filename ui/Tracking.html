@@ -5,39 +5,57 @@
       <title>Track Order</title>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
       <link href="eCommerceAssets/styles/TrackOrder.css" rel="stylesheet" type="text/css">
+	   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
    </head>
    <body onLoad="load()">
-	<div id="mainWrapper">
-	   <div id="returnHome">
-         <form action = "index.html">
-            <button type="submit" id="button_submit"><i class="fas fa-home"></i>Return Home</button>
-         </form>
-      </div>
-
       <iframe id="map" width="600" height="450" frameborder="0" style="border:0" 
          src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDZ_7y_iYoC3ZZS06q9P6VUjGzfhG0FOoQ
          &origin=san%20jose%20state%20university
          &destination=San%20jose%20airport" 
          allowfullscreen></iframe>
+      <div id="returnHome">
+         <form action = "index.html">
+            <button type="submit" id="button_submit"><i class="fas fa-home"></i>Return Home</button>
+         </form>
+      </div>
+	   
+	  <script src="script\request.js"></script> 
       <script>
 		  var map = new Object();
+		 	
 		  
 		  function load(){
 			  var para = window.location.search.substring(1);
 			  console.log(para);
 			  map = document.getElementById("map");
 			  map.setAttribute("src", 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyDZ_7y_iYoC3ZZS06q9P6VUjGzfhG0FOoQ&origin=Alum%20Rock%20Checkers%2095116%20San%20Jose%20CA&destination=' + para + "&language=en&region=US" );
-		  }
-		  
-         function update(){
-         	
-         }
+			  update(para);
+			  setInterval(update, 10000, para);
+		  	}
          
-         function request(){
-         	
+		  function update(para){
+			  var obj = {did : para};
+			   $.ajax({
+                 type: "POST",
+                 url: serverURL + "cs160/user/order/getDelivery",
+                 contentType: "application/x-www-form-urlencoded",
+                 data: obj,
+                 dataType: "json",
+                 success: function (res) {
+                     console.log(res)
+					 orderList = res.data
+					 var start = res.data.current_x + "," + res.data.current_y;
+					 var end = res.data.end_x + "," + res.data.end_y;
+						map.setAttribute("src", 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyDZ_7y_iYoC3ZZS06q9P6VUjGzfhG0FOoQ&origin=' + start + '&destination=' + end + "&language=en&region=US" );
+					 console.log("start" + start + "end" + end);
+                 },
+                 error: function (error) {
+                     console.log(error)
+                 }
+             });
+            return false;
          }
          
       </script>
-	</div>
    </body>
 </html>
