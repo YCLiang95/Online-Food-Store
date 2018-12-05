@@ -5,7 +5,7 @@ import (
 	"github.com/YCLiang95/CS160Group1OFS/backend/utils"
 	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
 	"github.com/YCLiang95/CS160Group1OFS/backend/control"
-	"fmt"
+	//"github.com/YCLiang95/CS160Group1OFS/backend/utils/redis-utils"
 )
 
 var SERVER_PORT string
@@ -17,7 +17,6 @@ func main(){
 		utils.Logger.Error("Failed to load config: ",err)
 		return
 	}
-	fmt.Println(protocal.G_Config)
 	flag.Parse()
 	httpser := control.NewHttpServer(SERVER_PORT)
 	httpser.StartServer()

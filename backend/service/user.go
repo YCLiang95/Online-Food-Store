@@ -6,29 +6,30 @@ import (
 	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
 )
 
-var(
-	RegisterError=errors.New("1000:failed to register user")
-	LoginFailedErr=errors.New("1001:email/password is incorrect")
-	UserSystemErr=errors.New("2000:network error,please try again")
+var (
+	RegisterError  = errors.New("1000:failed to register user")
+	LoginFailedErr = errors.New("1001:email/password is incorrect")
+	UserSystemErr  = errors.New("2000:network error,please try again")
 )
 
+func Register(email, password string) (err error) {
 
-func Register(email,password string)error{
 
-	if err:=dao.GetInstance().Register(email,password);err!=nil {
-		return RegisterError
+	if err = dao.GetInstance().Register(email, password); err != nil {
+		err = RegisterError
+		return
 	}
-	return nil
+	return
 }
 
-func Login(email,password string)( *protocal.ProjectUser,error) {
-
+func Login(email, password string) (*protocal.ProjectUser, error) {
 	user, err := dao.GetInstance().GetUser(email)
-	if err != nil{
-		return nil,UserSystemErr
+	if err != nil {
+		return nil, UserSystemErr
 	}
-	if user==nil||user.Password!=password{
-		return nil,LoginFailedErr
+	if user == nil || user.Password != password {
+		return nil, LoginFailedErr
 	}
-	return user,nil
+	return user, nil
 }
+
