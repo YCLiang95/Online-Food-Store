@@ -10,16 +10,14 @@ type UserRequest struct {
 
 
 type ProjectUser struct {
-	Uid   int
+	Uid   int64  `xorm:"autoincr"`
 	Email string
 	Password string
 }
 
-
-
-
 type UserRegisterReponse struct {
 	Email string `json:"email"`
-	Uid int  `json:"uid"`
+	Uid int64  `json:"uid"`
 	Token string`json:"token"`
+
 }

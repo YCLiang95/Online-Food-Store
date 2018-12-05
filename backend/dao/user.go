@@ -2,6 +2,9 @@ package dao
 
 import (
 	"github.com/YCLiang95/CS160Group1OFS/backend/common/protocal"
+	"github.com/YCLiang95/CS160Group1OFS/backend/utils/mysql-utils"
+	"github.com/tianyun6655/Ofbank_Quantitative_Transaction/utils"
+	"fmt"
 )
 
 type UserDaoInstance struct{}
@@ -17,8 +20,10 @@ func GetInstance() *UserDaoInstance {
 
 func (ui *UserDaoInstance) Register(email, password string) (err error) {
 	user := &protocal.ProjectUser{Email: email, Password: password}
-	 err = daoFunctionLogWapper(user, nil,saveRecorders)
-	return
+	if err = daoFunctionLogWapper(user, nil, saveRecorders); err != nil {
+		return
+	}
+   return
 }
 
 func (ui *UserDaoInstance) GetUser(email string) (user *protocal.ProjectUser, err error) {

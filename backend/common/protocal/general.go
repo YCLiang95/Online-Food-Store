@@ -23,10 +23,14 @@ type RedisConfig struct {
 	MaxIdle int  `json:"maxIdle"`
 	Timeout int  `json:"timeOut"`
 	Host string   `json:"host"`
+	DB int   `json:"db"`
+	Password string `json:"password"`
+	PoolSize int  `json:"pool_size"`
 }
 type Config struct {
 	MysqlConfig MySqlConfig  `json:"mysql"`
     RedisConfig  RedisConfig `json:"redis"`
+    GoogleKey string `json:"googleKey"`
 }
 
 
