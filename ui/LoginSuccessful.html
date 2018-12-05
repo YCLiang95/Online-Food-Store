@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>LoginSuccessful</title>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+      <link href="eCommerceAssets/styles/LoginSucess.css" rel="stylesheet" type="text/css">
+   </head>
+
+   <body onLoad="message()">
+      <img src="eCommerceAssets/images/success.png" alt = "">
+
+      <div id="msg">
+         <p>LOGIN SUCCESSFUL</p>
+         <a>Welcom back, </a><a id="userNameText">Username</a>
+      </div>
+
+      <a href="index.html"><i class="fas fa-home"></i>Back to Shopping</a>
+	   
+	   <script src="script\cookie.js"></script>
+      <script>
+         function message(){
+         	document.getElementById("userNameText").innerHTML = " " + getCookie("userName") + "!";
+         }
+      </script>
+   </body>
+</html>
