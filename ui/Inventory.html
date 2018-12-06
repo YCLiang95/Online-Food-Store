@@ -26,8 +26,12 @@
                   <p class="Quantity">Quantity:<input type="text" id="quantityInput" name="quantity" value="N/A"><a>For items out of stock, input value &lt 0</a></p> 
                </section>
             </div>
+			 <div id="dupWarningDiv">
+				 <a><font color="red">Duplicated merchandiase in the data base!</font></a>
+				 <a>Ignore the warning?</a><input type="checkbox" id="ignoreCheckbox">
+			 </div>
             <div class="buttons">
-               <p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="return" onClick="window.location.href=`index.html`"></p>
+               <p class="home"><i class="fas fa-home"></i><input type="button" value="Return Home" class="return" onClick="returnHome()"></p>
                <input type="button" name="button" value="Save to Server" class="saveButton" onClick="update('cs160/mechandise/update')">
                <input type="button" name="button" value="Create new product" class="saveButton" onClick="update('cs160/mechandise/save')">
             </div>
@@ -39,7 +43,8 @@
 	  <script src="script\request.js"></script>
       <script>
          var productList = new Object();
-          
+          var dup = false;
+		  
           function load(){
           	getInventory();
           	getProductList();
@@ -77,7 +82,14 @@
           
           function display(){
           	var list = document.getElementById("selectList");
-          	for (var i = 0; i < productList.length; i++)
+			dup = false;
+          	for (var i = 0; i < productList.length; i++){
+				for (var j = i + 1; j <productList.length; j ++){
+					if(productList[i].name == productList[j].name){
+						dup = true;
+						break;
+					}
+				}
           		if (productList[i].mid == list.value) {
           				document.getElementById("prodcutImage").src = productList[i].imagerl;
           				document.getElementById("nameInput").value = productList[i].name;
@@ -88,7 +100,25 @@
           				document.getElementById("URLInput").value = productList[i].imagerl;
           			break;
           		}
+			}
+			  if (dup){
+				  document.getElementById("dupWarningDiv").style.display = "block";
+				  document.getElementById("ignoreCheckbox").checked  = false;
+			  } else {
+				  document.getElementById("dupWarningDiv").style.display = "none";
+				  document.getElementById("ignoreCheckbox").checked  = true;
+			  }
           }
+		  
+		  function returnHome(){
+			  if (dup){
+				  if (document.getElementById("ignoreCheckbox").checked ){
+					 window.location.href = "index.html";
+				  } else {
+					 alert("Unresolved Warning: Duplicated Merchandiase!");
+				  }
+			  } else window.location.href = "index.html";
+		  }
           
           function update(url){
           	var xhttp = new XMLHttpRequest();
